@@ -1,12 +1,13 @@
-SELinuxPolicy Cookbook
+SELinux Policy Cookbook
 ======================
-This cookbbok can be used to manage SELinux policies and components (rather than just enable / disable it).  
+This cookbbok can be used to manage SELinux policies and components (rather than just enable / disable enforcing).  
 I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
 
 Requirements
 ------------
-Needs a healthy SELinux installation.  
-I'm not an expert on what makes SELinux "healthy", but you get the general idea.
+Needs an SELinux policy active (so its values can be managed).  
+Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`.
+Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
 
 Attributes
 ----------
@@ -15,8 +16,8 @@ None, at the moment.
 Usage
 -----
 
-This cookbook only has resources, so it should be called from a wrapper cookbook.
-Remember to add `depends 'selinuxpolicy'` to your `metadata.rb`.
+This cookbook's functionality is exposed via resources, so it should be called from a wrapper cookbook.
+Remember to add `depends 'selinux_policy'` to your `metadata.rb`.
 
 ### boolean
 Represents an SELinux [boolean](http://wiki.gentoo.org/wiki/SELinux/Tutorials/Using_SELinux_booleans).
@@ -32,7 +33,7 @@ Attributes:
 Example usage:
 
 ```ruby
-selinuxpolicy_boolean 'httpd_can_network_connect' do
+selinux_policy_boolean 'httpd_can_network_connect' do
     value true
     # Make sure nginx is started if this value was modified
     notifies :start,'service[nginx]', :immediate
@@ -62,7 +63,7 @@ Example usage:
 
 ```ruby
 # Allow nginx to bind to port 5678, by giving it the http_port_t context
-selinuxpolicy_port '5678' do
+selinux_policy_port '5678' do
     protocol 'tcp'
     secontext 'http_port_t'
 end

@@ -1,5 +1,5 @@
 #
-# Cookbook Name:: selinuxpolicy
+# Cookbook Name:: selinux_policy
 # Recipe:: default
 #
 # Copyright 2014, BackSlasher
