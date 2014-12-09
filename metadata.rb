@@ -1,4 +1,4 @@
-name             'selinuxpolicy'
+name             'selinux_policy'
 maintainer       'Backslasher'
 maintainer_email 'nitz.raz@gmail.com'
 license          'GPL v2'
