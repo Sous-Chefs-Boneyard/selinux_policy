@@ -69,6 +69,39 @@ selinux_policy_port '5678' do
 end
 ```
 
+### module
+Manages SEModules
+
+Actions:
+
+* `deploy` (default): Compiles a module from it's `te` file and deploys it. Deploys only when one of the following is true:
+  * The module isn't currently present
+  * `force` is enabled
+  * The policy file has changed
+* `remove`: Removes a module 
+
+Example usage:
+
+```ruby
+# Allow openvpn to write/delete in '/etc/openvpn'
+selinux_module 'openvpn-googleauthenticator' do
+  content '
+module dy-openvpn-googleauthenticator 1.0;
+
+require {
+    type openvpn_t;
+    type openvpn_etc_t;
+    class file { write unlink };
+}
+
+
+#============= openvpn_t ==============
+allow openvpn_t openvpn_etc_t:file { write unlink };
+'
+  action :deploy
+end
+```
+
 Contributing
 ------------
 The generic method seems fine to me:

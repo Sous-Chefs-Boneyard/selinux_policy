@@ -7,9 +7,9 @@
 # GPLv2
 #
 case platform_family
-when "debian" package_name='policycoreutils'
-when "rhel" package_name='policycoreutils'
-else raise 'Uknown distro, cannot determine required package name'
+when "debian" pkgs = [ 'policycoreutils', 'selinux-policy-dev', 'make' ]
+when "rhel" pkgs = [ 'policycoreutils', 'selinux-policy', 'make' ]
+else raise 'Uknown distro, cannot determine required package names'
 end
 
-package package_name
+pkgs.each{|p|package p}
