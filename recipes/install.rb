@@ -7,8 +7,9 @@
 # GPLv2
 #
 case platform_family
+#policycoreutils-python
 when "debian" pkgs = [ 'policycoreutils', 'selinux-policy-dev', 'make' ]
-when "rhel" pkgs = [ 'policycoreutils', 'selinux-policy', 'make' ]
+when "rhel" pkgs = [ 'policycoreutils-python', 'selinux-policy', 'make' ]
 else raise 'Uknown distro, cannot determine required package names'
 end
 
