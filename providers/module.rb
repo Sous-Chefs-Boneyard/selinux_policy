@@ -11,12 +11,14 @@ action :deploy do
     # notifies :run, "execute[semodule-deploy-#{new_resource.name}]"
   end
 
-  execute "semodule-deploy-#{new_resource.name}" do
+  e=execute "semodule-deploy-#{new_resource.name}" do
     # action ( new_resource.force ? :run : :nothing )
     command "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{filename}.pp && /usr/sbin/semodule -i #{filename}.pp"
     only_if {f.updated_by_last_action? or new_resource.force or (shell_out("/usr/sbin/semodule -l | grep '^#{new_resource.name}\\s'").stdout == '')}
     cwd Chef::Config[:file_cache_path]
   end
+
+  new_resource.updated_by_last_action(e.updated_by_last_action?)
 end
 
 # remove module
