@@ -84,7 +84,7 @@ Example usage:
 
 ```ruby
 # Allow openvpn to write/delete in '/etc/openvpn'
-selinux_module 'openvpn-googleauthenticator' do
+selinux_policy_module 'openvpn-googleauthenticator' do
   content '
 module dy-openvpn-googleauthenticator 1.0;
 
@@ -99,6 +99,26 @@ require {
 allow openvpn_t openvpn_etc_t:file { write unlink };
 '
   action :deploy
+end
+```
+
+### permissive
+Allows some types to misbehave without stopping them.  
+Not as good as specific policies, but better than disabling SELinux entirely.
+
+Actions:
+
+* `add`: Adds a permissive, unless it's already added
+* `delete`: Deletes a permissive if it's listed
+
+Example usage:
+
+```ruby
+# Disable enforcement on Nginx
+# As described on http://nginx.com/blog/nginx-se-linux-changes-upgrading-rhel-6-6/
+
+selinux_policy_permissive 'nginx' do
+  notifies :restart, 'service[nginx]'
 end
 ```
 
