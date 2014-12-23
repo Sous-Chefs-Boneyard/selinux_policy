@@ -1,0 +1,39 @@
+{
+  "name": "selinux_policy",
+  "description": "Manages SELinux policy components",
+  "long_description": "SELinux Policy Cookbook\n======================\nThis cookbook can be used to manage SELinux policies and components (rather than just enable / disable enforcing).  \nI made it because I needed some SELinux settings done, and the `execute`s started to look annoying.\n\nRequirements\n------------\nNeeds an SELinux policy active (so its values can be managed). Cookbook can be applied to system with SELINUX\nthat is disabled, but it will silently pass. This allows you to include it in generic roles.\n  \nAlso requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`.\nTools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).\n\nAttributes\n----------\nNone, at the moment.\n\nUsage\n-----\n\nThis cookbook's functionality is exposed via resources, so it should be called from a wrapper cookbook.\nRemember to add `depends 'selinux_policy'` to your `metadata.rb`.\n\n### boolean\nRepresents an SELinux [boolean](http://wiki.gentoo.org/wiki/SELinux/Tutorials/Using_SELinux_booleans).\nYou can either `set` it, meaning it will be changed without persistence (it will revert to default in the next reboot), or `setpersist` it (default action), so it'll keep it value after rebooting.  \nUsing `setpersist` requires an active policy (so that the new value can be saved somewhere).\n\nAttributes:\n\n* `name`: boolean's name. Defaults to resource name.\n* `value`: Its new value (`on`/`off`).\n* `persist`: Its value (`true`/`falue`), default `true`\n\nExample usage:\n\n```ruby\nselinux_policy_boolean 'httpd_can_network_connect' do\n    value true\n    # Make sure nginx is started if this value was modified\n    notifies :start,'service[nginx]', :immediate\nend\n```\n\n**Note**: Due to ruby interperting `0` as `true`, using `value 0` is unwise.\n\n### port\nAllows assigning a network port to a certain SELinux context.  \nAs explained [here](http://wiki.centos.org/HowTos/SELinux#head-ad837f60830442ae77a81aedd10c20305a811388), it can be useful for running Apache on a non-standard port.\n\nActions:\n\n* `addormodify` (default): Assigns the port to the right context, whether it's already listed in context or not at all.\n* `add`: Assigns the port to the right context it's if not listed (only uses `-a`).\n* `modify`: Changes the port's context if it's already listed (only uses `-m`).\n* `delete`: Removes the port's context if it's listed (uses `-d`).\n\nAttributes:\n\n* `port`: The port in question, defaults to resource name.\n* `protocol`: `tcp`/`udp`. defaults to `tcp`\n* `secontext`: The SELinux context to assign the port to. Uneeded when using `delete`.\n\nExample usage:\n\n```ruby\n# Allow nginx to bind to port 5678, by giving it the http_port_t context\nselinux_policy_port '5678' do\n    protocol 'tcp'\n    secontext 'http_port_t'\nend\n```\n\nContributing\n------------\nThe generic method seems fine to me:\n\n1. Fork the repository on Github\n2. Create a named feature branch (like `add_component_x`)\n3. Write your change\n4. Write tests for your change (if applicable)\n5. Run the tests, ensuring they all pass\n6. Submit a Pull Request using Github\n\nLicense and Authors\n-------------------\nLicensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)  \nAuthor: Nitzan Raz ([backslasher](http://backslasher.net))  \n\nI'll be happy to accept contributions or to hear from you!\n",
+  "maintainer": "Backslasher",
+  "maintainer_email": "nitz.raz@gmail.com",
+  "license": "GPL v2",
+  "platforms": {
+
+  },
+  "dependencies": {
+
+  },
+  "recommendations": {
+
+  },
+  "suggestions": {
+
+  },
+  "conflicting": {
+
+  },
+  "providing": {
+
+  },
+  "replacing": {
+
+  },
+  "attributes": {
+
+  },
+  "groupings": {
+
+  },
+  "recipes": {
+
+  },
+  "version": "1.0.0"
+}
