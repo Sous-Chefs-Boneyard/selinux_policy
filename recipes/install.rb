@@ -6,7 +6,7 @@
 #
 # GPLv2
 #
-case node[:platform_family]
+case node['platform_family']
   when "debian"
     pkgs = [ 'policycoreutils', 'selinux-policy-dev', 'make' ]
   when "rhel"
