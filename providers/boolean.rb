@@ -3,6 +3,8 @@ def whyrun_supported?
   true
 end
 
+use_inline_resources
+
 # Set for now, without persisting
 action :set do
   set_sebool(false)
@@ -20,5 +22,4 @@ def set_sebool(persist=false)
     command "/usr/sbin/setsebool #{persist_string} #{new_resource.name} #{new_value}"
     not_if "/usr/sbin/getsebool #{new_resource.name} | grep '#{new_value}$' >/dev/null" if !new_resource.force
   end
-  new_resource.updated_by_last_action(e.updated_by_last_action?)
 end

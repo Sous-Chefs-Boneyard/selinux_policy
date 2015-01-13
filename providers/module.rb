@@ -3,6 +3,8 @@ def whyrun_supported?
   true
 end
 
+use_inline_resources
+
 # Compile and deploy module (also upgrade)
 action :deploy do
   filename="semodule-#{new_resource.name}"
@@ -17,8 +19,6 @@ action :deploy do
     only_if {f.updated_by_last_action? or new_resource.force or (shell_out("/usr/sbin/semodule -l | grep '^#{new_resource.name}\\s'").stdout == '')}
     cwd Chef::Config[:file_cache_path]
   end
-
-  new_resource.updated_by_last_action(e.updated_by_last_action?)
 end
 
 # remove module
