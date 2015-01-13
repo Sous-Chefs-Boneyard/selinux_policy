@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.4.0
+-----
+- [backlasher] - Fixed foodcritic errors
+
 0.3.0
 -----
 - [backlasher] - Fixed `install.rb` syntax. Now it actually works
