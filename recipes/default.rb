@@ -6,4 +6,6 @@
 #
 # GPLv2
 #
-# Nothing's here!
+#
+
+include_recipe "selinux_policy::install"
