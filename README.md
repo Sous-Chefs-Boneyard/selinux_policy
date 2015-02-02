@@ -5,7 +5,8 @@ I made it because I needed some SELinux settings done, and the `execute`s starte
 
 Requirements
 ------------
-Needs an SELinux policy active (so its values can be managed).  
+Needs an SELinux policy active (so its values can be managed). Cookbook can be applied to system with SELINUX that is disabled, but it will silently pass. This allows you to include it in generic roles.
+
 Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`.
 Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
 
@@ -27,8 +28,9 @@ Using `setpersist` requires an active policy (so that the new value can be saved
 Attributes:
 
 * `name`: boolean's name. Defaults to resource name.
-* `value`: Its new value (`true`/`false`).
-* `force`: Use `setsebool` even if the current value agrees with the requested one.
+* `value`: `true`/`false`, which get transposed to `on`/`off`.
+* `persist`: Its value (`true`/`falue`), default `true`.
+* `force`: forcefully set the value even if it is correct.
 
 Example usage:
 
@@ -38,6 +40,17 @@ selinux_policy_boolean 'httpd_can_network_connect' do
     # Make sure nginx is started if this value was modified
     notifies :start,'service[nginx]', :immediate
 end
+
+# All options
+
+selinux_policy_boolean 'httpd_can_network_connect' do
+    value true
+    persist true
+    force false
+    # Make sure nginx is started if this value was modified
+    notifies :start,'service[nginx]', :immediate
+end
+
 ```
 
 **Note**: Due to ruby interperting `0` as `true`, using `value 0` is unwise.
@@ -56,7 +69,7 @@ Actions:
 Attributes:
 
 * `port`: The port in question, defaults to resource name.
-* `protocol`: `tcp`/`udp`.
+* `protocol`: `tcp`/`udp`. defaults to `tcp`
 * `secontext`: The SELinux context to assign the port to. Uneeded when using `delete`.
 
 Example usage:
@@ -78,7 +91,7 @@ Actions:
   * The module isn't currently present
   * `force` is enabled
   * The policy file has changed
-* `remove`: Removes a module 
+* `remove`: Removes a module
 
 Example usage:
 
