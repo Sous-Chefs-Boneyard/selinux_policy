@@ -7,6 +7,7 @@ This file is used to list changes made in each version of the selinuxpolicy cook
 -----
 - [backslasher] - Added RHEL5/derivatives support. Thanks to @knightorc.
                   Cookbook will break on RHEL7. If anyone expiriences this, please check required packages and create an issue/PR
+- [backslasher] - Machines without SELinux are (opionally) supported. Thanks to @knightroc.
 
 0.4.0
 -----

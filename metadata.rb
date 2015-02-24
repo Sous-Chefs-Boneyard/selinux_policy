@@ -6,3 +6,7 @@ description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.4.0'
 
+attribute 'selinux_policy',
+  :display_name => 'SELinux Policy',
+  :description  => 'Hash of SELinux policy related attributes',
+  :type         => 'hash'

@@ -5,13 +5,18 @@ I made it because I needed some SELinux settings done, and the `execute`s starte
 
 Requirements
 ------------
-Needs an SELinux policy active (so its values can be managed).  
+Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run).
 Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`.
 Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
 
 Attributes
 ----------
-None, at the moment.
+
+These attributes affect the way all of the LWRPs are behaving.
+
+* `node['selinux_policy']['allow_disabled'] - Whether to allow runs when SELinux is disabled. Will generate warnings, but the run won't fail.  
+   Defaults to `true`, set to `false` if you don't have any machines with disabled SELinux.
+
 
 Usage
 -----
