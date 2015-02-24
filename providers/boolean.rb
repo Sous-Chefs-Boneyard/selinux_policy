@@ -7,12 +7,12 @@ use_inline_resources
 
 # Set for now, without persisting
 action :set do
-  set_sebool(false)
+  set_sebool(false) if use_selinux
 end
 
 # Set and persist
 action :setpersist do
-  set_sebool(true)
+  set_sebool(true) if use_selinux
 end
 
 def set_sebool(persist=false)
