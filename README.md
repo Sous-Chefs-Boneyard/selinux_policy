@@ -107,6 +107,38 @@ allow openvpn_t openvpn_etc_t:file { write unlink };
 end
 ```
 
+### fcontext
+
+Allows managing the SELinux context of files. This may be needed to allow certain daemons access to their files and similar.
+
+Actions:
+
+* `addormodify` (default): Assigns the file regexp to the right context, whether it's already listed another context or not at all.
+* `add`: Assigns the file regexp to the right context it's if not listed (only uses `-a`).
+* `modify`: Changes the file regexp context if it's already listed (only uses `-m`).
+* `delete`: Removes the file regexp context if it's listed (uses `-d`).
+
+Attributes:
+
+* `file_spec`: This is the file regexp in question, defaults to resource name.
+* `secontext`: The SELinux context to assign the file regexp to. Not needed when using `delete`.
+
+Example usage (see [mysql cookbook](https://github.com/chef-cookbooks/mysql) for example daemons ):
+
+```ruby
+# Allow a custom mysql daemon to access its files.
+{'mysqld_etc_t' => "/etc/mysql-#{service_name}(/.*)?",
+'mysqld_etc_t' => "/etc/mysql-#{service_name}/my\.cnf",
+'mysqld_log_t' => "/var/log/mysql-#{service_name}(/.*)?",
+'mysqld_db_t' => "/opt/mysql_data_#{service_name}(/.*)?",
+'mysqld_var_run_t' => "/var/run/mysql-#{service_name}(/.*)?",
+'mysqld_initrc_exec_t' => "/etc/rc\.d/init\.d/mysql-#{service_name}"}.each do |sc, f|
+  selinux_policy_fcontext f do
+    secontext sc
+  end
+end
+```
+
 ### permissive
 Allows some types to misbehave without stopping them.  
 Not as good as specific policies, but better than disabling SELinux entirely.
