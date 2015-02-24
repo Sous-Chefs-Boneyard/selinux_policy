@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.5.0
+-----
+- [backslasher] - Added RHEL5/derivatives support. Thanks to @knightorc.
+                  Cookbook will break on RHEL7. If anyone expiriences this, please check required packages and create an issue/PR
+
 0.4.0
 -----
 - [backlasher] - Fixed foodcritic errors
