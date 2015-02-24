@@ -5,7 +5,7 @@ I made it because I needed some SELinux settings done, and the `execute`s starte
 
 Requirements
 ------------
-Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run).
+Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run).  
 Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`.
 Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
 
@@ -83,7 +83,7 @@ Actions:
   * The module isn't currently present
   * `force` is enabled
   * The policy file has changed
-* `remove`: Removes a module 
+* `remove`: Removes a module
 
 Example usage:
 
