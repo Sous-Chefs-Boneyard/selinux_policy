@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.6.1
+-----
+- [backslasher] - Migrated to `only_if` instead of if
+- [backslasher] - README typos
+
 0.6.0
 -----
 - [joerg] - Added fcontext resource for managing file contexts under SELinux
