@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.6.0
+-----
+- [joerg] - Added fcontext resource for managing file contexts under SELinux
+
 0.5.0
 -----
 - [backslasher] - Added RHEL5/derivatives support. Thanks to @knightorc.
