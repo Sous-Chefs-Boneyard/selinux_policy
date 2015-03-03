@@ -177,6 +177,10 @@ The generic method seems fine to me:
 License and Authors
 -------------------
 Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)  
-Author: Nitzan Raz ([backslasher](http://backslasher.net))  
+Author: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
+
+Contributors:
+* [Jörg Herzinger](https://github.com/joerg) (http://www.bytesource.net)
+* [Wade Peacock](https://github.com/knightorc) (http://www.visioncritical.com)
 
 I'll be happy to accept contributions or to hear from you!
