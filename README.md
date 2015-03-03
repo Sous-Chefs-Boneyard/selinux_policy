@@ -85,6 +85,12 @@ Actions:
   * The policy file has changed
 * `remove`: Removes a module
 
+Attributes:
+
+* `name`: The module name. Defaults to resource name.
+* `content`: The module content, can be extracted from `audit2allow -m NAME`
+* `force`: Whether to install the module even if it seems unnecessary. Defaults to false, can help when the module was modified "under the nose" of Chef (since we don't actually download the curernt module and decompile when comparing).
+
 Example usage:
 
 ```ruby
@@ -113,7 +119,7 @@ This can be used to grant SELinux-protected daemons access to additional / moved
 Actions:
 
 * `addormodify` (default): Assigns the file regexp to the right context, whether it's already listed another context or not at all.
-add: Assigns the file regexp to the right context it's if not listed (only uses -a).
+* `add`: Assigns the file regexp to the right context it's if not listed (only uses -a).
 * `modify`: Changes the file regexp context if it's already listed (only uses -m).
 * `delete`: Removes the file regexp context if it's listed (uses -d).
 
