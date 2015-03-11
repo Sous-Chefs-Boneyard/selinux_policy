@@ -10,3 +10,7 @@ attribute 'selinux_policy',
   :display_name => 'SELinux Policy',
   :description  => 'Hash of SELinux policy related attributes',
   :type         => 'hash'
+
+%w{ redhat centos ubuntu debian }.each do |os|
+  supports os
+end
