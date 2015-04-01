@@ -2,6 +2,8 @@
 # Library: helper-disabled
 # 2015, GPLv2, Nitzan Raz (http://backslasher.net)
 
+include 'Chef::Mixin::ShellOut'
+
 class Chef
   class Provider
     # Checks if SELinux is disabled and whether we're allowed to run when disabled
