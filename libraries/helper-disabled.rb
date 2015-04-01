@@ -2,7 +2,8 @@
 # Library: helper-disabled
 # 2015, GPLv2, Nitzan Raz (http://backslasher.net)
 
-include 'Chef::Mixin::ShellOut'
+require 'chef/mixin/shell_out'
+include Chef::Mixin::ShellOut
 
 class Chef
   class Provider
