@@ -33,7 +33,7 @@ end
 action :addormodify do
   execute "selinux-port-#{new_resource.port}-addormodify" do
     command <<-EOT
-    if /usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null; then
+    if /usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}.*#{new_resource.port}'>/dev/null; then
       /usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
     else
       /usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
