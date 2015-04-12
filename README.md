@@ -14,7 +14,7 @@ Attributes
 
 These attributes affect the way all of the LWRPs are behaving.
 
-* `node['selinux_policy']['allow_disabled'] - Whether to allow runs when SELinux is disabled. Will generate warnings, but the run won't fail.  
+* `node['selinux_policy']['allow_disabled']` - Whether to allow runs when SELinux is disabled. Will generate warnings, but the run won't fail.  
    Defaults to `true`, set to `false` if you don't have any machines with disabled SELinux.
 
 
