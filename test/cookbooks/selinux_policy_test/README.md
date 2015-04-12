@@ -1,4 +1,4 @@
 # selinux_policy_test
 
-TODO: Enter the cookbook description here.
+Wrapper cookbook to test selinux_policy LWRPs in Test Kitchen.
 
