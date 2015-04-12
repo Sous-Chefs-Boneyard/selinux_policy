@@ -188,5 +188,6 @@ Author: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backs
 Contributors:
 * [Joerg Herzinger](https://github.com/joerg) (http://www.bytesource.net)
 * [Wade Peacock](https://github.com/knightorc) (http://www.visioncritical.com)
+* [Kieren Evans](https://github.com/kierenevans) (http://kle.me)
 
 I'll be happy to accept contributions or to hear from you!

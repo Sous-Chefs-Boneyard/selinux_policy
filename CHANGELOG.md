@@ -3,6 +3,12 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.6.2
+-----
+- [kevans]      - Support Chef 11.8.0 running shellout!()
+- [backslasher] - Simplified support info
+- [backslasher] - ASCIIed files
+
 0.6.1
 -----
 - [backslasher] - Migrated to `only_if` instead of if
