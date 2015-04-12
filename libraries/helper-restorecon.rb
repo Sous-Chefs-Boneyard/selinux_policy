@@ -1,6 +1,6 @@
 # Cookbook: selinux_policy
 # Library: helper-restorecon
-# 2015, GPLv2, Jörg Herzinger (www.bytesource.net)
+# 2015, GPLv2, Joerg Herzinger (www.bytesource.net)
 
 class Chef
   class Provider
