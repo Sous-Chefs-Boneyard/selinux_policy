@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.6.3
+-----
+- [backslasher] - Readme updates
+- [kevans]      - Added kitchen testing
+
 0.6.2
 -----
 - [kevans]      - Support Chef 11.8.0 running shellout!()
