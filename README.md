@@ -169,6 +169,13 @@ selinux_policy_permissive 'nginx' do
 end
 ```
 
+## Testing
+We currently use a very basic kitchen recipe for testing.  
+We also only test against CentOS (because Ubuntu comes with SELinux disabled and restarting mid-test is hard).  
+
+## Chef 11 Support
+I don't use Chef 11, but stuff *seems* to work OK to other people.
+
 Contributing
 ------------
 The generic method seems fine to me:
