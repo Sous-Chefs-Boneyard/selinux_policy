@@ -17,10 +17,10 @@ case node['platform_family']
       when 6
         pkgs = [ 'policycoreutils-python', 'selinux-policy', 'make' ]
       else
-        raise 'Uknown version of RHEL/derivative, cannot determine required package names'
+        raise 'Unknown version of RHEL/derivative, cannot determine required package names'
     end
   else
-    raise 'Uknown distro, cannot determine required package names'
+    raise 'Unknown distro, cannot determine required package names'
 end
 
 pkgs.each{|p|package p}
