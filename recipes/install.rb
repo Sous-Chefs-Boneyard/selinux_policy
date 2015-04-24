@@ -14,7 +14,7 @@ case node['platform_family']
       when 5
         # policycoreutils-python does not exist in RHEL5
         pkgs = [ 'policycoreutils', 'selinux-policy', 'make' ]
-      when 6|7
+      when 6,7
         pkgs = [ 'policycoreutils-python', 'selinux-policy', 'make' ]
       else
         raise 'Uknown version of RHEL/derivative, cannot determine required package names'
