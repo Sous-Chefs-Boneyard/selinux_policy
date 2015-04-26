@@ -196,5 +196,6 @@ Contributors:
 * [Joerg Herzinger](https://github.com/joerg) (http://www.bytesource.net)
 * [Wade Peacock](https://github.com/knightorc) (http://www.visioncritical.com)
 * [Kieren Evans](https://github.com/kierenevans) (http://kle.me)
+* [Antek Baranski](https://github.com/Sauraus)
 
 I'll be happy to accept contributions or to hear from you!
