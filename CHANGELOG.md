@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.6.4
+-----
+- [sauraus] - CentOS 7 support
+- [sauraus] - Typos
+
 0.6.3
 -----
 - [backslasher] - Readme updates
