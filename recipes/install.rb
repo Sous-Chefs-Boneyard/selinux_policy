@@ -8,6 +8,7 @@
 #
 case node['platform_family']
   when "debian"
+    raise 'Install SELinux manually on Ubuntu. See https://wiki.ubuntu.com/SELinux' if node["platform"] == 'ubuntu'
     pkgs = [ 'policycoreutils', 'selinux-policy-dev', 'make' ]
   when "rhel"
     case node['platform_version'].to_i.floor
