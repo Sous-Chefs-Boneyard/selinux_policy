@@ -11,12 +11,15 @@ case node['platform_family']
     raise 'Install SELinux manually on Ubuntu. See https://wiki.ubuntu.com/SELinux' if node["platform"] == 'ubuntu'
     pkgs = [ 'policycoreutils', 'selinux-policy-dev', 'make' ]
   when "rhel"
-    case node['platform_version'].to_i.floor
+    case node['platform_version'].to_i
       when 5
         # policycoreutils-python does not exist in RHEL5
-        pkgs = [ 'policycoreutils', 'selinux-policy', 'make' ]
-      when 6,7
+        pkgs = [ 'policycoreutils', 'selinux-policy-devel', 'make' ]
+      when 6
+        # selinux-policy-devel does not exist in RHEL6
         pkgs = [ 'policycoreutils-python', 'selinux-policy', 'make' ]
+      when 7
+        pkgs = [ 'policycoreutils-python', 'selinux-policy-devel', 'make' ]
       else
         raise 'Unknown version of RHEL/derivative, cannot determine required package names'
     end
