@@ -1,3 +1,5 @@
+include Chef::SELinuxPolicy::Helpers
+
 # Support whyrun
 def whyrun_supported?
   true
