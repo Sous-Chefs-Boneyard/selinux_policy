@@ -3,6 +3,13 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.7.0
+-----
+- [chewi]       - Fixed prereq packages
+- [backslasher] - Modified misleading comment
+- [chewi]       - Move helpers into a cookbook-specific module
+- [chewi]       - Prevent use_selinux from blowing up on systems without getenforce
+
 0.6.5
 -----
 - [backslasher] - Ubuntu installation warning
