@@ -1,0 +1,28 @@
+interface(`p4d_domtrans',`
+	gen_require(`
+		type p4d_t, p4d_exec_t;
+	')
+
+	domtrans_pattern($1,p4d_exec_t,p4d_t)
+')
+
+interface(`p4d_write_root',`
+        gen_require(`
+                type p4d_root_t;
+        ')
+
+        files_search_etc($1)
+        allow $1 p4d_root_t:dir list_dir_perms;
+        write_files_pattern($1,p4d_root_t,p4d_root_t)
+        read_files_pattern($1,p4d_root_t,p4d_root_t)
+')
+
+interface(`p4d_read_log',`
+        gen_require(`
+                type p4d_log_t;
+        ')
+
+        logging_search_logs($1)
+        allow $1 p4d_log_t:dir list_dir_perms;
+        read_files_pattern($1,p4d_log_t,p4d_log_t)
+')

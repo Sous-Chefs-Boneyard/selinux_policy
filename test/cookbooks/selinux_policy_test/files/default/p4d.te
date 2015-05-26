@@ -1,0 +1,46 @@
+policy_module(p4d, 1.0.0)
+
+type p4d_t;
+domain_type(p4d_t)
+type p4d_exec_t;
+init_daemon_domain(p4d_t, p4d_exec_t)
+allow p4d_t self:process { setpgid fork };
+miscfiles_read_localization(p4d_t)
+term_dontaudit_use_generic_ptys(p4d_t)
+term_dontaudit_use_console(p4d_t)
+
+
+type p4d_var_run_t;
+files_pid_file(p4d_var_run_t)
+manage_files_pattern(p4d_t,p4d_var_run_t,p4d_var_run_t)
+files_pid_filetrans(p4d_t,p4d_var_run_t, { file sock_file })
+
+
+allow p4d_t self:capability { setgid setuid };
+type p4d_root_t;
+files_type(p4d_root_t)
+allow p4d_t p4d_root_t:dir setattr;
+allow p4d_t p4d_root_t:file manage_file_perms;
+create_files_pattern(p4d_t,p4d_root_t,p4d_root_t)
+append_files_pattern(p4d_t,p4d_root_t,p4d_root_t)
+read_files_pattern(p4d_t,p4d_root_t,p4d_root_t)
+
+
+type p4d_log_t;
+logging_log_file(p4d_log_t)
+allow p4d_t p4d_log_t:dir setattr;
+create_files_pattern(p4d_t,p4d_log_t,p4d_log_t)
+append_files_pattern(p4d_t,p4d_log_t,p4d_log_t)
+read_files_pattern(p4d_t,p4d_log_t,p4d_log_t)
+logging_log_filetrans(p4d_t,p4d_log_t,file)
+
+
+type p4d_port_t;
+corenet_port(p4d_port_t)
+allow p4d_t self:tcp_socket create_stream_socket_perms;
+allow p4d_t self:netlink_route_socket { bind create getattr };
+corenet_tcp_sendrecv_all_if(p4d_t)
+corenet_tcp_sendrecv_all_nodes(p4d_t)
+corenet_tcp_sendrecv_all_ports(p4d_t)
+corenet_tcp_bind_all_nodes(p4d_t)
+corenet_tcp_bind_all_ports(p4d_t)
