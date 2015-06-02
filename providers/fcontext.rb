@@ -39,10 +39,10 @@ action :addormodify do
   execute "selinux-fcontext-#{new_resource.secontext}-addormodify" do
     command lazy { "
     if /usr/sbin/semanage fcontext -l | grep -P '#{escaped_file_spec}\s.*'>/dev/null; then
-      /usr/sbin/semanage fcontext -m -t #{new_resource.secontext} '#{new_resource.file_spec}'
+      /usr/sbin/semanage fcontext -m -t #{new_resource.secontext} '#{new_resource.file_spec}' &&
       #{restorecon(new_resource.file_spec)}
     else
-      /usr/sbin/semanage fcontext -a -t #{new_resource.secontext} '#{new_resource.file_spec}'
+      /usr/sbin/semanage fcontext -a -t #{new_resource.secontext} '#{new_resource.file_spec}' &&
       #{restorecon(new_resource.file_spec)}
     fi" }
     not_if "/usr/sbin/semanage fcontext -l | grep -P '#{escaped_file_spec}\s.*\ssystem_u:object_r:#{new_resource.secontext}:s0'>/dev/null"
