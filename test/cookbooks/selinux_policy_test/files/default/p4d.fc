@@ -1,0 +1,4 @@
+/usr/local/bin/p4d           --  gen_context(system_u:object_r:p4d_exec_t,s0)
+/var/run/p4d.*              --  gen_context(system_u:object_r:p4d_var_run_t,s0)
+/var/log/p4d(/.*)?         gen_context(system_u:object_r:p4d_log_t,s0)
+/var/lib/p4d/root(/.*)?      gen_context(system_u:object_r:p4d_root_t,s0)
