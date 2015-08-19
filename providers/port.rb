@@ -11,7 +11,7 @@ use_inline_resources
 action :add do
   execute "selinux-port-#{new_resource.port}-add" do
     command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
-    not_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+    not_if {port_allowed?(new_resource.secontext, new_resource.protocol, new_resource.port)}
     only_if {use_selinux}
   end
 end
@@ -20,7 +20,7 @@ end
 action :delete do
   execute "selinux-port-#{new_resource.port}-delete" do
     command "/usr/sbin/semanage port -d -p #{new_resource.protocol} #{new_resource.port}"
-    only_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+    only_if {port_allowed?(new_resource.secontext, new_resource.protocol, new_resource.port)}
     only_if {use_selinux}
   end
 end
@@ -33,15 +33,21 @@ action :modify do
 end
 
 action :addormodify do
-  execute "selinux-port-#{new_resource.port}-addormodify" do
-    command <<-EOT
-    if /usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null; then
-      /usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
-    else
-      /usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
-    fi
-    EOT
-    not_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.secontext}\\s+#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+  # add or modify based on whether or not any other context has that port open
+  # note this is currently quite inefficient because we're repeating semanage commands 
+  execute "selinux-port-#{new_resource.port}-add" do
+    command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
+    not_if {port_allowed?(nil, new_resource.protocol, new_resource.port)}
+    not_if {port_allowed?(new_resource.secontext, new_resource.protocol, new_resource.port)}
     only_if {use_selinux}
   end
+
+  execute "selinux-port-#{new_resource.port}-modify" do
+    command "/usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
+    only_if {port_allowed?(nil, new_resource.protocol, new_resource.port)}
+    not_if {port_allowed?(new_resource.secontext, new_resource.protocol, new_resource.port)}
+    only_if {use_selinux}
+  end
+
 end
+
