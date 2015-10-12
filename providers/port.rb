@@ -51,13 +51,14 @@ action :addormodify do
 
   execute "selinux-port-#{new_resource.port}-addormodify" do
     command <<-EOT
-    if #{port_defined(new_resource.port, new_resource.protocol)}; then
+    #{port_defined(new_resource.port, new_resource.protocol)}
+    if [ $? = 2 ]; then
       /usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
     else
       /usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
     fi
     EOT
-    not_if port_defined(new_resource.port, new_resource.protocol, new_resource.secontext)
+    not_if port_defined(new_resource.port, new_resource.protocol)
     only_if {use_selinux}
   end
 end

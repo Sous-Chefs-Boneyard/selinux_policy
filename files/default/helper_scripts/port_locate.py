@@ -27,16 +27,16 @@ if '-' in port_or_range:
     port_start,port_end = map(int, port_or_range.split('-'))
 else:
     port_start = port_end = int(port_or_range)
-if len(sys.argv) > 2:
-    label = sys.argv[2]
+if len(sys.argv) > 3:
+    label = sys.argv[3]
 else:
     label = None
 
 import seobject
 pr=seobject.portRecords().get_all()
-matching_key = find(lambda k: k[0]<=start_port and k[1]>=end_port and k[2]==protocol ,pr.keys())
-actual_label = pr[matching_key][0]
+matching_key = find(lambda k: port_start<=k[0] and port_end>=k[1] and k[2]==protocol ,pr.keys())
 if matching_key:
+    actual_label = pr[matching_key][0]
     if (not label) or (label == actual_label):
         print 'Found key',matching_key
         sys.exit(0)
