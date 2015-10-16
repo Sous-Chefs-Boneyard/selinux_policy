@@ -6,5 +6,4 @@ description      'Wrapper cookbook to test selinux_policy LWRPs'
 long_description 'Wrapper cookbook to test selinux_policy LWRPs'
 version          '0.1.0'
 
-depends          'selinux', '~> 0.9.0'
 depends          'selinux_policy'

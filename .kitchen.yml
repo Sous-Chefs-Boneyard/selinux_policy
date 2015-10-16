@@ -28,6 +28,8 @@ platforms:
 suites:
   - name: default
     run_list:
-      - recipe[selinux::default]
-      - recipe[selinux_policy_test::default]
+      - recipe[selinux::enforcing]
+      - recipe[selinux_policy_test::setup]
+      - recipe[selinux_policy_test::single_port]
+      - recipe[selinux_policy_test::twice_port]
     attributes:
