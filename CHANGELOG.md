@@ -3,6 +3,12 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.8.0
+-----
+- [backslasher] - Test overhaul. Now testing is somewhat reliable when using ports
+- [backslasher] - Port search is a function
+- [backslasher] - Port detection now supports ranges. No possibility to add ranges (yet)
+
 0.7.2
 -----
 - [shortdudey123] - ChefSpec matchers, helps testing
