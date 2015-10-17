@@ -12,8 +12,8 @@ describe 'selinux_policy port' do
       end
       it 'defines a single port' do
         stub_command("seinfo --protocol=tcp --portcon=1080 | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}' | grep -q ^").and_return(false)
-        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
         expect(chef_run).to     run_execute('selinux-port-1080-add')
+        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
       end
       it 'redefines the port' do
         stub_command("seinfo --protocol=tcp --portcon=1080 | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}' | grep -q ^").and_return(true)
@@ -24,8 +24,8 @@ describe 'selinux_policy port' do
       it 'avoids redefining the port' do
         stub_command("seinfo --protocol=tcp --portcon=1080 | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}' | grep -q ^").and_return(true)
         stub_command("seinfo --protocol=tcp --portcon=1080 | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}' | grep -P 'http_port_t'").and_return(true)
-        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
         expect(chef_run).not_to run_execute('selinux-port-1080-add')
+        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
       end
     end
     #TODO 'Add':
