@@ -5,13 +5,21 @@ def whyrun_supported?
   true
 end
 
+def port_defined(protocol,port,label=nil)
+  if label
+    "/usr/sbin/semanage port -l | grep -P '#{label}\\s+#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+  else
+    "/usr/sbin/semanage port -l | grep -P '#{protocol}\\s+#{port}'>/dev/null"
+  end
+end
+
 use_inline_resources
 
 # Create if doesn't exist, do not touch if port is already registered (even under different type)
 action :add do
   execute "selinux-port-#{new_resource.port}-add" do
     command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
-    not_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+    not_if port_defined(new_resource.protocol, new_resource.port)
     only_if {use_selinux}
   end
 end
@@ -20,7 +28,7 @@ end
 action :delete do
   execute "selinux-port-#{new_resource.port}-delete" do
     command "/usr/sbin/semanage port -d -p #{new_resource.protocol} #{new_resource.port}"
-    only_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+    only_if port_defined(new_resource.protocol, new_resource.port)
     only_if {use_selinux}
   end
 end
@@ -41,7 +49,7 @@ action :addormodify do
       /usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
     fi
     EOT
-    not_if "/usr/sbin/semanage port -l | grep -P '#{new_resource.secontext}\\s+#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
+    not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
     only_if {use_selinux}
   end
 end
