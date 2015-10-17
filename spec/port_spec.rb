@@ -11,12 +11,22 @@ describe 'selinux_policy port' do
         }
       end
       it 'defines a single port' do
+        stub_command("/usr/sbin/semanage port -l | grep -P 'tcp\\s+1080'>/dev/null").and_return(false)
         stub_command("/usr/sbin/semanage port -l | grep -P 'http_port_t\\s+tcp\\s+1080'>/dev/null").and_return(false)
-        expect(chef_run).to run_execute('selinux-port-1080-addormodify')
+        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
+        expect(chef_run).to     run_execute('selinux-port-1080-add')
+      end
+      it 'redefines the port' do
+        stub_command("/usr/sbin/semanage port -l | grep -P 'tcp\\s+1080'>/dev/null").and_return(true)
+        stub_command("/usr/sbin/semanage port -l | grep -P 'http_port_t\\s+tcp\\s+1080'>/dev/null").and_return(false)
+        expect(chef_run).not_to run_execute('selinux-port-1080-add')
+        expect(chef_run).to     run_execute('selinux-port-1080-modify')
       end
       it 'avoids redefining the port' do
+        stub_command("/usr/sbin/semanage port -l | grep -P 'tcp\\s+1080'>/dev/null").and_return(true)
         stub_command("/usr/sbin/semanage port -l | grep -P 'http_port_t\\s+tcp\\s+1080'>/dev/null").and_return(true)
-        expect(chef_run).not_to run_execute('selinux-port-1080-addormodify')
+        expect(chef_run).not_to run_execute('selinux-port-1080-modify')
+        expect(chef_run).not_to run_execute('selinux-port-1080-add')
       end
     end
     #TODO 'Add':

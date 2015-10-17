@@ -36,20 +36,15 @@ end
 action :modify do
   execute "selinux-port-#{new_resource.port}-modify" do
     command "/usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
+    only_if port_defined(new_resource.protocol, new_resource.port)
+    not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
     only_if {use_selinux}
   end
 end
 
 action :addormodify do
-  execute "selinux-port-#{new_resource.port}-addormodify" do
-    command <<-EOT
-    if /usr/sbin/semanage port -l | grep -P '#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null; then
-      /usr/sbin/semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
-    else
-      /usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}
-    fi
-    EOT
-    not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
-    only_if {use_selinux}
-  end
+  # Try to add new port
+  run_action(:add)
+  # Try to modify existing port
+  run_action(:modify)
 end
