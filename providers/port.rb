@@ -6,11 +6,13 @@ def whyrun_supported?
 end
 
 def port_defined(protocol,port,label=nil)
-  if label
-    "/usr/sbin/semanage port -l | grep -P '#{label}\\s+#{new_resource.protocol}\\s+#{new_resource.port}'>/dev/null"
-  else
-    "/usr/sbin/semanage port -l | grep -P '#{protocol}\\s+#{port}'>/dev/null"
-  end
+  base_command = "seinfo --protocol=#{protocol} --portcon=#{port} | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}'"
+  grep = if label
+           "grep -P '#{Regexp::escape(label)}'"
+         else
+           "grep -q ^"
+         end
+  "#{base_command} | #{grep}"
 end
 
 use_inline_resources
