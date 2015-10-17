@@ -170,15 +170,17 @@ end
 ```
 
 ## Testing
-We currently use a very basic kitchen recipe for testing.  
+We have a test kitchen that has *some* tests (at the time of writing this: Basic port ops)  
+We also have a ChefSpec suite for *some* things (again, currently only basic ports). To use it, run somethingg like `chef exec rspec`.  
 We also only test against CentOS (because Ubuntu comes with SELinux disabled and restarting mid-test is hard).  
 
 ## Chef 11 Support
 I don't use Chef 11, but stuff *seems* to work OK to other people.
 
-Contributing
-------------
-The generic method seems fine to me:
+## Contributing
+Pretty standard.  
+If fixing a bug, please add regession tests to the RSpec (if applicable) and the kitchen.  
+If adding a feature, please create basic tests for it, both RSpec and kitchen.
 
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
