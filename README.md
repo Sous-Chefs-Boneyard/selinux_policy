@@ -171,7 +171,7 @@ end
 
 ## Testing
 We have a test kitchen that has *some* tests (at the time of writing this: Basic port ops)  
-We also have a ChefSpec suite for *some* things (again, currently only basic ports). To use it, run somethingg like `chef exec rspec`.  
+We also have a ChefSpec suite for *some* things (again, currently only basic ports). To use it, run something like `chef exec rspec`.  
 We also only test against CentOS (because Ubuntu comes with SELinux disabled and restarting mid-test is hard).  
 
 ## Chef 11 Support
