@@ -19,4 +19,7 @@ group :kitchen do
   gem 'kitchen-vagrant'
 end
 
-gem 'chefspec'
+group :testing do
+  gem 'chefspec'
+  gem 'foodcritic'
+end
