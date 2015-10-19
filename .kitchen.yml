@@ -35,4 +35,5 @@ suites:
       - recipe[selinux_policy_test::range_port]
       - recipe[selinux_policy_test::module]
       - recipe[selinux_policy_test::module_directory]
+      - recipe[selinux_policy_test::fcontext]
     attributes:
