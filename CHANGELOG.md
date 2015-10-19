@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.8.1
+-----
+- [backslasher] - Added Travis CI harness
+- [backslasher] - Fixed typo in README
+
 0.8.0
 -----
 - [backslasher] - Test overhaul. Now testing is somewhat reliable when using ports
