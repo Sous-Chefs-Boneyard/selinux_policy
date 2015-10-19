@@ -18,8 +18,8 @@ describe 'selinux_policy fcontext' do
 
   let :chef_run do
     ChefSpec::SoloRunner.new(step_into: ['selinux_policy_fcontext']).converge_dsl('selinux_policy') do
+      node.override['selinux_policy']['allow_disabled'] = false
       selinux_policy_fcontext '/tmp/test' do
-        node.override['selinux_policy']['allow_disabled'] = false
         secontext 'http_dir_t'
       end
     end
