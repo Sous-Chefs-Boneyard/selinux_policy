@@ -33,4 +33,5 @@ suites:
       - recipe[selinux_policy_test::single_port]
       - recipe[selinux_policy_test::twice_port]
       - recipe[selinux_policy_test::range_port]
+      - recipe[selinux_policy_test::module]
     attributes:
