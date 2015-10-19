@@ -5,4 +5,8 @@ task :foodcritic do
   sh 'foodcritic .'
 end
 
-task :travis => [:spec, :foodcritic]
+task :rubocop do
+  sh "rubocop --fail-level E"
+end
+
+task :travis => [:spec, :foodcritic, :rubocop]
