@@ -16,14 +16,23 @@ action :deploy do
   filename="semodule-#{new_resource.name}"
   f = file "#{Chef::Config[:file_cache_path]}/#{filename}.te" do
     content new_resource.content
-    # notifies :run, "execute[semodule-deploy-#{new_resource.name}]"
+    notifies :run, "execute[semodule-deploy-#{new_resource.name}]"
     only_if {use_selinux}
   end
 
+  execute "semodule-force-anchor-#{new_resource.name}" do
+    command "true"
+    notifies :run, "execute[semodule-deploy-#{new_resource.name}]"
+  end
+
+  execute "semodule-missing-anchor-#{new_resource.name}" do
+    command "true"
+    not_if module_defined(new_resource.name)
+    notifies :run, "execute[semodule-deploy-#{new_resource.name}]"
+  end
+
   e=execute "semodule-deploy-#{new_resource.name}" do
-    # action ( new_resource.force ? :run : :nothing )
     command "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{filename}.pp && /usr/sbin/semodule -i #{filename}.pp"
-    only_if {f.updated_by_last_action? or new_resource.force or (shell_out(module_defined(name)).stdout == '')}
     cwd Chef::Config[:file_cache_path]
     only_if {use_selinux}
   end
