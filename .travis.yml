@@ -1,0 +1,4 @@
+language: ruby
+rvm: 2.1
+install: bundle install --without kitchen --path vendor/bundle
+script: bundle exec rspec
