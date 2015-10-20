@@ -25,7 +25,7 @@ action :fetch do
   end
 
   if new_resource.content
-    file "#{new_resource.directory}/#{new_resource.name}.te" do
+    file "#{new_resource.directory}/#{new_resource.module_name}.te" do
       content new_resource.content
       only_if {use_selinux}
     end
@@ -36,8 +36,8 @@ end
 # compile the module
 # XXX allow modifyable path
 action :compile do
-  make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{new_resource.name}.pp"
-  execute "semodule-compile-#{new_resource.name}" do
+  make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{new_resource.module_name}.pp"
+  execute "semodule-compile-#{new_resource.module_name}" do
     command make_command
     not_if "#{make_command} -q" # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
     cwd new_resource.directory
@@ -45,13 +45,30 @@ action :compile do
 end
 
 # deploy / upgrade module
+# XXX this looks ugly AF because CentOS 6.X doesn't support extracting
+# SELinux modules from the current policy, which I planned on comparing
+# to my compiled file. I'll be happy to see anything else (that works).
 action :install do
-  deployed_file = "/etc/selinux/targeted/modules/active/modules/#{new_resource.name}.pp"
-  filename = "#{new_resource.directory}/#{new_resource.name}.pp"
-  execute "semodule-install-#{new_resource.name}" do
-    command  "/usr/sbin/semodule -i #{filename}"
+
+  # Trigger when you modified anything else (compiled again, for instance)
+  g = execute "selinux-install-guard-#{new_resource.module_name}" do
+    command "true"
+    only_if {new_resource.updated_by_last_action? or new_resource.force}
     only_if {use_selinux}
-    not_if "#{module_defined(new_resource.name)} && cmp '#{deployed_file}' '#{filename}'" # Do not run if the module is installed and its the same file inside
+  end
+
+  # Trigger when the module is missing from current policy
+  l = execute "selinux-install-locate-#{new_resource.module_name}" do
+    command "true"
+    not_if module_defined(new_resource.module_name)
+    only_if {use_selinux}
+  end
+
+  filename = "#{new_resource.directory}/#{new_resource.module_name}.pp"
+  execute "semodule-install-#{new_resource.module_name}" do
+    command  "/usr/sbin/semodule -i #{filename}"
+    not_if {g.should_skip?(:run) && l.should_skip?(:run)} # Weird, but works for ChefSpec
+    only_if {use_selinux}
   end
 end
 
@@ -64,9 +81,9 @@ end
 
 # remove module
 action :remove do
-  execute "semodule-remove-#{new_resource.name}" do
-    command "/usr/sbin/semodule -r #{new_resource.name}"
-    only_if module_defined(new_resource.name)
+  execute "semodule-remove-#{new_resource.module_name}" do
+    command "/usr/sbin/semodule -r #{new_resource.module_name}"
+    only_if module_defined(new_resource.module_name)
     only_if {use_selinux}
   end
 end

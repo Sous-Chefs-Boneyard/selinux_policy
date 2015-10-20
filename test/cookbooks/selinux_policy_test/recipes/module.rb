@@ -16,11 +16,13 @@ ruby_block 'fail-module' do
   end
 end
 
-selinux_policy_module 'testy' do
-  content '
+module_content = <<-eos
     policy_module(testy, 1.0.0)
     type testy_t;
-  '
+  eos
+
+selinux_policy_module 'testy' do
+  content module_content
 end
 
 # Expect to find the module
@@ -30,9 +32,16 @@ execute 'module-sniff' do
   notifies :run, 'ruby_block[fail-module]', :immediate
 end
 
+# Should not be reinstalled
+selinux_policy_module 'testy-again' do
+  module_name 'testy'
+  content module_content
+  notifies :run, 'ruby_block[fail-module]', :immediate
+end
+
 selinux_policy_module 'testy-bye' do
   action :remove
-  name 'testy'
+  module_name 'testy'
 end
 
 # Expect not to find module

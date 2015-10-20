@@ -81,7 +81,7 @@ Actions:
 
 * `fetch`: Prepares the module's files for compilation. Allow `remote_directory`-like behaviour
 * `compile`: Translates a module source directory into a `NAME.pp` file. Uses `make` logic for idempotence.
-* `install`: Adds a compiled module (`pp`) to the current policy. Compares existing module to avoid reinstalling it.
+* `install`: Adds a compiled module (`pp`) to the current policy. Only installs if the module was modified this run, `force` is enabled or it's missing from the current policy
 * `deploy` (default): Runs `fetch`, `compile`, `install` in that order.
 * `remove`: Removes a module.
 
@@ -93,7 +93,7 @@ Attributes:
 * `directory_source`: Copies files cookbook to the module directory (uses `remote_directory`). Allows keeping all of the module's source files in the cookbook.  
     **Note:** You can pre-create the module directory and populate it in any other way you'd choose.
 * `cookbook`: Modifies the source cookbook for the `remote_directory`.
-* `force`: Deprecated. Does nothing
+* `force`: Installs the module even if it seems fine. Ruins idempotence but should help solve some weird cases.
 
 Example usage:
 
