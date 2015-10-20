@@ -17,7 +17,9 @@ ruby_block 'fail-range' do
 end
 
 # Manually define ports
-execute '/usr/sbin/semanage port -a -t http_port_t  -p tcp 1900-1902'
+execute '/usr/sbin/semanage port -a -t http_port_t  -p tcp 1900-1902' do
+  not_if '/usr/sbin/semanage port -l | grep http_port_t | grep 1900-1902'
+end
 selinux_policy_port 1901 do #### modify to 5001
   protocol 'tcp'
   secontext 'http_port_t'
