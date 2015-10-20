@@ -1,6 +1,6 @@
 # A resource for managing SE modules
 
-actions :deploy, :remove
+actions :deploy, :fetch, :compile, :install, :remove
 default_action :deploy
 
 attribute :name, :kind_of => String, :name_attribute => true
