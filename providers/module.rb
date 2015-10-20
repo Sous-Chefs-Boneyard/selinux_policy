@@ -39,7 +39,7 @@ action :compile do
   make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{new_resource.module_name}.pp"
   execute "semodule-compile-#{new_resource.module_name}" do
     command make_command
-    not_if "#{make_command} -q" # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
+    not_if "#{make_command} -q", cwd: new_resource.directory # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
     cwd new_resource.directory
   end
 end
