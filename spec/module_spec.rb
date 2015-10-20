@@ -27,6 +27,57 @@ describe 'selinux_policy module' do
       end
     end
   end
+  describe 'fetch' do
+    describe 'disallows both source_directory and content' do
+      let :chef_run do
+        ChefSpec::SoloRunner.new(step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+          node.override['selinux_policy']['allow_disabled'] = false
+          selinux_policy_module 'testy' do
+            action :fetch
+            content <<-eos
+              policy_module(testy, 1.0.0)
+              type testy_t;
+              eos
+            directory_source 'lolzaur'
+          end
+        end
+      end
+      it 'works' do
+        expect{chef_run}.to raise_error(Exception)
+      end
+    end
+    describe 'source_directory' do
+      let :chef_run do
+        ChefSpec::SoloRunner.new(step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+          node.override['selinux_policy']['allow_disabled'] = false
+          selinux_policy_module 'testy' do
+            action :fetch
+            directory_source 'lolzaur'
+          end
+        end
+      end
+      it 'works' do
+        expect{chef_run}.not_to raise_error(Exception)
+      end
+    end
+    describe 'content' do
+      let :chef_run do
+        ChefSpec::SoloRunner.new(step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+          node.override['selinux_policy']['allow_disabled'] = false
+          selinux_policy_module 'testy' do
+            action :fetch
+            content <<-eos
+              policy_module(testy, 1.0.0)
+              type testy_t;
+              eos
+          end
+        end
+      end
+      it 'works' do
+        expect{chef_run}.not_to raise_error(Exception)
+      end
+    end
+  end
   describe 'compile' do
     let(:chef_run){chef_run_module(:compile)}
     it 'acts when needed' do

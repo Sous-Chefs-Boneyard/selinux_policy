@@ -13,8 +13,16 @@ use_inline_resources
 
 # Get all the components in the right place
 action :fetch do
-  # TODO add more options
   directory new_resource.directory
+
+  raise 'dont specify both directory_source and content' if new_resource.directory_source and new_resource.content
+
+  if new_resource.directory_source
+    remote_directory new_resource.directory do
+      source new_resource.directory_source
+      cookbook new_resource.cookbook
+    end
+  end
 
   if new_resource.content
     file "#{new_resource.directory}/#{new_resource.name}.te" do
@@ -22,6 +30,7 @@ action :fetch do
       only_if {use_selinux}
     end
   end
+
 end
 
 # compile the module

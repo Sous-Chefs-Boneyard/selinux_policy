@@ -17,3 +17,5 @@ end
 
 # Content options:
 attribute :content, :kind_of => String, :default => nil # provide a 'te' file directly. Optional
+attribute :directory_source, :kind_of => String, :default => nil # Source directory for module source code. If specified, will use "remote_directory" on the directory specified as `directory`
+attribute :cookbook, :kind_of => String, :default => nil # Related to directory

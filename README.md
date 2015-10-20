@@ -79,17 +79,21 @@ Manages SEModules
 
 Actions:
 
-* `deploy` (default): Compiles a module from it's `te` file and deploys it. Deploys only when one of the following is true:
-  * The module isn't currently present
-  * `force` is enabled
-  * The policy file has changed
-* `remove`: Removes a module
+* `fetch`: Prepares the module's files for compilation. Allow `remote_directory`-like behaviour
+* `compile`: Translates a module source directory into a `NAME.pp` file. Uses `make` logic for idempotence.
+* `install`: Adds a compiled module (`pp`) to the current policy. Compares existing module to avoid reinstalling it.
+* `deploy` (default): Runs `fetch`, `compile`, `install` in that order.
+* `remove`: Removes a module.
 
 Attributes:
 
 * `name`: The module name. Defaults to resource name.
-* `content`: The module content, can be extracted from `audit2allow -m NAME`
-* `force`: Whether to install the module even if it seems unnecessary. Defaults to false, can help when the module was modified "under the nose" of Chef (since we don't actually download the curernt module and decompile when comparing).
+* `directory`: Directory where module is stored. Defaults to a directory inside the Chef cache.
+* `content`: The module content, can be extracted from `audit2allow -m NAME`. This can be used to create simple modules without using external files.
+* `directory_source`: Copies files cookbook to the module directory (uses `remote_directory`). Allows keeping all of the module's source files in the cookbook.  
+    **Note:** You can pre-create the module directory and populate it in any other way you'd choose.
+* `cookbook`: Modifies the source cookbook for the `remote_directory`.
+* `force`: Deprecated. Does nothing
 
 Example usage:
 
