@@ -21,7 +21,7 @@ module_content = <<-eos
     type testy_t;
   eos
 
-selinux_policy_module 'testy' do
+m = selinux_policy_module 'testy' do
   content module_content
 end
 
@@ -42,6 +42,7 @@ end
 selinux_policy_module 'testy-bye' do
   action :remove
   module_name 'testy'
+  directory m.directory # Hack but should simulate the real world better
 end
 
 # Expect not to find module
