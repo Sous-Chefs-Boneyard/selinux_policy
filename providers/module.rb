@@ -9,37 +9,36 @@ def module_defined(name)
   "/usr/sbin/semodule -l | grep -w '^#{name}'"
 end
 
-def module_filename(name)
-  "semodule-#{name}"
-end
-
 use_inline_resources
 
 # Get all the components in the right place
 action :fetch do
   # TODO add more options
-  # XXX allow modifyable path
-  file "#{Chef::Config[:file_cache_path]}/#{module_filename(new_resource.name)}.te" do
-    content new_resource.content
-    only_if {use_selinux}
+  directory new_resource.directory
+
+  if new_resource.content
+    file "#{new_resource.directory}/#{new_resource.name}.te" do
+      content new_resource.content
+      only_if {use_selinux}
+    end
   end
 end
 
 # compile the module
 # XXX allow modifyable path
 action :compile do
-  make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{module_filename(new_resource.name)}.pp"
+  make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{new_resource.name}.pp"
   execute "semodule-compile-#{new_resource.name}" do
     command make_command
     not_if "#{make_command} -q" # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
-    cwd Chef::Config[:file_cache_path] # XXX hopefully can be removed
+    cwd new_resource.directory
   end
 end
 
 # deploy / upgrade module
 action :install do
-  deployed_file = "/etc/selinux/targeted/modules/active/modules/#{module_filename(new_resource.name)}.pp"
-  filename = "#{Chef::Config[:file_cache_path]}/#{module_filename(new_resource.name)}.pp"
+  deployed_file = "/etc/selinux/targeted/modules/active/modules/#{new_resource.name}.pp"
+  filename = "#{new_resource.directory}/#{new_resource.name}.pp"
   execute "semodule-install-#{new_resource.name}" do
     command  "/usr/sbin/semodule -i #{filename}"
     only_if {use_selinux}

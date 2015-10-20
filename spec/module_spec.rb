@@ -30,22 +30,22 @@ describe 'selinux_policy module' do
   describe 'compile' do
     let(:chef_run){chef_run_module(:compile)}
     it 'acts when needed' do
-      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile semodule-testy.pp -q").and_return(false)
+      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q").and_return(false)
       expect(chef_run).to run_execute('semodule-compile-testy')
     end
     it 'does nothing when not needed' do
-      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile semodule-testy.pp -q").and_return(true)
+      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q").and_return(true)
       expect(chef_run).not_to run_execute('semodule-compile-testy')
     end
   end
   describe 'install' do
     let(:chef_run){chef_run_module(:install)}
     it 'acts when needed' do
-      stub_command(/.*semodule -l \| grep -w '\^testy' && cmp '\/etc.*\/semodule-testy.pp' '.*\/semodule-testy.pp'/).and_return(false)
+      stub_command(/.*semodule -l \| grep -w '\^testy' && cmp '\/etc.*\/testy.pp' '.*\/testy.pp'/).and_return(false)
       expect(chef_run).to run_execute('semodule-install-testy')
     end
     it 'does nothing when not needed' do
-      stub_command(/.*semodule -l \| grep -w '\^testy' && cmp '\/etc.*\/semodule-testy.pp' '.*\/semodule-testy.pp'/).and_return(true)
+      stub_command(/.*semodule -l \| grep -w '\^testy' && cmp '\/etc.*\/testy.pp' '.*\/testy.pp'/).and_return(true)
       expect(chef_run).not_to run_execute('semodule-install-testy')
     end
   end
