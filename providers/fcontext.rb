@@ -31,7 +31,7 @@ use_inline_resources
 action :relabel do
   execute "selinux-fcontext-relabel-#{new_resource.secontext}" do
     command restorecon(new_resource.file_spec)
-    not_if "test -z \"$(#{restorecon(new_resource.file_spec)})\""
+    not_if "test -z \"$(#{restorecon(new_resource.file_spec)} -vn)\""
   end
 end
 
