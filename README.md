@@ -131,7 +131,7 @@ Actions:
 Attributes:
 
 * `file_spec`: This is the file regexp in question, defaults to resource name.
-* `secontext`: The SELinux context to assign the file regexp to. Not needed when using delete.
+* `secontext`: The SELinux context to assign the file regexp to.
 
 Example usage (see mysql cookbook for example daemons ):
 
