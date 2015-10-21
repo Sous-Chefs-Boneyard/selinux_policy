@@ -16,6 +16,7 @@ end
 
 dir_name = '/var/www/tester'
 context = 'httpd_tmp_t'
+context2 = 'httpd_munin_script_exec_t'
 
 selinux_policy_fcontext dir_name do
   secontext context
@@ -28,6 +29,27 @@ end
 # Fail if dir isn't actually set
 execute 'true' do
   not_if "stat -c %C #{dir_name} | grep #{context}"
+  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+end
+
+# Should not run again
+selinux_policy_fcontext 'nomod' do
+  file_spec dir_name
+  action :modify
+  secontext context
+  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+end
+
+# Should not run again
+selinux_policy_fcontext 'modme' do
+  file_spec dir_name
+  action :modify
+  secontext context2
+end
+
+# Fail if dir hasn't modified context
+execute 'true' do
+  not_if "stat -c %C #{dir_name} | grep #{context2}"
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end
 
