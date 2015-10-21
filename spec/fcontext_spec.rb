@@ -27,7 +27,7 @@ describe 'selinux_policy fcontext' do
 
   describe 'AddOrModify' do
     it 'creates when none' do
-      stub_command("/usr/sbin/semanage fcontext -l | grep -P '/tmp/test .* system_u:object_r:http_dir_t:s0'>/dev/null").and_return(false)
+       stub_command("semanage fcontext -l | grep -P '^/tmp/test\\s' | grep -P '\\ssystem_u:object_r:http_dir_t:s0$'").and_return(false)
       expect(chef_run).to run_execute('selinux-fcontext-http_dir_t-addormodify')
     end
     it 'modifies when exists and mismatch' do
