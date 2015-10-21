@@ -21,7 +21,7 @@ action :fetch do
 
   raise 'dont specify both directory_source and content' if new_resource.directory_source and new_resource.content
 
-  if new_resource.directory_source
+  if new_resource.directory_source # ~FC023
     remote_directory new_resource.directory do
       source new_resource.directory_source
       cookbook new_resource.cookbook
