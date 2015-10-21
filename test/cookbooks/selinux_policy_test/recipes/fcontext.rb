@@ -16,7 +16,7 @@ end
 
 dir_name = '/var/www/tester'
 context = 'httpd_tmp_t'
-context2 = 'httpd_munin_script_exec_t'
+context2 = 'boot_t'
 
 selinux_policy_fcontext dir_name do
   secontext context
