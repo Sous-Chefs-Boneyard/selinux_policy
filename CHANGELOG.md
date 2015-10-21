@@ -3,6 +3,14 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.9.0
+-----
+- [backslasher] - module overhaul:   code refactoring, supporting new input, testing, new actions
+- [backslasher] - fcontext overhaul: code refactoring, testing, new action
+
+**Note**: I don't think I have any breaking changes here. If there are, I apologise and request that you create an issue with a test recipe that fails on the problem (so I can reproduce)
+
+
 0.8.1
 -----
 - [backslasher] - Added Travis CI harness
