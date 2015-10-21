@@ -30,32 +30,23 @@ describe 'selinux_policy fcontext' do
        stub_command("semanage fcontext -l | grep -P '^/tmp/test\\s' | grep -P '\\ssystem_u:object_r:http_dir_t:s0$'").and_return(false)
       expect(chef_run).to run_execute('selinux-fcontext-http_dir_t-addormodify')
     end
-    it 'modifies when exists and mismatch' do
-    end
-    it 'does nothing when match' do
-    end
+    #it 'modifies when exists and mismatch'
+    #it 'does nothing when match'
   end
 
   describe 'Add' do
-    it 'creates when none' do
-    end
-    it 'does nothing when exists' do
-    end
+    #it 'creates when none'
+    #it 'does nothing when exists'
   end
 
   describe 'Modify' do
-    it 'does nothing when none' do
-    end
-    it 'modifies when exists and mismatch' do
-    end
-    it 'does nothing when match' do
-    end
+    #it 'does nothing when none'
+    #it 'modifies when exists and mismatch'
+    #it 'does nothing when match'
   end
 
   describe 'Delete' do
-    it 'does nothing when none' do
-    end
-    it 'removes when match' do
-    end
+    #it 'does nothing when none'
+    #it 'removes when match'
   end
 end
