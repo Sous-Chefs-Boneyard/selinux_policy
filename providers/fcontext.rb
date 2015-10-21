@@ -14,15 +14,35 @@ def fcontext_defined(file_spec,label=nil)
   end
 end
 
+def restorecon(file_spec)
+  path = file_spec.to_s.sub(/\\/,'') # Remove backslashes
+  return "restorecon #{path}" if ::File.exist?(path) # Return if it's not a regular expression
+  path.count('/').times do
+    path = ::File.dirname(path) # Splits at last '/' and returns front part
+    break if ::File.directory?(path)
+  end
+  # This will restore the selinux file context recursively.
+  return "restorecon -R #{path}"
+end
+
 use_inline_resources
+
+# Run restorecon to fix label
+action :relabel do
+  execute "selinux-fcontext-relabel-#{new_resource.secontext}" do
+    command restorecon(new_resource.file_spec)
+    not_if "test -z \"$(#{restorecon(new_resource.file_spec)})\""
+  end
+end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
 action :add do
   escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-add" do
-    command "/usr/sbin/semanage fcontext -a -t #{new_resource.secontext} '#{new_resource.file_spec}' && #{restorecon(new_resource.file_spec)}"
+    command "/usr/sbin/semanage fcontext -a -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     not_if fcontext_defined(new_resource.file_spec)
     only_if {use_selinux}
+    notifies :relabel, new_resource
   end
 end
 
@@ -30,18 +50,20 @@ end
 action :delete do
   escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
-    command "/usr/sbin/semanage fcontext -d '#{new_resource.file_spec}' && #{restorecon(new_resource.file_spec)}"
+    command "/usr/sbin/semanage fcontext -d '#{new_resource.file_spec}'"
     only_if fcontext_defined(new_resource.file_spec, new_resource.secontext)
     only_if {use_selinux}
+    notifies :relabel, new_resource
   end
 end
 
 action :modify do
   execute "selinux-fcontext-#{new_resource.secontext}-modify" do
-    command "/usr/sbin/semanage fcontext -m -t #{new_resource.secontext} '#{new_resource.file_spec}' && #{restorecon(new_resource.file_spec)}"
+    command "/usr/sbin/semanage fcontext -m -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     only_if {use_selinux}
     only_if fcontext_defined(new_resource.file_spec)
     not_if  fcontext_defined(new_resource.file_spec, new_resource.secontext)
+    notifies :relabel, new_resource
   end
 end
 
