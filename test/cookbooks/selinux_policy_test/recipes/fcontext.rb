@@ -56,13 +56,13 @@ end
 selinux_policy_fcontext 'deleteme' do
   file_spec dir_name
   action :delete
-  secontext context
 end
 
 execute "restorecon #{dir_name}" # Restore original context
 
-# Shouldn't be in that context anymore
+# Shouldn't be in any of our contexts anymore
 execute 'true' do
-  only_if "stat -c %C #{dir_name} | grep #{context}"
+  not_if "stat -c %C #{dir_name} | grep -v #{context}"
+  not_if "stat -c %C #{dir_name} | grep -v #{context2}"
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end

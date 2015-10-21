@@ -4,4 +4,4 @@
 actions :add, :delete, :modify, :addormodify
 default_action :addormodify
 attribute :file_spec, :kind_of => String, :name_attribute => true
-attribute :secontext, :kind_of => String, :required => true
+attribute :secontext, :kind_of => String
