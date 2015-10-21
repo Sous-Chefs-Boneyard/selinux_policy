@@ -42,17 +42,6 @@ action :modify do
 end
 
 action :addormodify do
-  escaped_file_spec = Regexp.escape(new_resource.file_spec)
-  execute "selinux-fcontext-#{new_resource.secontext}-addormodify" do
-    command "
-    if #{fcontext_defined(new_resource.file_spec, new_resource.secontext)}; then
-      /usr/sbin/semanage fcontext -m -t #{new_resource.secontext} '#{new_resource.file_spec}' &&
-      #{restorecon(new_resource.file_spec)}
-    else
-      /usr/sbin/semanage fcontext -a -t #{new_resource.secontext} '#{new_resource.file_spec}' &&
-      #{restorecon(new_resource.file_spec)}
-    fi"
-    not_if fcontext_defined(new_resource.file_spec, new_resource.secontext)
-    only_if {use_selinux}
-  end
+  run_action(:add)
+  run_action(:modify)
 end
