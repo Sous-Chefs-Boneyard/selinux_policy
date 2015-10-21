@@ -9,6 +9,10 @@ def module_defined(name)
   "/usr/sbin/semodule -l | grep -w '^#{name}'"
 end
 
+def shell_boolean(expression)
+  expression ? "true" : "false"
+end
+
 use_inline_resources
 
 # Get all the components in the right place
@@ -50,24 +54,10 @@ end
 # to my compiled file. I'll be happy to see anything else (that works).
 action :install do
 
-  # Trigger when you modified anything else (compiled again, for instance)
-  g = execute "selinux-install-guard-#{new_resource.module_name}" do
-    command "true"
-    only_if {new_resource.updated_by_last_action? or new_resource.force}
-    only_if {use_selinux}
-  end
-
-  # Trigger when the module is missing from current policy
-  l = execute "selinux-install-locate-#{new_resource.module_name}" do
-    command "true"
-    not_if module_defined(new_resource.module_name)
-    only_if {use_selinux}
-  end
-
   filename = "#{new_resource.directory}/#{new_resource.module_name}.pp"
   execute "semodule-install-#{new_resource.module_name}" do
     command  "/usr/sbin/semodule -i #{filename}"
-    not_if {g.should_skip?(:run) && l.should_skip?(:run)} # Weird, but works for ChefSpec
+    only_if "#{shell_boolean(new_resource.updated_by_last_action? || new_resource.force)} || ! (#{module_defined(new_resource.module_name)}) "
     only_if {use_selinux}
   end
 end

@@ -92,11 +92,11 @@ describe 'selinux_policy module' do
   describe 'install' do
     let(:chef_run){chef_run_module(:install)}
     it 'acts when needed' do
-      stub_command("/usr/sbin/semodule -l | grep -w '^testy'").and_return(false)
+      stub_command("false || ! (/usr/sbin/semodule -l | grep -w '^testy') ").and_return(true)
       expect(chef_run).to run_execute('semodule-install-testy')
     end
     it 'does nothing when not needed' do
-      stub_command("/usr/sbin/semodule -l | grep -w '^testy'").and_return(true)
+      stub_command("false || ! (/usr/sbin/semodule -l | grep -w '^testy') ").and_return(false)
       expect(chef_run).not_to run_execute('semodule-install-testy')
     end
   end
