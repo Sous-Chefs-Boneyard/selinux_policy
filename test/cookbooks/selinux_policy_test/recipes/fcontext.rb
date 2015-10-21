@@ -15,7 +15,7 @@ ruby_block 'fail-mismatch' do
 end
 
 dir_name = '/var/www/tester'
-context = 'http_tmp_t'
+context = 'httpd_tmp_t'
 
 selinux_policy_fcontext dir_name do
   secontext context
