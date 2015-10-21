@@ -14,27 +14,33 @@ ruby_block 'fail-mismatch' do
   end
 end
 
-selinux_policy_fcontext '/tmp/test' do
-  secontext 'httpd_tmp_t'
+dir_name = '/var/www/tester'
+context = 'http_tmp_t'
+
+selinux_policy_fcontext dir_name do
+  secontext context
 end
 
-directory '/tmp/test'
+directory dir_name do
+  recursive true
+end
 
 # Fail if dir isn't actually set
 execute 'true' do
-  not_if 'stat -c %C /tmp/test | grep httpd_tmp_t'
+  not_if "stat -c %C #{dir_name} | grep #{context}"
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end
 
-selinux_policy_fcontext '/tmp/test-again' do
-  file_spec '/tmp/test'
+selinux_policy_fcontext 'deleteme' do
+  file_spec dir_name
   action :delete
+  secontext context
 end
 
-execute 'restorecon /tmp/test' # Restore original context
+execute "restorecon #{dir_name}" # Restore original context
 
 # Shouldn't be in that context anymore
 execute 'true' do
-  only_if 'stat -c %C /tmp/test | grep httpd_tmp_t'
+  only_if "stat -c %C #{dir_name} | grep #{context}"
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end
