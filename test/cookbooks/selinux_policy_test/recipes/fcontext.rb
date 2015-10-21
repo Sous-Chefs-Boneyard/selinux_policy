@@ -25,3 +25,16 @@ execute 'true' do
   not_if 'stat -c %C /tmp/test | grep httpd_tmp_t'
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end
+
+selinux_policy_fcontext '/tmp/test-again' do
+  file_spec '/tmp/test'
+  action :delete
+end
+
+execute 'restorecon /tmp/test' # Restore original context
+
+# Shouldn't be in that context anymore
+execute 'true' do
+  only_if 'stat -c %C /tmp/test | grep httpd_tmp_t'
+  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+end
