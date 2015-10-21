@@ -7,7 +7,11 @@ end
 
 def fcontext_defined(file_spec,label=nil)
   base_command = "semanage fcontext -l | grep -P '^#{Regexp.escape(file_spec)}\\s'"
-  "#{base_command} | grep -P '\\ssystem_u:object_r:#{Regexp.escape(label)}:s0$'" if label
+  if label
+    "#{base_command} | grep -P '\\ssystem_u:object_r:#{Regexp.escape(label)}:s0$'"
+  else
+    base_command
+  end
 end
 
 use_inline_resources
