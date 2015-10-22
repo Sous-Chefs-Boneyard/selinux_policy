@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.9.1
+-----
+- [backslasher] - Fixed issue with module being partially executed on machines with SELinux disabled
+
 0.9.0
 -----
 - [backslasher] - module overhaul:   code refactoring, supporting new input, testing, new actions
