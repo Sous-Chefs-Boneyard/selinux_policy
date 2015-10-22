@@ -17,7 +17,9 @@ use_inline_resources
 
 # Get all the components in the right place
 action :fetch do
-  directory new_resource.directory
+  directory new_resource.directory do
+    only_if {use_selinux}
+  end
 
   raise 'dont specify both directory_source and content' if new_resource.directory_source and new_resource.content
 
@@ -25,6 +27,7 @@ action :fetch do
     remote_directory new_resource.directory do
       source new_resource.directory_source
       cookbook new_resource.cookbook
+      only_if {use_selinux}
     end
   end
 
@@ -44,6 +47,7 @@ action :compile do
   execute "semodule-compile-#{new_resource.module_name}" do
     command make_command
     not_if "#{make_command} -q", cwd: new_resource.directory # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
+    only_if {use_selinux}
     cwd new_resource.directory
   end
 end
