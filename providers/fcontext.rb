@@ -16,13 +16,13 @@ end
 
 def restorecon(file_spec)
   path = file_spec.to_s.sub(/\\/,'') # Remove backslashes
-  return "restorecon #{path}" if ::File.exist?(path) # Return if it's not a regular expression
+  return "restorecon -i #{path}" if ::File.exist?(path) # Return if it's not a regular expression
   path.count('/').times do
     path = ::File.dirname(path) # Splits at last '/' and returns front part
     break if ::File.directory?(path)
   end
   # This will restore the selinux file context recursively.
-  return "restorecon -R #{path}"
+  return "restorecon -iR #{path}"
 end
 
 use_inline_resources
