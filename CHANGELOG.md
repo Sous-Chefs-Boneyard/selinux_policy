@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.9.2
+-----
+- [backslasher] - Ignoring nonexisting files in restorecon
+
 0.9.1
 -----
 - [backslasher] - Fixed issue with module being partially executed on machines with SELinux disabled
