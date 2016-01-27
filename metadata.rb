@@ -13,5 +13,8 @@ attribute 'selinux_policy',
 
 supports 'redhat'
 supports 'centos'
+supports 'fedora'
 supports 'ubuntu'
 supports 'debian'
+
+depends 'yum', '~> 3.9.0'

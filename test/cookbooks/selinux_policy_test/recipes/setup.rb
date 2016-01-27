@@ -9,3 +9,9 @@
 # Sets the machine up for selinux goodness
 
 include_recipe 'selinux_policy::install'
+
+bash 'SELinux Enforcing' do
+  code 'setenforce 1'
+  user 'root'
+  not_if { `getenforce`.strip == 'Enforcing' }
+end

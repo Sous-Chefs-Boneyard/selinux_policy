@@ -20,9 +20,13 @@ case node['platform_family']
         pkgs = [ 'policycoreutils-python', 'selinux-policy', 'setools-console', 'make' ]
       when 7
         pkgs = [ 'policycoreutils-python', 'selinux-policy-devel', 'setools-console', 'make' ]
+        include_recipe 'yum::dnf_yum_compat'
       else
         raise 'Unknown version of RHEL/derivative, cannot determine required package names'
     end
+  when "fedora"
+    pkgs = [ 'policycoreutils-python', 'selinux-policy-devel', 'setools-console', 'make' ]
+    include_recipe 'yum::dnf_yum_compat'
   else
     raise 'Unknown distro, cannot determine required package names'
 end
