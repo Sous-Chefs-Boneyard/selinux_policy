@@ -1,4 +1,4 @@
-require 'chefspec'
+require 'spec_helper'
 
 describe 'selinux_policy port' do
   describe 'single port' do
