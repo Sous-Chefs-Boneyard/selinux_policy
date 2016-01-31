@@ -205,5 +205,6 @@ Contributors:
 * [Kieren Evans](https://github.com/kierenevans) (http://kle.me)
 * [Antek Baranski](https://github.com/Sauraus)
 * [James Le Cuirot](https://github.com/chewi)
+* [John Bartko](https://github.com/jbartko)
 
 I'll be happy to accept contributions or to hear from you!
