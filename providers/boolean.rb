@@ -19,7 +19,7 @@ end
 
 def set_sebool(persist=false)
   persist_string= persist ? '-P ':''
-  new_value= new_resource.state ? 'on' : 'off'
+  new_value= new_resource.value ? 'on' : 'off'
   e = execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
     command "/usr/sbin/setsebool #{persist_string} #{new_resource.name} #{new_value}"
     not_if "/usr/sbin/getsebool #{new_resource.name} | grep '#{new_value}$' >/dev/null" if !new_resource.force
