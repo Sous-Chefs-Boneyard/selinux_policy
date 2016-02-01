@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.9.4
+-----
+- [mhorbul] - Fixed state detection in boolean resource
+
 0.9.3
 -----
 - [backlsasher] - Fixed testing & kitchen
