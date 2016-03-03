@@ -33,6 +33,7 @@ suites:
       - fedora-23
   - name: broken_selinux
     run_list:
+      - recipe[yum::dnf_yum_compat]
       - recipe[selinux_policy_test::setup]
       - recipe[selinux_policy_test::single_port]
       - recipe[selinux_policy_test::twice_port]

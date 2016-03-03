@@ -16,5 +16,3 @@ supports 'centos'
 supports 'fedora'
 supports 'ubuntu'
 supports 'debian'
-
-depends 'yum', '~> 3.9.0'
