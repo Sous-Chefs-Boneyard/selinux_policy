@@ -17,4 +17,4 @@ supports 'fedora'
 supports 'ubuntu'
 supports 'debian'
 
-depends 'yum', '~> 3.9.0'
+depends 'yum', '~> 3.9'
