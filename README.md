@@ -20,6 +20,7 @@ These attributes affect the way all of the LWRPs are behaving.
 
 Usage
 -----
+* `selinux_policy::install` - Installs SELinux policy management tools
 
 This cookbook's functionality is exposed via resources, so it should be called from a wrapper cookbook.
 Remember to add `depends 'selinux_policy'` to your `metadata.rb`.
@@ -38,6 +39,8 @@ Attributes:
 Example usage:
 
 ```ruby
+include_recipe 'selinux_policy::install'
+
 selinux_policy_boolean 'httpd_can_network_connect' do
     value true
     # Make sure nginx is started if this value was modified
@@ -67,6 +70,8 @@ Attributes:
 Example usage:
 
 ```ruby
+include_recipe 'selinux_policy::install'
+
 # Allow nginx to bind to port 5678, by giving it the http_port_t context
 selinux_policy_port '5678' do
     protocol 'tcp'
@@ -99,6 +104,8 @@ Attributes:
 Example usage:
 
 ```ruby
+include_recipe 'selinux_policy::install'
+
 # Allow openvpn to write/delete in '/etc/openvpn'
 selinux_policy_module 'openvpn-googleauthenticator' do
   content <<-eos
@@ -136,6 +143,8 @@ Attributes:
 Example usage (see mysql cookbook for example daemons ):
 
 ```ruby
+include_recipe 'selinux_policy::install'
+
 # Allow http servers (nginx/apache) to modify moodle files
 selinux_policy_fcontext '/var/www/moodle(/.*)?' do
   secontext 'httpd_sys_rw_content_t'
@@ -166,6 +175,8 @@ Actions:
 Example usage:
 
 ```ruby
+include_recipe 'selinux_policy::install'
+
 # Disable enforcement on Nginx
 # As described on http://nginx.com/blog/nginx-se-linux-changes-upgrading-rhel-6-6/
 
