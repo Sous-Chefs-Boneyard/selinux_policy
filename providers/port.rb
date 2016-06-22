@@ -15,10 +15,15 @@ def port_defined(protocol,port,label=nil)
   "#{base_command} | #{grep}"
 end
 
+def validate_port(port)
+  raise "port value: #{port} is invalid." unless port.to_s.match /^\d+$/
+end
+
 use_inline_resources
 
 # Create if doesn't exist, do not touch if port is already registered (even under different type)
 action :add do
+  validate_port(new_resource.port)
   execute "selinux-port-#{new_resource.port}-add" do
     command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
     not_if port_defined(new_resource.protocol, new_resource.port)
@@ -28,6 +33,7 @@ end
 
 # Delete if exists
 action :delete do
+  validate_port(new_resource.port)
   execute "selinux-port-#{new_resource.port}-delete" do
     command "/usr/sbin/semanage port -d -p #{new_resource.protocol} #{new_resource.port}"
     only_if port_defined(new_resource.protocol, new_resource.port)
