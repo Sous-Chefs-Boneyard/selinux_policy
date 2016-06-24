@@ -3,6 +3,11 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+0.9.6
+------
+- [jhmartin] - Updated README
+- [backslasher] - Major revision of testing
+
 0.9.5
 -----
 - [backslasher] - Modified yum dependency
