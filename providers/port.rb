@@ -16,7 +16,8 @@ def port_defined(protocol,port,label=nil)
 end
 
 def validate_port(port)
-  raise "port value: #{port} is invalid." unless port.to_s.match /^\d+$/
+  raise ArgumentError, "port value: #{port} is invalid." unless port.to_s.match /^\d+$/
+
 end
 
 use_inline_resources
