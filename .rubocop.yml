@@ -1,0 +1,12 @@
+AllCops:
+  Include:
+    - Berksfile
+    - Gemfile
+    - Rakefile
+  Exclude:
+    - vendor/**/*
+
+LineLength:
+  Enabled: false
+MethodLength:
+  Max: 30

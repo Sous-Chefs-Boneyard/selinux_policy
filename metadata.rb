@@ -4,7 +4,7 @@ maintainer_email 'nitz.raz@gmail.com'
 license          'GPL v2'
 description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.9.5'
+version          '0.9.6'
 
 attribute 'selinux_policy',
   :display_name => 'SELinux Policy',
@@ -14,6 +14,7 @@ attribute 'selinux_policy',
 supports 'redhat'
 supports 'centos'
 supports 'fedora'
+supports 'amazon'
 supports 'ubuntu'
 supports 'debian'
 

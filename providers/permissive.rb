@@ -12,7 +12,7 @@ action :add do
   e = execute "selinux-permissive-#{new_resource.name}-add" do
     command "/usr/sbin/semanage permissive -a '#{new_resource.name}'"
     not_if  "/usr/sbin/semanage permissive -l | grep  '^#{new_resource.name}$'"
-    only_if {use_selinux}
+    only_if { use_selinux }
   end
 end
 
@@ -21,6 +21,6 @@ action :delete do
   e = execute "selinux-port-#{new_resource.name}-delete" do
     command "/usr/sbin/semanage permissive -d '#{new_resource.name}'"
     not_if  "/usr/sbin/semanage permissive -l | grep  '^#{new_resource.name}$'"
-    only_if {use_selinux}
+    only_if { use_selinux }
   end
 end
