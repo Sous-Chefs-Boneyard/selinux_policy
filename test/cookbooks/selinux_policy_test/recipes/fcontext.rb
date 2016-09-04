@@ -40,7 +40,6 @@ selinux_policy_fcontext 'nomod' do
   notifies :run, 'ruby_block[fail-mismatch]', :immediate
 end
 
-# Should not run again
 selinux_policy_fcontext 'modme' do
   file_spec dir_name
   action :modify

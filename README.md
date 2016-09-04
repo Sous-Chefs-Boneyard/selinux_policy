@@ -139,6 +139,15 @@ Attributes:
 
 * `file_spec`: This is the file regexp in question, defaults to resource name.
 * `secontext`: The SELinux context to assign the file regexp to. Not required for `:delete`
+* `file_type`: Restrict the fcontext to specific file types. See the table below for an overview. See also https://en.wikipedia.org/wiki/Unix_file_types for more info
+* **a** All files
+* **f** Regular files
+* **d** Directory
+* **c** Character device
+* **b** Block device
+* **s** Socket
+* **l** Symbolic link
+* **p** Namedpipe
 
 Example usage (see mysql cookbook for example daemons ):
 
@@ -160,6 +169,12 @@ end
   selinux_policy_fcontext f do
     secontext sc
   end
+end
+
+# Adapt a symbolic link
+selinux_policy_fcontext '/var/www/symlink_to_webroot' do
+  secontext 'httpd_sys_rw_content_t'
+  filetype 'l'
 end
 ```
 

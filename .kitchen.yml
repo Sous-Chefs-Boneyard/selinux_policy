@@ -29,6 +29,7 @@ suites:
       - recipe[selinux_policy_test::module]
       - recipe[selinux_policy_test::module_directory]
       - recipe[selinux_policy_test::fcontext]
+      - recipe[selinux_policy_test::fcontext_filetype]
     excludes:
       - fedora-22
       - fedora-23
@@ -42,6 +43,7 @@ suites:
       - recipe[selinux_policy_test::module]
       - recipe[selinux_policy_test::module_directory]
       - recipe[selinux_policy_test::fcontext]
+      - recipe[selinux_policy_test::fcontext_filetype]
     includes:
       - fedora-22
       - fedora-23
