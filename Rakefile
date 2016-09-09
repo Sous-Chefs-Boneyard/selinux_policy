@@ -4,13 +4,12 @@ RSpec::Core::RakeTask.new(:spec)
 require 'foodcritic'
 FoodCritic::Rake::LintTask.new()
 
+require 'rubocop/rake_task'
+RuboCop::RakeTask.new().tap{|rc|
+  rc.options+= ['--fail-level', 'E']
+}
 
 namespace :testing do
-
-  desc 'run Rubocop'
-  task :rubocop do
-    sh "rubocop --fail-level E"
-  end
 
   desc 'A set of tests for travis'
   task :travis => [:spec, :foodcritic, :rubocop]
