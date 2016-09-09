@@ -2,4 +2,4 @@ language: ruby
 rvm: 2.3.1
 cache: bundler
 script:
-- bundle install testing; bundle exec rake travis
+- bundle install --with=testing && bundle exec rake travis
