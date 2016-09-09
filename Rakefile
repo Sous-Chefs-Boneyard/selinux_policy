@@ -12,6 +12,6 @@ RuboCop::RakeTask.new().tap{|rc|
 namespace :testing do
 
   desc 'A set of tests for travis'
-  task :travis => [:spec, :foodcritic, :rubocop]
+  task :travis => [:foodcritic, :rubocop, :spec]
 
 end
