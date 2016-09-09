@@ -1,12 +1,19 @@
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task :foodcritic do
-  sh 'foodcritic .'
-end
+namespace :testing do
 
-task :rubocop do
-  sh "rubocop --fail-level E"
-end
+  desc 'run Foodcritic'
+  task :foodcritic do
+    sh 'foodcritic .'
+  end
 
-task :travis => [:spec, :foodcritic, :rubocop]
+  desc 'run Rubocop'
+  task :rubocop do
+    sh "rubocop --fail-level E"
+  end
+
+  desc 'A set of tests for travis'
+  task :travis => [:spec, :foodcritic, :rubocop]
+
+end
