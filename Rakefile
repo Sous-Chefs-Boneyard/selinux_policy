@@ -18,7 +18,10 @@ namespace :testing do
   task :kitchen do
     require 'kitchen/rake_tasks'
     Kitchen::RakeTasks.new
-    Rake::Task['kitchen:all'].invoke()
+    # Create a multitask version
+    instance_tasks = Rake::Task['kitchen:all'].prerequisites
+    t = multitask '_kitchen' => instance_tasks.map{|n|"kitchen:#{n}"}
+    t.invoke()
   end
 
   desc 'Tests a user should run'
