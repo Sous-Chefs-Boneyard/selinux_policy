@@ -1,12 +1,11 @@
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-namespace :testing do
+require 'foodcritic'
+FoodCritic::Rake::LintTask.new()
 
-  desc 'run Foodcritic'
-  task :foodcritic do
-    sh 'foodcritic .'
-  end
+
+namespace :testing do
 
   desc 'run Rubocop'
   task :rubocop do
