@@ -12,12 +12,13 @@ RuboCop::RakeTask.new().tap{|rc|
 # Only load kitchen tasks if we have kitchen available
 got_kitchen = begin
   require 'kitchen/rake_tasks'
-rescue LoadError
+  Kitchen::RakeTasks.new
+  true
+rescue LoadError, Kitchen::UserError
   # Not loading kitchen specs
   false
 end
 if got_kitchen then
-  Kitchen::RakeTasks.new
   kitchen_instance_tasks = Rake::Task['kitchen:all'].prerequisites.map{|n|"kitchen:#{n}"}
 else
   kitchen_instance_tasks = []
