@@ -194,16 +194,15 @@ We also only test against CentOS (because Ubuntu comes with SELinux disabled and
 I don't use Chef 11, but stuff *seems* to work OK to other people.
 
 ## Contributing
-Pretty standard.  
-If fixing a bug, please add regession tests to the RSpec (if applicable) and the kitchen.  
-If adding a feature, please create basic tests for it, both RSpec and kitchen.
-
-1. Fork the repository on Github
+1. Fork the repository
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
-4. Write tests for your change (if applicable)
-5. Run the tests, ensuring they all pass
-6. Submit a Pull Request using Github
+4. Write tests for your change (if applicable):  
+    If fixing a bug, please add regression tests for the RSpec (if possible) and the kitchen
+    If adding a feature, please create basic tests for it, in both RSpec and kitchen
+5. Run the tests, ensuring they all pass, using `rake testing:user`
+6. Submit a Pull Request using Github  
+    Please **attach the test results** using a gist
 
 License and Authors
 -------------------
