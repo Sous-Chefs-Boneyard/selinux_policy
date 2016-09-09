@@ -3,6 +3,12 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+1.0.0
+-----
+- [equick] - Validating ports better
+- [backslasher] - FContext relabling for flies is now immediate. (Possibly breaking)
+- [backslasher] - testing made slightly more elegant
+
 0.9.6
 ------
 - [jhmartin] - Updated README
