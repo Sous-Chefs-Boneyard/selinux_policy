@@ -9,19 +9,28 @@ RuboCop::RakeTask.new().tap{|rc|
   rc.options+= ['--fail-level', 'E']
 }
 
+# Only load kitchen tasks if we have kitchen available
+got_kitchen = begin
+  require 'kitchen/rake_tasks'
+rescue LoadError
+  # Not loading kitchen specs
+  false
+end
+if got_kitchen then
+  Kitchen::RakeTasks.new
+  kitchen_instance_tasks = Rake::Task['kitchen:all'].prerequisites.map{|n|"kitchen:#{n}"}
+else
+  kitchen_instance_tasks = []
+end
+
 namespace :testing do
 
   desc 'A set of tests for travis'
   task :travis => [:foodcritic, :rubocop, :spec]
 
   desc 'Full testing of kitchen'
-  task :kitchen do
-    require 'kitchen/rake_tasks'
-    Kitchen::RakeTasks.new
-    # Create a multitask version
-    instance_tasks = Rake::Task['kitchen:all'].prerequisites
-    t = multitask '_kitchen' => instance_tasks.map{|n|"kitchen:#{n}"}
-    t.invoke()
+  multitask :kitchen => kitchen_instance_tasks do
+    raise 'No kitchen tests to run' unless kitchen_instance_tasks.any?
   end
 
   desc 'Tests a user should run'
