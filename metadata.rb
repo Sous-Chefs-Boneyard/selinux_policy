@@ -6,6 +6,9 @@ description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '1.0.0'
 
+issues_url 'https://github.com/BackSlasher/chef-selinuxpolicy/issues'
+source_url 'https://github.com/BackSlasher/chef-selinuxpolicy'
+
 attribute 'selinux_policy',
   :display_name => 'SELinux Policy',
   :description  => 'Hash of SELinux policy related attributes',
