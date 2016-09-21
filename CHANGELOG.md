@@ -3,6 +3,10 @@ selinuxpolicy CHANGELOG
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+1.0.1
+-----
+- [backslasher] - Foodcritic and rubocop improvements
+
 1.0.0
 -----
 - [equick] - Validating ports better
