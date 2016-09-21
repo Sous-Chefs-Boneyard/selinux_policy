@@ -4,6 +4,6 @@
 actions :add, :delete, :modify, :addormodify
 default_action :addormodify
 
-attribute :port, :kind_of => [Integer, String], :name_attribute => true
-attribute :protocol, :kind_of => String, :equal_to => ['tcp', 'udp']
-attribute :secontext, :kind_of => String
+attribute :port, kind_of: [Integer, String], name_attribute: true
+attribute :protocol, kind_of: String, equal_to: %w(tcp udp)
+attribute :secontext, kind_of: String

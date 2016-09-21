@@ -10,9 +10,9 @@ issues_url 'https://github.com/BackSlasher/chef-selinuxpolicy/issues'
 source_url 'https://github.com/BackSlasher/chef-selinuxpolicy'
 
 attribute 'selinux_policy',
-  :display_name => 'SELinux Policy',
-  :description  => 'Hash of SELinux policy related attributes',
-  :type         => 'hash'
+          display_name: 'SELinux Policy',
+          description: 'Hash of SELinux policy related attributes',
+          type: 'hash'
 
 supports 'redhat'
 supports 'centos'

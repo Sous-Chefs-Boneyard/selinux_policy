@@ -2,20 +2,18 @@ require 'spec_helper'
 
 module ChefSpec
   class SoloRunner
-    def converge_dsl(*recipes,&block)
+    def converge_dsl(*recipes, &block)
       cookbook_name = 'imaginary'
       recipe_name = 'temp'
-      converge(*recipes){
+      converge(*recipes) do
         recipe = Chef::Recipe.new(cookbook_name, recipe_name, @run_context)
         recipe.instance_eval(&block)
-      }
+      end
     end
   end
 end
 
-
 describe 'selinux_policy fcontext' do
-
   let :chef_run do
     ChefSpec::SoloRunner.new(step_into: ['selinux_policy_fcontext']).converge_dsl('selinux_policy') do
       node.override['selinux_policy']['allow_disabled'] = false
@@ -47,18 +45,18 @@ describe 'selinux_policy fcontext' do
   end
 
   describe 'Add' do
-    #it 'creates when none'
-    #it 'does nothing when exists'
+    # it 'creates when none'
+    # it 'does nothing when exists'
   end
 
   describe 'Modify' do
-    #it 'does nothing when none'
-    #it 'modifies when exists and mismatch'
-    #it 'does nothing when match'
+    # it 'does nothing when none'
+    # it 'modifies when exists and mismatch'
+    # it 'does nothing when match'
   end
 
   describe 'Delete' do
-    #it 'does nothing when none'
-    #it 'removes when match'
+    # it 'does nothing when none'
+    # it 'removes when match'
   end
 end

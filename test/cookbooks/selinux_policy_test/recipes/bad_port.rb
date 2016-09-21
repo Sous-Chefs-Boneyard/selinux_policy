@@ -27,4 +27,3 @@ ruby_block 'bad-port' do
     raise 'Invalid port was not complained about' unless caught
   end
 end
-

@@ -2,20 +2,18 @@ require 'chefspec'
 
 module ChefSpec
   class SoloRunner
-    def converge_dsl(*recipes,&block)
+    def converge_dsl(*recipes, &block)
       cookbook_name = 'imaginary'
       recipe_name = 'temp'
-      converge(*recipes){
+      converge(*recipes) do
         recipe = Chef::Recipe.new(cookbook_name, recipe_name, @run_context)
         recipe.instance_eval(&block)
-      }
+      end
     end
   end
 end
 
-
 describe 'selinux_policy boolean' do
-
   let :chef_run do
     ChefSpec::SoloRunner.new(step_into: ['selinux_policy_boolean']).converge_dsl('selinux_policy') do
       node.override['selinux_policy']['allow_disabled'] = false

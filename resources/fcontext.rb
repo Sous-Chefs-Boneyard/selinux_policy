@@ -3,5 +3,5 @@
 
 actions :add, :delete, :modify, :addormodify, :relabel
 default_action :addormodify
-attribute :file_spec, :kind_of => String, :name_attribute => true
-attribute :secontext, :kind_of => String
+attribute :file_spec, kind_of: String, name_attribute: true
+attribute :secontext, kind_of: String

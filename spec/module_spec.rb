@@ -2,17 +2,16 @@ require 'spec_helper'
 
 module ChefSpec
   class SoloRunner
-    def converge_dsl(*recipes,&block)
+    def converge_dsl(*recipes, &block)
       cookbook_name = 'imaginary'
       recipe_name = 'temp'
-      converge(*recipes){
+      converge(*recipes) do
         recipe = Chef::Recipe.new(cookbook_name, recipe_name, @run_context)
         recipe.instance_eval(&block)
-      }
+      end
     end
   end
 end
-
 
 describe 'selinux_policy module' do
   def chef_run_module(*actions)
@@ -43,7 +42,7 @@ describe 'selinux_policy module' do
         end
       end
       it 'works' do
-        expect{chef_run}.to raise_error(Exception)
+        expect { chef_run }.to raise_error(Exception)
       end
     end
     describe 'source_directory' do
@@ -57,7 +56,7 @@ describe 'selinux_policy module' do
         end
       end
       it 'works' do
-        expect{chef_run}.not_to raise_error(Exception)
+        expect { chef_run }.not_to raise_error(Exception)
       end
     end
     describe 'content' do
@@ -74,23 +73,23 @@ describe 'selinux_policy module' do
         end
       end
       it 'works' do
-        expect{chef_run}.not_to raise_error(Exception)
+        expect { chef_run }.not_to raise_error(Exception)
       end
     end
   end
   describe 'compile' do
-    let(:chef_run){chef_run_module(:compile)}
+    let(:chef_run) { chef_run_module(:compile) }
     it 'acts when needed' do
-      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q").and_return(false)
+      stub_command('/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q').and_return(false)
       expect(chef_run).to run_execute('semodule-compile-testy')
     end
     it 'does nothing when not needed' do
-      stub_command("/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q").and_return(true)
+      stub_command('/usr/bin/make -f /usr/share/selinux/devel/Makefile testy.pp -q').and_return(true)
       expect(chef_run).not_to run_execute('semodule-compile-testy')
     end
   end
   describe 'install' do
-    let(:chef_run){chef_run_module(:install)}
+    let(:chef_run) { chef_run_module(:install) }
     it 'acts when needed' do
       stub_command("false || ! (/usr/sbin/semodule -l | grep -w '^testy') ").and_return(true)
       expect(chef_run).to run_execute('semodule-install-testy')

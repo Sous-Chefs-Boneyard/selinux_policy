@@ -6,9 +6,9 @@ describe 'selinux_policy port' do
       let(:chef_run) do
         runner = ChefSpec::SoloRunner.new(step_into: ['selinux_policy_port'])
         Chef::Config[:cookbook_path] << './test/cookbooks'
-        runner.converge('selinux_policy_test::single_port'){
+        runner.converge('selinux_policy_test::single_port') do
           runner.node.override['selinux_policy']['allow_disabled'] = false
-        }
+        end
       end
       it 'defines a single port' do
         stub_command("seinfo --protocol=tcp --portcon=1080 | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}' | grep -q ^").and_return(false)
@@ -28,15 +28,15 @@ describe 'selinux_policy port' do
         expect(chef_run).not_to run_execute('selinux-port-1080-modify')
       end
     end
-    #TODO 'Add':
+    # TODO: 'Add':
     # when port is OK
     # when port is different label
     # when port doesn't exist
-    #TODO 'Modify':
+    # TODO 'Modify':
     # when port is OK
     # when said port exists
     # when port doesn't exist
-    #TODO 'Delete'
+    # TODO 'Delete'
     # when port is not there (OK)
     # when port exists
   end
@@ -45,18 +45,18 @@ describe 'selinux_policy port' do
     let(:chef_run) do
       runner = ChefSpec::SoloRunner.new(step_into: ['selinux_policy_port'])
       Chef::Config[:cookbook_path] << './test/cookbooks'
-      runner.converge('selinux_policy_test::range_port'){
+      runner.converge('selinux_policy_test::range_port') do
         runner.node.override['selinux_policy']['allow_disabled'] = false
-      }
+      end
     end
-    #TODO complete
-    #it 'defines a port' do
+    # TODO: complete
+    # it 'defines a port' do
     #  expect(chef_run).to run_execute('selinux-port-1901-addormodify')
-    #end
-    #it 'correctly detects a port in range' do
+    # end
+    # it 'correctly detects a port in range' do
     #  expect(chef_run).to run_execute('selinux-port-1901-addormodify')
-    #end
-    #TODO testing:
+    # end
+    # TODO testing:
     # The matching script is not actually being tested here, so we can only check how the script responds on "match" and "no match"
   end
 end
