@@ -4,7 +4,7 @@ maintainer_email 'nitz.raz@gmail.com'
 license          'GPL v2'
 description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.0.1'
+version          '1.1.0'
 
 issues_url 'https://github.com/BackSlasher/chef-selinuxpolicy/issues'
 source_url 'https://github.com/BackSlasher/chef-selinuxpolicy'

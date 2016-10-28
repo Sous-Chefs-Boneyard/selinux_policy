@@ -232,5 +232,6 @@ Contributors:
 * [James Le Cuirot](https://github.com/chewi)
 * [John Bartko](https://github.com/jbartko)
 * [Maksim Horbul](https://github.com/mhorbul)
+* [Dieter Blomme](https://github.com/daften)
 
 I'll be happy to accept contributions or to hear from you!
