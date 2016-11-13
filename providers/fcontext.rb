@@ -37,38 +37,45 @@ end
 use_inline_resources
 
 # Run restorecon to fix label
-action :relabel do
-  res = shell_out!('find', '/', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', ';')
-  new_resource.updated_by_last_action(true) unless res.stdout.empty?
+def relabel_resources
+  execute "selinux-fcontext-#{new_resource.secontext}-relabel" do
+    command lazy { restorecon(new_resource.file_spec) }
+    action :nothing
+  end
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
 action :add do
+  relabel_resources
+  escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-add" do
     command "/usr/sbin/semanage fcontext -a #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     not_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
     only_if { use_selinux }
-    notifies :relabel, new_resource, :immediate
+    notifies :run, "execute[selinux-fcontext-#{new_resource.secontext}-relabel]", :immediate
   end
 end
 
 # Delete if exists
 action :delete do
+  relabel_resources
+  escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
     command "/usr/sbin/semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
     only_if { use_selinux }
-    notifies :relabel, new_resource, :immediate
+    notifies :run, "execute[selinux-fcontext-#{new_resource.secontext}-relabel]", :immediate
   end
 end
 
 action :modify do
+  relabel_resources
   execute "selinux-fcontext-#{new_resource.secontext}-modify" do
     command "/usr/sbin/semanage fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     only_if { use_selinux }
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
     not_if  fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
-    notifies :relabel, new_resource, :immediate
+    notifies :run, "execute[selinux-fcontext-#{new_resource.secontext}-relabel]", :immediate
   end
 end
 
