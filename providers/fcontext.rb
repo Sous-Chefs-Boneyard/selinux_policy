@@ -37,16 +37,20 @@ end
 use_inline_resources
 
 # Run restorecon to fix label
-def relabel_resources
+def selinux_fcontext_relabel_resources(relabel_action=:nothing)
   execute "selinux-fcontext-#{new_resource.secontext}-relabel" do
     command lazy { restorecon(new_resource.file_spec) }
-    action :nothing
+    action relabel_action
   end
+end
+
+action :relabel do
+  selinux_fcontext_relabel_resources(:run)
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
 action :add do
-  relabel_resources
+  selinux_fcontext_relabel_resources
   escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-add" do
     command "/usr/sbin/semanage fcontext -a #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
@@ -58,7 +62,7 @@ end
 
 # Delete if exists
 action :delete do
-  relabel_resources
+  selinux_fcontext_relabel_resources
   escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
     command "/usr/sbin/semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
@@ -69,7 +73,7 @@ action :delete do
 end
 
 action :modify do
-  relabel_resources
+  selinux_fcontext_relabel_resources
   execute "selinux-fcontext-#{new_resource.secontext}-modify" do
     command "/usr/sbin/semanage fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     only_if { use_selinux }
