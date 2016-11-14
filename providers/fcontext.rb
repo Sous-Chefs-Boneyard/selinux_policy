@@ -17,12 +17,8 @@ def fcontext_defined(file_spec, file_type, label = nil)
     'p' => 'named pipe'
   }
 
-  base_command = "semanage fcontext -l | grep -P '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+'"
-  if label
-    "#{base_command} | grep -P '\\ssystem_u:object_r:#{Regexp.escape(label)}:s0\\s*$'"
-  else
-    base_command
-  end
+  label_matcher = label ? "system_u:object_r:#{Regexp.escape(label)}:s0\\s*$" : ''
+  "semanage fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
 end
 
 def semanage_options(file_type)
