@@ -103,7 +103,9 @@ Attributes:
 * `directory`: Directory where module is stored. Defaults to a directory inside the Chef cache.
 * `content`: The module content, can be extracted from `audit2allow -m NAME`. This can be used to create simple modules without using external files.
 * `directory_source`: Copies files cookbook to the module directory (uses `remote_directory`). Allows keeping all of the module's source files in the cookbook.  
-    **Note:** You can pre-create the module directory and populate it in any other way you'd choose.
+    **Notes:** 
+      * You can pre-create the module directory and populate it in any other way you'd choose.
+      * This cannot be used to compiled module (`pp`). For those, please use `directory` that you have populated beforehand with a `remote_directory`.
 * `cookbook`: Modifies the source cookbook for the `remote_directory`.
 * `force`: Installs the module even if it seems fine. Ruins idempotence but should help solve some weird cases.
 
@@ -130,6 +132,24 @@ selinux_policy_module 'openvpn-googleauthenticator' do
   action :deploy
 end
 ```
+
+
+```ruby
+### Populate a remote working directory
+remote_directory '/tmp/selinux-qas' do
+  source 'selinux-qas'
+  mode '0755'
+  action :create
+end
+
+### Install the SELinux policies
+include_recipe 'selinux_policy::default'
+selinux_policy_module 'sshdqas' do
+   directory '/tmp/selinux-qas'
+   action  :install
+end
+```
+
 ### fcontext
 Allows managing the SELinux context of files.
 This can be used to grant SELinux-protected daemons access to additional / moved files.
