@@ -25,17 +25,6 @@ def fcontext_defined(file_spec, file_type, label = nil)
   end
 end
 
-def restorecon(file_spec)
-  path = file_spec.to_s.sub(/\\/, '') # Remove backslashes
-  return "restorecon -i #{path}" if ::File.exist?(path) # Return if it's not a regular expression
-  path.count('/').times do
-    path = ::File.dirname(path) # Splits at last '/' and returns front part
-    break if ::File.directory?(path)
-  end
-  # This will restore the selinux file context recursively.
-  "restorecon -iR #{path}"
-end
-
 def semanage_options(file_type)
   # Set options for file_type
   if node[:platform_family].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
@@ -57,10 +46,8 @@ use_inline_resources
 
 # Run restorecon to fix label
 action :relabel do
-  execute "selinux-fcontext-relabel-#{new_resource.secontext}" do
-    command restorecon(new_resource.file_spec)
-    not_if "test -z \"$(#{restorecon(new_resource.file_spec)} -vn)\""
-  end
+  res = shell_out!('restorecon','-irv',new_resource.file_spec)
+  new_resource.updated_by_last_action(true) unless res.stdout.empty?
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
