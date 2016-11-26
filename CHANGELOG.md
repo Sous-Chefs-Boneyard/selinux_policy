@@ -2,6 +2,12 @@ selinuxpolicy CHANGELOG
 =======================
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
+## 1.1.1
+- [7307850] (Adam Ward) Silence fcontext guard output
+- [ad71437] (nitz) Restorecon is now done via shell_out
+- [fa30813] (James Le Cuirot) Change yum dependency to ~> 4.0
+- [cd9a8da] (nitz) Removed selinux enforcing from kitchen, unified runlists
+
 
 1.1.0
 -----
