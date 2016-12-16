@@ -3,12 +3,6 @@ SELinux Policy Cookbook
 This cookbbok can be used to manage SELinux policies and components (rather than just enable / disable enforcing).  
 I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
 
-
-\*\*Maintainer Required\*\*
--------------------
-As I'm currently not working with this cookbook, I have little context about things.  
-If you're interested in helping out with making this cookbook better, please LMK by opening an issue or sending me a message.
-
 Requirements
 ------------
 Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run).  
