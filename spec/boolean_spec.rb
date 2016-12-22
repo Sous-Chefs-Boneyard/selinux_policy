@@ -15,7 +15,7 @@ end
 
 describe 'selinux_policy boolean' do
   let :chef_run do
-    ChefSpec::SoloRunner.new(step_into: ['selinux_policy_boolean']).converge_dsl('selinux_policy') do
+    ChefSpec::SoloRunner.new(platform: 'centos', version: '7.0', step_into: ['selinux_policy_boolean']).converge_dsl('selinux_policy') do
       node.override['selinux_policy']['allow_disabled'] = false
       selinux_policy_boolean 'httpd_can_network_connect_db' do
         value true
