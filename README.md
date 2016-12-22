@@ -215,6 +215,6 @@ I don't use Chef 11, but stuff *seems* to work OK to other people.
 
 ## License and Authors
 
-Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
-Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
-Maintainer Community:: Sous Chefs [help@sous-chefs.org](mailto:help@sous-chefs.org)
+- Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
+- Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
+- Maintainer Community:: Sous Chefs [help@sous-chefs.org](mailto:help@sous-chefs.org)
