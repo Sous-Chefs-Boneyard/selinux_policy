@@ -23,7 +23,7 @@ end
 
 def semanage_options(file_type)
   # Set options for file_type
-  if node[:platform_family].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
+  if node['platform_family'].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
     file_type_option = case file_type
                        when 'a' then '-f ""'
                        when 'f' then '-f --'
