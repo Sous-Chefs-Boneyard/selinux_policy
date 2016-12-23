@@ -199,11 +199,6 @@ selinux_policy_permissive 'nginx' do
 end
 ```
 
-## Testing
-We have a test kitchen that has *some* tests (at the time of writing this: Basic port ops)
-We also have a ChefSpec suite for *some* things (again, currently only basic ports). To use it, run something like `chef exec rspec`.
-We also only test against CentOS (because Ubuntu comes with SELinux disabled and restarting mid-test is hard).
-
 ## Chef 11 Support
 I don't use Chef 11, but stuff *seems* to work OK to other people.
 
@@ -220,6 +215,6 @@ I don't use Chef 11, but stuff *seems* to work OK to other people.
 
 ## License and Authors
 
-Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
-Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
-Maintainer Community:: Sous Chefs [help@sous-chefs.org](mailto:help@sous-chefs.org)
+- Licensed [GPL v2](http://choosealicense.com/licenses/gpl-2.0/)
+- Author:: [Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
+- Maintainer Community:: Sous Chefs [help@sous-chefs.org](mailto:help@sous-chefs.org)

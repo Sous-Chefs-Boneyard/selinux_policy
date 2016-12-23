@@ -1,5 +1,5 @@
 if defined?(ChefSpec)
-  def set_selinux_policy_boolean(resource_name)
+  def set_selinux_policy_boolean(resource_name) # rubocop:disable Style/AccessorMethodName
     ChefSpec::Matchers::ResourceMatcher.new(:selinux_policy_boolean, :set, resource_name)
   end
 

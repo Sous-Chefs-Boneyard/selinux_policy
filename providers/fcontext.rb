@@ -14,7 +14,7 @@ def fcontext_defined(file_spec, file_type, label = nil)
     'b' => 'block device',
     's' => 'socket',
     'l' => 'symbolic link',
-    'p' => 'named pipe'
+    'p' => 'named pipe',
   }
 
   label_matcher = label ? "system_u:object_r:#{Regexp.escape(label)}:s0\\s*$" : ''
@@ -23,32 +23,27 @@ end
 
 def semanage_options(file_type)
   # Set options for file_type
-  if node[:platform_family].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
-    file_type_option = case file_type
-                       when 'a' then '-f ""'
-                       when 'f' then '-f --'
-                       else; "-f -#{file_type}"
+  if node['platform_family'].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
+    case file_type
+    when 'a' then '-f ""'
+    when 'f' then '-f --'
+    else; "-f -#{file_type}"
     end
   else
-    file_type_option = "-f #{file_type}"
+    "-f #{file_type}"
   end
-
-  options = file_type_option
-
-  options
 end
 
 use_inline_resources
 
 # Run restorecon to fix label
 action :relabel do
-  res = shell_out!('restorecon','-irv',new_resource.file_spec)
+  res = shell_out!('restorecon', '-irv', new_resource.file_spec)
   new_resource.updated_by_last_action(true) unless res.stdout.empty?
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
 action :add do
-  escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-add" do
     command "/usr/sbin/semanage fcontext -a #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     not_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
@@ -59,7 +54,6 @@ end
 
 # Delete if exists
 action :delete do
-  escaped_file_spec = Regexp.escape(new_resource.file_spec)
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
     command "/usr/sbin/semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
