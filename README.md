@@ -87,7 +87,7 @@ Actions:
 * `compile`: Translates a module source directory into a `NAME.pp` file. Uses `make` logic for idempotence.
 * `install`: Adds a compiled module (`pp`) to the current policy. Only installs if the module was modified this run, `force` is enabled or it's missing from the current policy.
     **Note:** I wish I could compare the existing module to the one generated, but the `extract` capability was only added in [Aug 15](https://github.com/SELinuxProject/selinux/commit/65c6325271b54d3de9c17352a57d469dfbd12729). I'll be happy to see a better idea.
-* `deploy` (default): Runs `fetch`, `compile`, `install` in that order.
+* `deploy` (default): Runs `fetch`, `compile`, `install` in that order. The expected format is the same as `audit2allow -r`.
 * `remove`: Removes a module.
 
 Attributes:
