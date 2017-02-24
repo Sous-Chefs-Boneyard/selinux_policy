@@ -4,7 +4,7 @@ maintainer_email 'help@sous-chefs.org'
 license          'GPL v2'
 description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '1.1.1'
+version          '2.0.0'
 
 supports 'redhat'
 supports 'centos'
