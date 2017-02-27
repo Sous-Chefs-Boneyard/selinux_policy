@@ -21,6 +21,17 @@ def fcontext_defined(file_spec, file_type, label = nil)
   "semanage fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
 end
 
+def restorecon(file_spec)
+  path = file_spec.to_s.sub(/\\/, '') # Remove backslashes
+  return "restorecon -iv #{path}" if ::File.exist?(path) # Return if it's not a regular expression
+  path.count('/').times do
+    path = ::File.dirname(path) # Splits at last '/' and returns front part
+    break if ::File.directory?(path)
+  end
+  # This will restore the selinux file context recursively.
+  "restorecon -irv #{path}"
+end
+
 def semanage_options(file_type)
   # Set options for file_type
   if node['platform_family'].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
