@@ -15,6 +15,8 @@ ruby_block 'fail-mismatch' do
 end
 
 dir_name = '/var/www/tester'
+subdir = '/var/www/tester/testregex'
+regex = '/var/www/tester(/.*)?'
 context = 'httpd_tmp_t'
 context2 = 'boot_t'
 
@@ -57,7 +59,27 @@ selinux_policy_fcontext 'deleteme' do
   action :delete
 end
 
-execute "restorecon #{dir_name}" # Restore original context
+# Testing regexes
+directory subdir do
+  recursive true
+end
+
+selinux_policy_fcontext regex do
+  secontext context
+end
+
+# Fail if subdir hasn't modified context
+execute 'true' do
+  not_if "stat -c %C #{subdir} | grep #{context}"
+  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+end
+
+selinux_policy_fcontext 'deleteregex' do
+  file_spec regex
+  action :delete
+end
+
+execute "restorecon -iR #{dir_name}" # Restore original context
 
 # Shouldn't be in any of our contexts anymore
 execute 'true' do
