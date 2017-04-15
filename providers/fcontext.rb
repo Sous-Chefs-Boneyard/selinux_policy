@@ -38,8 +38,10 @@ use_inline_resources
 
 # Run restorecon to fix label
 action :relabel do
-  res = shell_out!("find / -regextype posix-egrep -regex '#{new_resource.file_spec}' -type d -print0  2>/dev/null | xargs -0 restorecon -iR")
-  new_resource.updated_by_last_action(true) unless res.stdout.empty?
+  execute "selinux-fcontext-#{new_resource.secontext}-relabel" do
+    command "find / -regextype posix-egrep -regex '#{new_resource.file_spec}' -type d -print0  2>/dev/null | xargs -0 restorecon -iRv"
+    only_if { use_selinux }
+  end
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
