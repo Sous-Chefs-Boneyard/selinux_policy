@@ -2,7 +2,11 @@
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
-## 2.0.0 (2016-02-23)
+## 2.0.1 (2017-04-21)
+
+- Perform relabel (restorecon) using find to support regexes
+
+## 2.0.0 (2017-02-23)
 
 - This cookbook has been moved to the Sous Chefs org. See sous-chefs.org for more information
 - Require Chef 12.1 or later
