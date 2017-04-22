@@ -7,7 +7,7 @@
 # GPLv2
 
 # Define a single fcontext
-ruby_block 'fail-mismatch' do
+ruby_block 'fail-mismatch-fcontext-filetype' do
   action :nothing
   block do
     raise 'Fail block was invoked'
@@ -40,21 +40,21 @@ selinux_policy_fcontext symlink do
 end
 
 # Fail if dir isn't actually set
-execute 'true' do
+execute 'true basedir context_dir' do
   not_if "stat -c %C #{basedir} | grep #{context_dir}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
 # Should not run again
-selinux_policy_fcontext 'nomod' do
+selinux_policy_fcontext 'nomod on basedir with context_dir' do
   file_spec basedir
   action :modify
   secontext context_dir
   file_type 'd'
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
-selinux_policy_fcontext 'modme' do
+selinux_policy_fcontext 'modme on basedir with context_dir2' do
   file_spec basedir
   action :modify
   secontext context_dir2
@@ -62,15 +62,15 @@ selinux_policy_fcontext 'modme' do
 end
 
 # Fail if dir hasn't modified context
-execute 'true' do
+execute 'true basedir' do
   not_if "stat -c %C #{basedir} | grep #{context_dir2}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
 # Fail if symlink has changed context
-execute 'true' do
+execute 'true symlink' do
   not_if "stat -c %C #{symlink} | grep #{context_symlink}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
 # Should not run again
@@ -79,7 +79,7 @@ selinux_policy_fcontext 'symlink-nomod' do
   action :modify
   secontext context_symlink
   file_type 'l'
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
 # Should not change the symlink itself, so shouldn't change
@@ -87,10 +87,10 @@ selinux_policy_fcontext 'symlink-nomod2' do
   file_spec symlink
   action :modify
   secontext context_dir2
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
 
-selinux_policy_fcontext 'deleteme' do
+selinux_policy_fcontext 'deleteme basedir' do
   file_spec basedir
   file_type 'd'
   action :delete
@@ -105,9 +105,9 @@ end
 execute "restorecon #{basedir}" # Restore original context
 
 # Shouldn't be in any of our contexts anymore
-execute 'true' do
+execute 'true basedir and symlink' do
   not_if "stat -c %C #{basedir} | grep -v #{context_dir}"
   not_if "stat -c %C #{basedir} | grep -v #{context_dir2}"
   not_if "stat -c %C #{symlink} | grep -v #{context_symlink}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext-filetype]', :immediate
 end
