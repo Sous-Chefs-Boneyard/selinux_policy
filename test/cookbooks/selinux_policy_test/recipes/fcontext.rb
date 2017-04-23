@@ -7,7 +7,7 @@
 # GPLv2
 
 # Define a single fcontext
-ruby_block 'fail-mismatch' do
+ruby_block 'fail-mismatch-fcontext' do
   action :nothing
   block do
     raise 'Fail block was invoked'
@@ -29,17 +29,17 @@ directory dir_name do
 end
 
 # Fail if dir isn't actually set
-execute 'true' do
+execute 'true dir context' do
   not_if "stat -c %C #{dir_name} | grep #{context}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
 
 # Should not run again
-selinux_policy_fcontext 'nomod' do
+selinux_policy_fcontext 'nomod on dir_name' do
   file_spec dir_name
   action :modify
   secontext context
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
 
 selinux_policy_fcontext 'modme' do
@@ -49,12 +49,12 @@ selinux_policy_fcontext 'modme' do
 end
 
 # Fail if dir hasn't modified context
-execute 'true' do
+execute 'true dir context2' do
   not_if "stat -c %C #{dir_name} | grep #{context2}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
 
-selinux_policy_fcontext 'deleteme' do
+selinux_policy_fcontext 'deleteme dir_name' do
   file_spec dir_name
   action :delete
 end
@@ -69,9 +69,9 @@ selinux_policy_fcontext regex do
 end
 
 # Fail if subdir hasn't modified context
-execute 'true' do
+execute 'true subdir context' do
   not_if "stat -c %C #{subdir} | grep #{context}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
 
 selinux_policy_fcontext 'deleteregex' do
@@ -82,8 +82,8 @@ end
 execute "restorecon -iR #{dir_name}" # Restore original context
 
 # Shouldn't be in any of our contexts anymore
-execute 'true' do
+execute 'true dir context and context2' do
   not_if "stat -c %C #{dir_name} | grep -v #{context}"
   not_if "stat -c %C #{dir_name} | grep -v #{context2}"
-  notifies :run, 'ruby_block[fail-mismatch]', :immediate
+  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
