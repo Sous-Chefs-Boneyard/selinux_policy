@@ -38,7 +38,8 @@ use_inline_resources
 
 # Run restorecon to fix label
 action :relabel do
-  res = shell_out!('find', '/', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', ';')
+  res_fs = shell_out!('stat', '--format', '%m', new_resource.file_spec).stdout.chomp
+  res = shell_out!('find', res_fs, '-xdev', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', '+')
   new_resource.updated_by_last_action(true) unless res.stdout.empty?
 end
 
