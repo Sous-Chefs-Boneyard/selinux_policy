@@ -40,12 +40,11 @@ use_inline_resources
 action :relabel do
   if File.exist?(new_resource.file_spec)
     res = shell_out!('restorecon', '-irv', new_resource.file_spec)
-    new_resource.updated_by_last_action(true) unless res.stdout.empty?
   else
     res_fs = shell_out!('stat', '--format', '%m', new_resource.file_spec).stdout.chomp
     res = shell_out!('find', res_fs, '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', '+')
-    new_resource.updated_by_last_action(true) unless res.stdout.empty?
   end
+  new_resource.updated_by_last_action(true) unless res.stdout.empty?
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
