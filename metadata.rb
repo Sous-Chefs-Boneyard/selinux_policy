@@ -1,7 +1,7 @@
 name             'selinux_policy'
 maintainer       'Sous Chefs'
 maintainer_email 'help@sous-chefs.org'
-license          'GPL v2'
+license          'GPL-2.0'
 description      'Manages SELinux policy components'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '2.0.1'

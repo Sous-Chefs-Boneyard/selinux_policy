@@ -6,7 +6,7 @@ def whyrun_supported?
 end
 
 def port_defined(protocol, port, label = nil)
-  base_command = "seinfo --protocol=#{protocol} --portcon=#{port} | awk -F: '$(NF-1) !~ /reserved_port_t$/ {print $(NF-1)}'"
+  base_command = "seinfo --protocol=#{protocol} --portcon=#{port} | awk -F: '$(NF-1) !~ /reserved_port_t$/ && $(NF-3) !~ /[0-9]*-[0-9]*/ {print $(NF-1)}'"
   grep = if label
            "grep -P '#{Regexp.escape(label)}'"
          else
@@ -27,6 +27,7 @@ action :add do
   execute "selinux-port-#{new_resource.port}-add" do
     command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
     not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
+    not_if port_defined(new_resource.protocol, new_resource.port)
     only_if { use_selinux }
   end
 end
