@@ -26,7 +26,7 @@ action :add do
   validate_port(new_resource.port)
   execute "selinux-port-#{new_resource.port}-add" do
     command "/usr/sbin/semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
-    not_if port_defined(new_resource.protocol, new_resource.port)
+    not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
     only_if { use_selinux }
   end
 end
