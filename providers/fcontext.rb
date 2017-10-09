@@ -38,9 +38,9 @@ use_inline_resources
 
 # Run restorecon to fix label
 action :relabel do
-  res = shell_out!('find', '/', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', ';')
-  converge_by('relabel-#{new_resource.secontext}') unless res.stdout.empty?
-  # new_resource.updated_by_last_action(true) unless res.stdout.empty?
+  converge_by("relabel-#{new_resource.secontext}") do
+    shell_out!('find', '/', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', ';')
+  end
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
