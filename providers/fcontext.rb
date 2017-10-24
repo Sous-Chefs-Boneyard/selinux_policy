@@ -37,9 +37,26 @@ end
 use_inline_resources
 
 # Run restorecon to fix label
+# https://github.com/sous-chefs/selinux_policy/pull/72#issuecomment-338718721
 action :relabel do
-  res = shell_out!('find', '/', '-regextype', 'posix-egrep', '-regex', new_resource.file_spec, '-execdir', 'restorecon', '-iRv', '{}', ';')
-  new_resource.updated_by_last_action(true) unless res.stdout.empty?
+  spec = new_resource.file_spec
+  escaped = Regexp.escape spec
+
+  common =
+    if spec == escaped
+      spec
+    else
+      index = spec.size.times { |i| break i if spec[i] != escaped[i] }
+      ::File.dirname spec[0...index]
+    end
+
+  # Just in case the spec is very weird...
+  common = '/' if common[0] != '/'
+
+  if ::File.exist? common
+    res = shell_out!('find', common, '-ignore_readdir_race', '-regextype', 'posix-egrep', '-regex', spec, '-prune', '-execdir', 'restorecon', '-iRv', '{}', '+')
+    new_resource.updated_by_last_action(true) unless res.stdout.empty?
+  end
 end
 
 # Create if doesn't exist, do not touch if fcontext is already registered
