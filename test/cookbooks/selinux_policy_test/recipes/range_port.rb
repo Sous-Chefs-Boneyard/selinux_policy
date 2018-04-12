@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: range_port
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Ensures a port is correctly detected when a range is already defined
 
 # Failure generator
