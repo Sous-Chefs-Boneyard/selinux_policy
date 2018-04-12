@@ -34,8 +34,6 @@ def semanage_options(file_type)
   end
 end
 
-use_inline_resources
-
 # Run restorecon to fix label
 # https://github.com/sous-chefs/selinux_policy/pull/72#issuecomment-338718721
 action :relabel do

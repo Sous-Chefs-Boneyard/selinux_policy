@@ -13,8 +13,6 @@ def shell_boolean(expression)
   expression ? 'true' : 'false'
 end
 
-use_inline_resources
-
 # Get all the components in the right place
 action :fetch do
   directory new_resource.directory do
