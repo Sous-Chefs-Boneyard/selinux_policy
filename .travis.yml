@@ -1,5 +1,6 @@
 # Use Travis's cointainer based infrastructure
-sudo: false
+sudo: required
+dist: trusty
 
 addons:
   apt:
@@ -20,12 +21,13 @@ env:
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
+  - echo 'SELINUXTYPE=refpolicy' | sudo tee /etc/selinux/config
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef --version
   - cookstyle --version
   - foodcritic --version
 
-script: kitchen verify ${INSTANCE}
+script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
