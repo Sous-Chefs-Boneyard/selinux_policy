@@ -32,3 +32,4 @@ suites:
       - recipe[selinux_policy_test::module_directory]
       - recipe[selinux_policy_test::fcontext]
       - recipe[selinux_policy_test::fcontext_filetype]
+      - recipe[selinux_policy_test::single_port_add_to_range]
