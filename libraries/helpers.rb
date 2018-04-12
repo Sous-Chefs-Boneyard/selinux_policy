@@ -1,13 +1,10 @@
-# Cookbook: selinux_policy
-# Library: helper-disabled
-# 2015, GPLv2, Nitzan Raz (http://backslasher.net)
 
-require 'chef/mixin/shell_out'
-include Chef::Mixin::ShellOut
 
 class Chef
   module SELinuxPolicy
     module Helpers
+      require 'chef/mixin/shell_out'
+      include Chef::Mixin::ShellOut
       # Checks if SELinux is disabled or otherwise unavailable and
       # whether we're allowed to run when disabled
       def use_selinux
