@@ -21,7 +21,7 @@ env:
 
 before_script:
   - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - echo 'SELINUXTYPE=refpolicy' | sudo tee /etc/selinux/config
+  - cat /etc/selinux/config
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef --version
   - cookstyle --version
