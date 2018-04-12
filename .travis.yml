@@ -15,19 +15,11 @@ branches:
   only:
     - master
 
-env:
-- INSTANCE=default-centos-6
-- INSTANCE=default-centos-7
-
 before_script:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - cat /etc/selinux/config
   - eval "$(/opt/chefdk/bin/chef shell-init bash)"
   - chef --version
   - cookstyle --version
   - foodcritic --version
-
-script: KITCHEN_LOCAL_YAML=.kitchen.dokken.yml kitchen verify ${INSTANCE}
 
 matrix:
   include:
