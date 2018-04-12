@@ -1,6 +1,13 @@
 # selinuxpolicy CHANGELOG
 
-This file is used to list changes made in each version of the selinuxpolicy cookbook.
+This file is used to changes made in each version of the selinuxpolicy cookbook.
+
+## [2.1.0] (2018-04-12)
+
+- Port definition methods to check for already defined ports
+- Cleanup resource cloning
+- Deprecate support for Chef 12.x now it's EOL
+- Fix Foodcritic warnings & update test platforms
 
 ## 2.0.1 (2017-04-21)
 
@@ -130,11 +137,7 @@ This file is used to list changes made in each version of the selinuxpolicy cook
 ## 0.5.0
 
 - [backslasher] - Added RHEL5/derivatives support. Thanks to @knightorc.
-
-  ```
-              Cookbook will break on RHEL7\. If anyone expiriences this, please check required packages and create an issue/PR
-  ```
-
+- **Cookbook will break on RHEL7\. If anyone experiences this, please check required packages and create an issue/PR**
 - [backslasher] - Machines without SELinux are (opionally) supported. Thanks to @knightroc.
 
 ## 0.4.0
@@ -153,3 +156,5 @@ This file is used to list changes made in each version of the selinuxpolicy cook
 ## 0.1.0
 
 - [backlasher] - Initial release of selinuxpolicy
+
+[v2.1.0]: https://github.com/sous-chefs/selinux_policy/compare/v2.0.1...v2.1.0

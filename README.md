@@ -8,8 +8,7 @@ Needs an SELinux policy active (so its values can be managed). Can work with a d
 
 ### Chef
 
-- Chef 12.1+
-- Chef 12.16.42 is NOT supported (see [#55](https://github.com/sous-chefs/selinux_policy/issues/55))
+- Chef 13
 
 ### Platforms
 
