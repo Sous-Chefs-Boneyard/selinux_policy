@@ -20,7 +20,7 @@ end
 # Expect to find the module
 execute 'module-sniff' do
   command 'true'
-  not_if "/usr/sbin/semodule -l | grep -w '^testy'"
+  not_if "semodule -l | grep -w '^testy'"
   notifies :run, 'ruby_block[fail-module]', :immediate
 end
 
@@ -40,6 +40,6 @@ end
 # Expect not to find module
 execute 'module-unsniff' do
   command 'true'
-  only_if "/usr/sbin/semodule -l | grep -w '^testy'"
+  only_if "semodule -l | grep -w '^testy'"
   notifies :run, 'ruby_block[fail-module]', :immediate
 end

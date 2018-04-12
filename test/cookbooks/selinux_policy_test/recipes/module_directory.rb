@@ -10,6 +10,6 @@ selinux_policy_module 'testo' do
   directory_source 'testo'
 end
 execute 'trigger-fail-module-dir' do
-  not_if '/usr/sbin/semodule -l | grep -w "^testo"'
+  not_if 'semodule -l | grep -w "^testo"'
   notifies :run, 'ruby_block[fail-module-dir]', :immediate
 end

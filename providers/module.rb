@@ -6,7 +6,7 @@ def whyrun_supported?
 end
 
 def module_defined(name)
-  "/usr/sbin/semodule -l | grep -w '^#{name}'"
+  "semodule -l | grep -w '^#{name}'"
 end
 
 def shell_boolean(expression)
@@ -56,7 +56,7 @@ end
 action :install do
   filename = "#{new_resource.directory}/#{new_resource.module_name}.pp"
   execute "semodule-install-#{new_resource.module_name}" do
-    command "/usr/sbin/semodule -i #{filename}"
+    command "semodule -i #{filename}"
     only_if "#{shell_boolean(new_resource.updated_by_last_action? || new_resource.force)} || ! (#{module_defined(new_resource.module_name)}) "
     only_if { use_selinux }
   end
@@ -72,7 +72,7 @@ end
 # remove module
 action :remove do
   execute "semodule-remove-#{new_resource.module_name}" do
-    command "/usr/sbin/semodule -r #{new_resource.module_name}"
+    command "semodule -r #{new_resource.module_name}"
     only_if module_defined(new_resource.module_name)
     only_if { use_selinux }
   end
