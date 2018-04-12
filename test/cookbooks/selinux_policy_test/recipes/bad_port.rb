@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: bad_port
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Expect to fail with a bad port string
 
 bad_port = selinux_policy_port 'bad_port' do

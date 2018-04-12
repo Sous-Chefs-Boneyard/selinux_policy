@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: module_directory
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Creates a module based on a source directory
 
 ruby_block 'fail-module-dir' do

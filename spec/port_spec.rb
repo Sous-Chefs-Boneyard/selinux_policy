@@ -4,8 +4,7 @@ describe 'selinux_policy port' do
   describe 'single port' do
     describe 'AddOrModify' do
       let(:chef_run) do
-        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.0', step_into: ['selinux_policy_port'])
-        Chef::Config[:cookbook_path] << './test/cookbooks'
+        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_port'])
         runner.converge('selinux_policy_test::single_port') do
           runner.node.override['selinux_policy']['allow_disabled'] = false
         end
@@ -43,7 +42,7 @@ describe 'selinux_policy port' do
 
   describe 'range of ports' do
     let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.0', step_into: ['selinux_policy_port'])
+      runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_port'])
       Chef::Config[:cookbook_path] << './test/cookbooks'
       runner.converge('selinux_policy_test::range_port') do
         runner.node.override['selinux_policy']['allow_disabled'] = false

@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: fcontext
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Define a single fcontext
 ruby_block 'fail-mismatch-fcontext' do
   action :nothing

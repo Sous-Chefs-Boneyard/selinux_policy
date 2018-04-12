@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: module
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Plays around with an SEModule
 
 # Failure generator

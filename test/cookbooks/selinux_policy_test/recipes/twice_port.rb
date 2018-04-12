@@ -1,11 +1,3 @@
-#
-# Cookbook Name:: selinux_policy_test
-# Recipe:: twice_port
-#
-# Copyright 2015, BackSlasher
-#
-# GPLv2
-
 # Define the same port twice and make sure nothing is done the second time
 
 # Failure generator

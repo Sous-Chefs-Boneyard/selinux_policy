@@ -5,8 +5,6 @@ def whyrun_supported?
   true
 end
 
-use_inline_resources
-
 # Set for now, without persisting
 action :set do
   sebool(false)
