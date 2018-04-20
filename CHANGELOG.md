@@ -2,6 +2,10 @@
 
 This file is used to list changes made in each version of the selinuxpolicy cookbook.
 
+## 3.0.0 (2018-04-XX)
+
+- Support Chef 13.0+
+
 ## 2.0.1 (2017-04-21)
 
 - Perform relabel (restorecon) using find to support regexes

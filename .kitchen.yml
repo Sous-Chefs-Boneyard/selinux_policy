@@ -6,29 +6,38 @@ provisioner:
   deprecations_as_errors: true
 
 platforms:
-# - name: amazon-linux
-#   driver_config:
-#     box: mvbcoding/awslinux
-- name: centos-6
-- name: centos-7
-# - name: debian-8
-# - name: debian-9
+- name: debian-9
+# - name: centos-6
+# - name: centos-7
 # - name: fedora-27
-# - name: freebsd-10
-# - name: freebsd-11
-# - name: opensuse-leap-42.2
 # - name: ubuntu-14.04
 # - name: ubuntu-16.04
+# - name: opensuse-leap
+# - name: amazonlinux
+#   driver_config:
+#     box: mvbcoding/awslinux
 
 suites:
+  - name: setup
+    run_list:
+      # - recipe[test::setup]
+      - recipe[test::single_port]
+
+
   - name: default
     run_list:
-      - recipe[selinux_policy_test::setup]
-      - recipe[selinux_policy_test::single_port]
-      - recipe[selinux_policy_test::twice_port]
-      - recipe[selinux_policy_test::range_port]
-      - recipe[selinux_policy_test::bad_port]
-      - recipe[selinux_policy_test::module]
-      - recipe[selinux_policy_test::module_directory]
-      - recipe[selinux_policy_test::fcontext]
-      - recipe[selinux_policy_test::fcontext_filetype]
+      - recipe[test::single_port]
+      - recipe[test::twice_port]
+      # - recipe[test::range_port]
+      # - recipe[test::bad_port]
+      # - recipe[test::module]
+      # - recipe[test::module_directory]
+      # - recipe[test::fcontext]
+      # - recipe[test::fcontext_filetype]
+
+supersuites:
+- name: test
+  steps:
+  - converge setup
+  - converge default
+  - verify web1
