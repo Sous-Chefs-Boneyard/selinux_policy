@@ -1,4 +1,4 @@
-name             'selinux_policy_test'
+name             'test'
 maintainer       'Sous Chefs'
 maintainer_email 'test'
 license          'Apache-2.0'

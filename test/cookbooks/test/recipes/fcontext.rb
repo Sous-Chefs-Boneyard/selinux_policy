@@ -1,3 +1,4 @@
+<<<<<<< HEAD:test/cookbooks/selinux_policy_test/recipes/fcontext.rb
 # Define a single fcontext
 ruby_block 'fail-mismatch-fcontext' do
   action :nothing
@@ -6,6 +7,8 @@ ruby_block 'fail-mismatch-fcontext' do
   end
 end
 
+=======
+>>>>>>> FC085:test/cookbooks/test/recipes/fcontext.rb
 dir_name = '/var/www/tester'
 subdir = '/var/www/tester/testregex'
 regex = '/var/www/tester(/.*)?'
@@ -20,18 +23,17 @@ directory dir_name do
   recursive true
 end
 
-# Fail if dir isn't actually set
-execute 'true dir context' do
-  not_if "stat -c %C #{dir_name} | grep #{context}"
-  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
-end
+#  TODO: Inspec test
+# # Fail if dir isn't actually set
+# execute 'true dir context' do
+#   not_if "stat -c %C #{dir_name} | grep #{context}"
+# end
 
 # Should not run again
 selinux_policy_fcontext 'nomod on dir_name' do
   file_spec dir_name
   action :modify
   secontext context
-  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end
 
 selinux_policy_fcontext 'modme' do
@@ -40,11 +42,11 @@ selinux_policy_fcontext 'modme' do
   secontext context2
 end
 
-# Fail if dir hasn't modified context
-execute 'true dir context2' do
-  not_if "stat -c %C #{dir_name} | grep #{context2}"
-  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
-end
+# # TODO Inspec test
+# # Fail if dir hasn't modified context
+# execute 'true dir context2' do
+#   not_if "stat -c %C #{dir_name} | grep #{context2}"
+# end
 
 selinux_policy_fcontext 'deleteme dir_name' do
   file_spec dir_name
@@ -60,11 +62,11 @@ selinux_policy_fcontext regex do
   secontext context
 end
 
-# Fail if subdir hasn't modified context
-execute 'true subdir context' do
-  not_if "stat -c %C #{subdir} | grep #{context}"
-  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
-end
+# TODO: Inspec test
+# # Fail if subdir hasn't modified context
+# execute 'true subdir context' do
+#   not_if "stat -c %C #{subdir} | grep #{context}"
+# end
 
 selinux_policy_fcontext 'deleteregex' do
   file_spec regex
@@ -77,5 +79,4 @@ execute "restorecon -iR #{dir_name}" # Restore original context
 execute 'true dir context and context2' do
   not_if "stat -c %C #{dir_name} | grep -v #{context}"
   not_if "stat -c %C #{dir_name} | grep -v #{context2}"
-  notifies :run, 'ruby_block[fail-mismatch-fcontext]', :immediate
 end

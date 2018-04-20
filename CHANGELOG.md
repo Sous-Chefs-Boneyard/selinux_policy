@@ -9,6 +9,10 @@ This file is used to changes made in each version of the selinuxpolicy cookbook.
 - Deprecate support for Chef 12.x now it's EOL
 - Fix Foodcritic warnings & update test platforms
 
+## 3.0.0 (2018-04-XX)
+
+- Support Chef 13.0+
+
 ## 2.0.1 (2017-04-21)
 
 - Perform relabel (restorecon) using find to support regexes
