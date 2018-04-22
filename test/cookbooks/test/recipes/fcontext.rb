@@ -1,14 +1,3 @@
-<<<<<<< HEAD:test/cookbooks/selinux_policy_test/recipes/fcontext.rb
-# Define a single fcontext
-ruby_block 'fail-mismatch-fcontext' do
-  action :nothing
-  block do
-    raise 'Fail block was invoked'
-  end
-end
-
-=======
->>>>>>> FC085:test/cookbooks/test/recipes/fcontext.rb
 dir_name = '/var/www/tester'
 subdir = '/var/www/tester/testregex'
 regex = '/var/www/tester(/.*)?'

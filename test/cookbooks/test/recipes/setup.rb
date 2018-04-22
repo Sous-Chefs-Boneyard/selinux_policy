@@ -1,7 +1,10 @@
-# Sets the machine up for selinux goodness
 
-include_recipe 'selinux_policy::install'
+selinux_policy_install 'install' do
+  notifies :reboot_now, 'reboot[SELinux Reboot]', :immediately
+end
 
-execute 'reboot' do
-  # not_if { "system(\"sestatus -v | grep enabled | grep SELinux\")" }
+reboot 'SELinux Reboot' do
+  action :nothing
+  reason 'Rebooting to enable SELinux.'
+  delay_mins 7
 end
