@@ -16,7 +16,7 @@ branches:
     - master
 
 before_script:
-  - eval "$(/opt/chefdk/bin/chef shell-init bash)"
+  - eval "$(chef shell-init bash)"
   - chef --version
   - cookstyle --version
   - foodcritic --version
