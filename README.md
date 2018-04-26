@@ -8,7 +8,7 @@ Needs an SELinux policy active (so its values can be managed). Can work with a d
 
 ### Chef
 
-- Chef 13
+- Chef 13+
 
 ### Platforms
 
