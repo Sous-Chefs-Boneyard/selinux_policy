@@ -1,4 +1,3 @@
-property :name, String
 property :allow_disabled, [true, false], default: true
 
 action :install do

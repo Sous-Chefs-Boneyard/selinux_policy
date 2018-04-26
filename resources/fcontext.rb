@@ -1,7 +1,6 @@
 # Manages file specs in SELinux
 # See http://docs.fedoraproject.org/en-US/Fedora/13/html/SELinux_FAQ/index.html#id3715134
 
-default_action :addormodify
 property :file_spec, String, name_property: true
 property :secontext, String
 property :file_type, String, default: 'a', equal_to: %w(a f d c b s l p)

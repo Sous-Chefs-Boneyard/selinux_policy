@@ -1,6 +1,5 @@
 # a resource for managing selinux permissive contexts
 
-property :name, String, name_property: true
 property :allow_disabled, [true, false], default: true
 
 # Create if doesn't exist, do not touch if port is already registered (even under different type)
