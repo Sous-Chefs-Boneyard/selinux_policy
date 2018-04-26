@@ -15,10 +15,11 @@ class Chef
         end
 
         if getenforce.stdout =~ /Disabled|/i
-        # return false only when SELinux is disabled and it's allowed
-        return_val = !(selinux_disabled && new_resource.allowed_disabled)
-        Chef::Log.warn('SELinux is disabled / unreachable, skipping') unless return_val
-        return_val
+          # return false only when SELinux is disabled and it's allowed
+          return_val = !(selinux_disabled && new_resource.allowed_disabled)
+          Chef::Log.warn('SELinux is disabled / unreachable, skipping') unless return_val
+          return_val
+        end
       end
 
       def sebool(persist = false)
@@ -81,7 +82,6 @@ class Chef
           "-f #{file_type}"
         end
       end
-
     end
   end
 end
