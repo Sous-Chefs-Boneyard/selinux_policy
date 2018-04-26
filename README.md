@@ -19,7 +19,7 @@ Needs an SELinux policy active (so its values can be managed). Can work with a d
 
 ## Attributes
 
-These attributes affect the way all of the LWRPs are behaving.
+These attributes affect the way all of the resource behave.
 
 - `node['selinux_policy']['allow_disabled']` - Whether to allow runs when SELinux is disabled. Will generate warnings, but the run won't fail. Defaults to `true`, set to `false` if you don't have any machines with disabled SELinux.
 
@@ -33,7 +33,7 @@ This cookbook's functionality is exposed via resources, so it should be called f
 
 Represents an SELinux [boolean](http://wiki.gentoo.org/wiki/SELinux/Tutorials/Using_SELinux_booleans). You can either `set` it, meaning it will be changed without persistence (it will revert to default in the next reboot), or `setpersist` it (default action), so it'll keep it value after rebooting. Using `setpersist` requires an active policy (so that the new value can be saved somewhere).
 
-Attributes:
+Properties:
 
 - `name`: boolean's name. Defaults to resource name.
 - `value`: Its new value (`true`/`false`).
@@ -64,7 +64,7 @@ Actions:
 - `modify`: Changes the port's context if it's already listed (only uses `-m`).
 - `delete`: Removes the port's context if it's listed (uses `-d`).
 
-Attributes:
+Properties:
 
 - `port`: The port in question, defaults to resource name.
 - `protocol`: `tcp`/`udp`.
@@ -94,7 +94,7 @@ Actions:
 - `deploy` (default): Runs `fetch`, `compile`, `install` in that order.
 - `remove`: Removes a module.
 
-Attributes:
+Properties:
 
 - `name`: The module name. Defaults to resource name.
 - `directory`: Directory where module is stored. Defaults to a directory inside the Chef cache.
@@ -138,7 +138,7 @@ Actions:
 - `modify`: Changes the file regexp context if it's already listed (only uses -m).
 - `delete`: Removes the file regexp context if it's listed (uses -d).
 
-Attributes:
+Properties:
 
 - `file_spec`: This is the file regexp in question, defaults to resource name.
 - `secontext`: The SELinux context to assign the file regexp to. Not required for `:delete`
