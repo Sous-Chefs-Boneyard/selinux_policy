@@ -5,7 +5,7 @@ describe 'selinux_policy module' do
     ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
       selinux_policy_module 'testy' do
         action actions
-        allow_disabled = false
+        allow_disabled false
         content <<-eos
           policy_module(testy, 1.0.0)
           type testy_t;
@@ -19,7 +19,7 @@ describe 'selinux_policy module' do
         ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
             action :fetch
-            allow_disabled = false
+            allow_disabled false
             content <<-eos
               policy_module(testy, 1.0.0)
               type testy_t;
@@ -36,7 +36,7 @@ describe 'selinux_policy module' do
       let :chef_run do
         ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
-            allow_disabled = false
+            allow_disabled false
             action :fetch
             directory_source 'lolzaur'
           end
@@ -51,7 +51,7 @@ describe 'selinux_policy module' do
         ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
             action :fetch
-            allow_disabled = false
+            allow_disabled false
             content <<-eos
               policy_module(testy, 1.0.0)
               type testy_t;
@@ -90,7 +90,7 @@ describe 'selinux_policy module' do
     let :chef_run do
       ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
         selinux_policy_module 'testy' do
-          allow_disabled = false
+          allow_disabled false
           action :remove
         end
       end
