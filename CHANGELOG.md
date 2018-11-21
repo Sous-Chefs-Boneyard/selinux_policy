@@ -2,6 +2,11 @@
 
 This file is used to changes made in each version of the selinuxpolicy cookbook.
 
+## [2.2.0] (2018-11-21)
+
+- Add RHEL-8 packages
+
+
 ## [2.1.0] (2018-04-12)
 
 - Port definition methods to check for already defined ports
