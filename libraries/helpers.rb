@@ -15,18 +15,18 @@ class Chef
         end
 
         # return false only when SELinux is disabled and it's allowed
-        return_val = !selinux_disabled || (selinux_disabled && new_resource.allowed_disabled)
+        return_val = !selinux_disabled || (selinux_disabled && new_resource.allow_disabled)
         Chef::Log.warn('SELinux is disabled / unreachable, skipping') unless return_val
         return_val
       end
 
-      def sebool(persist = false)
+      def sebool(new_resource, persist = false)
         persist_string = persist ? '-P ' :  ''
         new_value = new_resource.value ? 'on' : 'off'
         execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
           command "setsebool #{persist_string} #{new_resource.name} #{new_value}"
           not_if "getsebool #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
-          only_if { use_selinux }
+          only_if { use_selinux(new_resource) }
         end
       end
 

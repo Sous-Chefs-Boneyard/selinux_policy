@@ -8,12 +8,12 @@ include Chef::SELinuxPolicy::Helpers
 
 # Set for now, without persisting
 action :set do
-  sebool(false)
+  sebool(new_resource, false)
 end
 
 # Set and persist
 action :setpersist do
-  sebool(true)
+  sebool(new_resource, true)
 end
 
 action_class do
