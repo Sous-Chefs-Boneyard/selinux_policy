@@ -11,20 +11,20 @@ describe 'selinux_policy fcontext' do
 
   describe 'AddOrModify' do
     it 'creates when none' do
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(false)
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(false)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(false)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(false)
       expect(chef_run).to run_execute('selinux-fcontext-http_dir_t-add')
       expect(chef_run).not_to run_execute('selinux-fcontext-http_dir_t-modify')
     end
     it 'modifies when exists and mismatch' do
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(true)
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(false)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(true)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(false)
       expect(chef_run).not_to run_execute('selinux-fcontext-http_dir_t-add')
       expect(chef_run).to run_execute('selinux-fcontext-http_dir_t-modify')
     end
     it 'does nothing when match' do
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(true)
-      stub_command("semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(true)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+'").and_return(true)
+      stub_command("/sbin/semanage fcontext -l | grep -qP '^/tmp/test\\s+all\\ files\\s+system_u:object_r:http_dir_t:s0\\s*$'").and_return(true)
       expect(chef_run).not_to run_execute('selinux-fcontext-http_dir_t-add')
       expect(chef_run).not_to run_execute('selinux-fcontext-http_dir_t-modify')
     end

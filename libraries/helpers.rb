@@ -24,7 +24,7 @@ class Chef
         persist_string = persist ? '-P ' :  ''
         new_value = new_resource.value ? 'on' : 'off'
         execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
-          command "setsebool #{persist_string} #{new_resource.name} #{new_value}"
+          command "/sbin/setsebool #{persist_string} #{new_resource.name} #{new_value}"
           not_if "getsebool #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
           only_if { use_selinux(new_resource) }
         end
@@ -65,7 +65,7 @@ class Chef
         }
 
         label_matcher = label ? "system_u:object_r:#{Regexp.escape(label)}:s0\\s*$" : ''
-        "semanage fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
+        "/sbin/semanage fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
       end
 
       def semanage_options(file_type)

@@ -38,7 +38,7 @@ end
 # Create if doesn't exist, do not touch if fcontext is already registered
 action :add do
   execute "selinux-fcontext-#{new_resource.secontext}-add" do
-    command "semanage fcontext -a #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
+    command "/sbin/semanage fcontext -a #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     not_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
     only_if { use_selinux(new_resource) }
     notifies :relabel, new_resource, :immediate
@@ -48,7 +48,7 @@ end
 # Delete if exists
 action :delete do
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
-    command "semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
+    command "/sbin/semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
     only_if { use_selinux(new_resource) }
     notifies :relabel, new_resource, :immediate
@@ -57,7 +57,7 @@ end
 
 action :modify do
   execute "selinux-fcontext-#{new_resource.secontext}-modify" do
-    command "semanage fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
+    command "/sbin/semanage fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     only_if { use_selinux(new_resource) }
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
     not_if  fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
