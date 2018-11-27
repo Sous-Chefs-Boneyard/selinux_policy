@@ -19,7 +19,7 @@ end
 # Get all the components in the right place
 action :fetch do
   directory new_resource.directory do
-    only_if { use_selinux }
+    only_if { use_selinux(new_resource) }
   end
 
   raise 'dont specify both directory_source and content' if new_resource.directory_source && new_resource.content
@@ -28,14 +28,14 @@ action :fetch do
     remote_directory new_resource.directory do
       source new_resource.directory_source
       cookbook new_resource.cookbook
-      only_if { use_selinux }
+      only_if { use_selinux(new_resource) }
     end
   end
 
   if new_resource.content
     file "#{new_resource.directory}/#{new_resource.module_name}.te" do
       content new_resource.content
-      only_if { use_selinux }
+      only_if { use_selinux(new_resource) }
     end
   end
 end
@@ -45,7 +45,7 @@ action :compile do
   execute "semodule-compile-#{new_resource.module_name}" do
     command make_command
     not_if "#{make_command} -q", cwd: new_resource.directory # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
-    only_if { use_selinux }
+    only_if { use_selinux(new_resource) }
     cwd new_resource.directory
   end
 end
@@ -59,7 +59,7 @@ action :install do
   execute "semodule-install-#{new_resource.module_name}" do
     command "semodule -i #{filename}"
     only_if "#{shell_boolean(new_resource.updated_by_last_action? || new_resource.force)} || ! (#{module_defined(new_resource.module_name)}) "
-    only_if { use_selinux }
+    only_if { use_selinux(new_resource) }
   end
 end
 
@@ -67,7 +67,7 @@ action :remove do
   execute "semodule-remove-#{new_resource.module_name}" do
     command "semodule -r #{new_resource.module_name}"
     only_if module_defined(new_resource.module_name)
-    only_if { use_selinux }
+    only_if { use_selinux(new_resource) }
   end
 end
 

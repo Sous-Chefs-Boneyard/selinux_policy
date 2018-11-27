@@ -2,8 +2,14 @@
 
 This file is used to changes made in each version of the selinuxpolicy cookbook.
 
+## [2.3.0] (2018-11-XX)
+
+- Further fixes for the earlier refactoring
+- Repair CI jobs
+
 ## [2.2.0] (2018-11-21)
 
+- Large refactoring to helpers and resources
 - Add RHEL-8 packages
 
 
@@ -13,10 +19,6 @@ This file is used to changes made in each version of the selinuxpolicy cookbook.
 - Cleanup resource cloning
 - Deprecate support for Chef 12.x now it's EOL
 - Fix Foodcritic warnings & update test platforms
-
-## 3.0.0 (2018-04-XX)
-
-- Support Chef 13.0+
 
 ## 2.0.1 (2017-04-21)
 
