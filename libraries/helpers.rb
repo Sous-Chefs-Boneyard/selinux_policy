@@ -7,7 +7,7 @@ class Chef
       include Chef::Mixin::ShellOut
       # Checks if SELinux is disabled or otherwise unavailable and
       # whether we're allowed to run when disabled
-      def use_selinux(new_resource)
+      def use_selinux(allow_disabled)
         begin
           getenforce = shell_out!(which('getenforce'))
         rescue
@@ -17,7 +17,7 @@ class Chef
         end
 
         # return false only when SELinux is disabled and it's allowed
-        return_val = !selinux_disabled || (selinux_disabled && new_resource.allow_disabled)
+        return_val = !selinux_disabled || (selinux_disabled && allow_disabled)
         Chef::Log.warn('SELinux is disabled / unreachable, skipping') unless return_val
         return_val
       end
@@ -28,7 +28,7 @@ class Chef
         execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
           command "#{which('setsebool')} #{persist_string} #{new_resource.name} #{new_value}"
           not_if "#{which('getsebool')} #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
-          only_if { use_selinux(new_resource) }
+          only_if { use_selinux(new_resource.allow_disabled) }
         end
       end
 
