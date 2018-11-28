@@ -1,6 +1,8 @@
 # Manages file specs in SELinux
 # See http://docs.fedoraproject.org/en-US/Fedora/13/html/SELinux_FAQ/index.html#id3715134
 
+require 'chef/mixin/which'
+
 property :file_spec, String, name_property: true
 property :secontext, String
 property :file_type, String, default: 'a', equal_to: %w(a f d c b s l p)
@@ -48,7 +50,7 @@ end
 # Delete if exists
 action :delete do
   execute "selinux-fcontext-#{new_resource.secontext}-delete" do
-    command "semanage fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
+    command "#{which('semanage')} fcontext #{semanage_options(new_resource.file_type)} -d '#{new_resource.file_spec}'"
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
     only_if { use_selinux(new_resource) }
     notifies :relabel, new_resource, :immediate
@@ -57,7 +59,7 @@ end
 
 action :modify do
   execute "selinux-fcontext-#{new_resource.secontext}-modify" do
-    command "semanage fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
+    command "#{which('semanage')} fcontext -m #{semanage_options(new_resource.file_type)} -t #{new_resource.secontext} '#{new_resource.file_spec}'"
     only_if { use_selinux(new_resource) }
     only_if fcontext_defined(new_resource.file_spec, new_resource.file_type)
     not_if  fcontext_defined(new_resource.file_spec, new_resource.file_type, new_resource.secontext)
@@ -67,4 +69,5 @@ end
 
 action_class do
   include Chef::SELinuxPolicy::Helpers
+  include Chef::Mixin::Which
 end
