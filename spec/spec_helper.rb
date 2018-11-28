@@ -14,6 +14,17 @@ module ChefSpec
   end
 end
 
+# Stub this for the tests
+class Chef
+  module Mixin
+    module Which
+      def which(*cmds)
+        cmds.first
+      end
+    end
+  end
+end
+
 RSpec.configure do |config|
   config.color = true
   config.tty = true

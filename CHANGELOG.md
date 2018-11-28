@@ -2,7 +2,11 @@
 
 This file is used to changes made in each version of the selinuxpolicy cookbook.
 
-## [2.3.0] (2018-11-XX)
+## [2.3.1] (2018-11-XX)
+
+- Use chef/mixin/which to locate selinux binaries
+
+## [2.3.0] (2018-11-27)
 
 - Further fixes for the earlier refactoring
 - Repair CI jobs
