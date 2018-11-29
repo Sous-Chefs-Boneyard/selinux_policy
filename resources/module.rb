@@ -57,7 +57,7 @@ end
 action :install do
   filename = "#{new_resource.directory}/#{new_resource.module_name}.pp"
   execute "semodule-install-#{new_resource.module_name}" do
-    command "semodule -i #{filename}"
+    command "#{semodule_cmd} -i #{filename}"
     only_if "#{shell_boolean(new_resource.updated_by_last_action? || new_resource.force)} || ! (#{module_defined(new_resource.module_name)}) "
     only_if { use_selinux(new_resource.allow_disabled) }
   end
@@ -65,7 +65,7 @@ end
 
 action :remove do
   execute "semodule-remove-#{new_resource.module_name}" do
-    command "semodule -r #{new_resource.module_name}"
+    command "#{semodule_cmd} -r #{new_resource.module_name}"
     only_if module_defined(new_resource.module_name)
     only_if { use_selinux(new_resource.allow_disabled) }
   end

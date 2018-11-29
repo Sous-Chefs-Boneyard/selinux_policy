@@ -19,7 +19,7 @@ end
 action :add do
   validate_port(new_resource.port)
   execute "selinux-port-#{new_resource.port}-add" do
-    command "semanage port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
+    command "#{semanage_cmd} port -a -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
     not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
     not_if port_defined(new_resource.protocol, new_resource.port)
     only_if { use_selinux(new_resource.allow_disabled) }
@@ -30,7 +30,7 @@ end
 action :delete do
   validate_port(new_resource.port)
   execute "selinux-port-#{new_resource.port}-delete" do
-    command "semanage port -d -p #{new_resource.protocol} #{new_resource.port}"
+    command "#{semanage_cmd} port -d -p #{new_resource.protocol} #{new_resource.port}"
     only_if port_defined(new_resource.protocol, new_resource.port)
     only_if { use_selinux(new_resource.allow_disabled) }
   end
@@ -38,7 +38,7 @@ end
 
 action :modify do
   execute "selinux-port-#{new_resource.port}-modify" do
-    command "semanage port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
+    command "#{semanage_cmd} port -m -t #{new_resource.secontext} -p #{new_resource.protocol} #{new_resource.port}"
     only_if port_defined(new_resource.protocol, new_resource.port)
     not_if port_defined(new_resource.protocol, new_resource.port, new_resource.secontext)
     only_if { use_selinux(new_resource.allow_disabled) }
