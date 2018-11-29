@@ -1,6 +1,6 @@
-# selinuxpolicy CHANGELOG
+# selinux_policy CHANGELOG
 
-This file is used to changes made in each version of the selinuxpolicy cookbook.
+This file is used to changes made in each version of the selinux_policy cookbook.
 
 ## [2.3.1] (2018-11-XX)
 
