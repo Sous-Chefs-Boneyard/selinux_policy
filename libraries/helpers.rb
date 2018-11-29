@@ -1,15 +1,13 @@
 class Chef
   module SELinuxPolicy
     module Helpers
-      require 'chef/mixin/which'
       require 'chef/mixin/shell_out'
-      include Chef::Mixin::Which
       include Chef::Mixin::ShellOut
       # Checks if SELinux is disabled or otherwise unavailable and
       # whether we're allowed to run when disabled
       def use_selinux(allow_disabled)
         begin
-          getenforce = shell_out!(which('getenforce'))
+          getenforce = shell_out!(getenforce_cmd)
         rescue
           selinux_disabled = true
         else
@@ -26,14 +24,14 @@ class Chef
         persist_string = persist ? '-P ' :  ''
         new_value = new_resource.value ? 'on' : 'off'
         execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
-          command "#{which('setsebool')} #{persist_string} #{new_resource.name} #{new_value}"
-          not_if "#{which('getsebool')} #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
+          command "#{setsebool_cmd} #{persist_string} #{new_resource.name} #{new_value}"
+          not_if "#{getsebool_cmd} #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
           only_if { use_selinux(new_resource.allow_disabled) }
         end
       end
 
       def module_defined(name)
-        "#{which('semodule')} -l | grep -w '^#{name}'"
+        "#{semodule_cmd} -l | grep -w '^#{name}'"
       end
 
       def shell_boolean(expression)
@@ -67,7 +65,7 @@ class Chef
         }
 
         label_matcher = label ? "system_u:object_r:#{Regexp.escape(label)}:s0\\s*$" : ''
-        "#{which('semanage')} fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
+        "#{semanage_cmd} fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
       end
 
       def semanage_options(file_type)
@@ -81,6 +79,29 @@ class Chef
         else
           "-f #{file_type}"
         end
+      end
+
+      require 'chef/mixin/which'
+      include Chef::Mixin::Which
+
+      def setsebool_cmd
+        @setsebool_cmd ||= which('setsebool')
+      end
+
+      def getsebool_cmd
+        @getsebool_cmd ||= which('getsebool')
+      end
+
+      def getenforce_cmd
+        @getenforce_cmd ||= which('getenforce')
+      end
+
+      def semanage_cmd
+        @semanage_cmd ||= which('semanage')
+      end
+
+      def semodule_cmd
+        @semodule_cmd ||= which('semodule')
       end
     end
   end
