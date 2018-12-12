@@ -1,8 +1,12 @@
-# selinuxpolicy CHANGELOG
+# selinux_policy CHANGELOG
 
-This file is used to changes made in each version of the selinuxpolicy cookbook.
+This file is used to changes made in each version of the selinux_policy cookbook.
 
-## [2.3.1] (2018-11-XX)
+## [2.3.2] (2018-11-29)
+
+- Cache which helper method calls
+
+## [2.3.1] (2018-11-29)
 
 - Use chef/mixin/which to locate selinux binaries
 

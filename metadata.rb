@@ -7,7 +7,7 @@ long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 source_url       'https://github.com/sous-chefs/selinux_policy'
 issues_url       'https://github.com/sous-chefs/selinux_policy/issues'
 chef_version     '>= 13.0'
-version          '2.3.0'
+version          '2.3.2'
 
 supports 'redhat'
 supports 'centos'
