@@ -2,6 +2,12 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## [2.3.3] - 2019-01-10
+
+### Fixed
+
+- Perform relabel (restorecon) using xargs while still supporting regexes. Fixes [#88](https://github.com/sous-chefs/selinux_policy/issues/88)
+
 ## [2.3.2] - 2018-11-29
 
 - Cache which helper method calls
