@@ -1,28 +1,40 @@
-# selinuxpolicy CHANGELOG
+# selinux_policy CHANGELOG
 
-This file is used to changes made in each version of the selinuxpolicy cookbook.
+This file is used to changes made in each version of the selinux_policy cookbook.
 
-## [2.2.0] (2018-11-21)
+## [2.3.2] - 2018-11-29
 
+- Cache which helper method calls
+
+## [2.3.1] - 2018-11-29
+
+### Fixed
+
+-  Use `chef/mixin/which` to locate selinux binaries. Fixes [#85](https://github.com/sous-chefs/selinux_policy/issues/85) & [#93](https://github.com/sous-chefs/selinux_policy/issues/93)
+
+## [2.3.0] - 2018-11-27
+
+- Further fixes for the earlier refactoring
+- Repair CI jobs
+
+## [2.2.0] - 2018-11-21
+
+- Large refactoring to helpers and resources
 - Add RHEL-8 packages
 
 
-## [2.1.0] (2018-04-12)
+## [2.1.0] - 2018-04-12
 
 - Port definition methods to check for already defined ports
 - Cleanup resource cloning
 - Deprecate support for Chef 12.x now it's EOL
 - Fix Foodcritic warnings & update test platforms
 
-## 3.0.0 (2018-04-XX)
-
-- Support Chef 13.0+
-
-## 2.0.1 (2017-04-21)
+## 2.0.1 - 2017-04-21
 
 - Perform relabel (restorecon) using find to support regexes
 
-## 2.0.0 (2017-02-23)
+## 2.0.0 - 2017-02-23
 
 - This cookbook has been moved to the Sous Chefs org. See sous-chefs.org for more information
 - Require Chef 12.1 or later
@@ -166,4 +178,8 @@ This file is used to changes made in each version of the selinuxpolicy cookbook.
 
 - [backlasher] - Initial release of selinuxpolicy
 
-[v2.1.0]: https://github.com/sous-chefs/selinux_policy/compare/v2.0.1...v2.1.0
+[2.3.2]: https://github.com/sous-chefs/selinux_policy/compare/v2.3.1...v2.3.2
+[2.3.1]: https://github.com/sous-chefs/selinux_policy/compare/v2.3.0...v2.3.1
+[2.3.0]: https://github.com/sous-chefs/selinux_policy/compare/v2.2.0...v2.3.0
+[2.2.0]: https://github.com/sous-chefs/selinux_policy/compare/v2.1.0...v2.2.0
+[2.1.0]: https://github.com/sous-chefs/selinux_policy/compare/v2.0.1...v2.1.0

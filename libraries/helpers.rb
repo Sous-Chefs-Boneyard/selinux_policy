@@ -5,9 +5,9 @@ class Chef
       include Chef::Mixin::ShellOut
       # Checks if SELinux is disabled or otherwise unavailable and
       # whether we're allowed to run when disabled
-      def use_selinux(new_resource)
+      def use_selinux(allow_disabled)
         begin
-          getenforce = shell_out!('getenforce')
+          getenforce = shell_out!(getenforce_cmd)
         rescue
           selinux_disabled = true
         else
@@ -15,23 +15,23 @@ class Chef
         end
 
         # return false only when SELinux is disabled and it's allowed
-        return_val = !selinux_disabled || (selinux_disabled && new_resource.allowed_disabled)
+        return_val = !selinux_disabled || (selinux_disabled && allow_disabled)
         Chef::Log.warn('SELinux is disabled / unreachable, skipping') unless return_val
         return_val
       end
 
-      def sebool(persist = false)
+      def sebool(new_resource, persist = false)
         persist_string = persist ? '-P ' :  ''
         new_value = new_resource.value ? 'on' : 'off'
         execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
-          command "setsebool #{persist_string} #{new_resource.name} #{new_value}"
-          not_if "getsebool #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
-          only_if { use_selinux }
+          command "#{setsebool_cmd} #{persist_string} #{new_resource.name} #{new_value}"
+          not_if "#{getsebool_cmd} #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
+          only_if { use_selinux(new_resource.allow_disabled) }
         end
       end
 
       def module_defined(name)
-        "semodule -l | grep -w '^#{name}'"
+        "#{semodule_cmd} -l | grep -w '^#{name}'"
       end
 
       def shell_boolean(expression)
@@ -65,7 +65,7 @@ class Chef
         }
 
         label_matcher = label ? "system_u:object_r:#{Regexp.escape(label)}:s0\\s*$" : ''
-        "semanage fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
+        "#{semanage_cmd} fcontext -l | grep -qP '^#{Regexp.escape(file_spec)}\\s+#{Regexp.escape(file_hash[file_type])}\\s+#{label_matcher}'"
       end
 
       def semanage_options(file_type)
@@ -79,6 +79,29 @@ class Chef
         else
           "-f #{file_type}"
         end
+      end
+
+      require 'chef/mixin/which'
+      include Chef::Mixin::Which
+
+      def setsebool_cmd
+        @setsebool_cmd ||= which('setsebool')
+      end
+
+      def getsebool_cmd
+        @getsebool_cmd ||= which('getsebool')
+      end
+
+      def getenforce_cmd
+        @getenforce_cmd ||= which('getenforce')
+      end
+
+      def semanage_cmd
+        @semanage_cmd ||= which('semanage')
+      end
+
+      def semodule_cmd
+        @semodule_cmd ||= which('semodule')
       end
     end
   end
