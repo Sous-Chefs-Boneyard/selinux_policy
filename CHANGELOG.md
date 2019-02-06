@@ -2,7 +2,9 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
-## [2.3.3] - 2019-01-10
+## Unreleased
+
+## [2.3.3] - 2019-02-06
 
 ### Fixed
 
