@@ -30,7 +30,7 @@ action :relabel do
     common = '/' if common[0] != '/'
 
     if ::File.exist? common
-      shell_out!('find', common, '-ignore_readdir_race', '-regextype', 'posix-egrep', '-regex', spec, '-prune', '-execdir', 'restorecon', '-iRv', '{}', '+')
+      shell_out!('find', common, '-ignore_readdir_race', '-regextype', 'posix-egrep', '-regex', spec, '-prune', '-print0', '2>/dev/null', '|', 'xargs', '-0', '-I', '{}', 'restorecon', '-iRv', '{}')
     end
   end
 end
