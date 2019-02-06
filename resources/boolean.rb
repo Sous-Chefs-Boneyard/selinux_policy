@@ -4,8 +4,6 @@ property :value, [true, false]
 property :force, [true, false], default: false
 property :allow_disabled, [true, false], default: true
 
-include Chef::SELinuxPolicy::Helpers
-
 # Set for now, without persisting
 action :set do
   sebool(new_resource, false)

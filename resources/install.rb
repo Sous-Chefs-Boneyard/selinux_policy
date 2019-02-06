@@ -9,7 +9,6 @@ action :install do
       action :nothing
     end
 
-    # package ['policycoreutils', 'selinux-policy-dev', 'setools', 'make']
     package %w(selinux-policy-default selinux-basics auditd) do
       notifies :run, 'execute[selinux-activate]', :immediately
     end
