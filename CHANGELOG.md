@@ -6,8 +6,6 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 ## [2.3.3] - 2019-02-06
 
-### Fixed
-
 - Perform relabel (restorecon) using xargs while still supporting regexes. Fixes [#88](https://github.com/sous-chefs/selinux_policy/issues/88)
 
 ## [2.3.2] - 2018-11-29
@@ -16,9 +14,7 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 ## [2.3.1] - 2018-11-29
 
-### Fixed
-
--  Use `chef/mixin/which` to locate selinux binaries. Fixes [#85](https://github.com/sous-chefs/selinux_policy/issues/85) & [#93](https://github.com/sous-chefs/selinux_policy/issues/93)
+- Use `chef/mixin/which` to locate selinux binaries. Fixes [#85](https://github.com/sous-chefs/selinux_policy/issues/85) & [#93](https://github.com/sous-chefs/selinux_policy/issues/93)
 
 ## [2.3.0] - 2018-11-27
 
@@ -29,7 +25,6 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 - Large refactoring to helpers and resources
 - Add RHEL-8 packages
-
 
 ## [2.1.0] - 2018-04-12
 
