@@ -4,6 +4,10 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 ## Unreleased
 
+## [2.3.4] - 2019-02-07
+
+- Fix `shell_out` to use an actual shell. Caused by [#88](https://github.com/sous-chefs/selinux_policy/issues/88)
+
 ## [2.3.3] - 2019-02-06
 
 - Perform relabel (restorecon) using xargs while still supporting regexes. Fixes [#88](https://github.com/sous-chefs/selinux_policy/issues/88)

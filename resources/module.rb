@@ -9,7 +9,6 @@ property :directory_source, String # Source directory for module source code. If
 property :cookbook, String # Related to directory
 property :allow_disabled, [true, false], default: true
 
-
 action :deploy do
   run_action(:fetch)
   run_action(:compile)
