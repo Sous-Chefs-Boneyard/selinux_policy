@@ -26,6 +26,8 @@ action :install do
     end
   when 'fedora'
     package ['policycoreutils-python', 'selinux-policy-devel', 'setools-console', 'make']
+  when 'amazon'
+    package ['policycoreutils', 'selinux-policy-targeted', 'policycoreutils-python']
   else
     raise 'Unknown distro, cannot determine required package names'
   end

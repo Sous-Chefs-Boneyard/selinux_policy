@@ -26,85 +26,85 @@ workflows:
 
       # Test Kitchen
       - kitchen/dokken-single:
-          name: setup
+          name: setup-centos-6
           suite: setup
           requires:
             *lint_and_unit
           platform: centos-6
       - kitchen/dokken-single:
-          name: setup
+          name: setup-centos-7
           suite: setup
           requires:
             *lint_and_unit
           platform: centos-7
       - kitchen/dokken-single:
-          name: setup
+          name: setup-debian-8
           suite: setup
           requires:
             *lint_and_unit
           platform: debian-8
       - kitchen/dokken-single:
-          name: setup
+          name: setup-debian-9
           suite: setup
           requires:
             *lint_and_unit
           platform: debian-9
       - kitchen/dokken-single:
-          name: setup
+          name: setup-ubuntu-1604
           suite: setup
           requires:
             *lint_and_unit
           platform: ubuntu-1604
       - kitchen/dokken-single:
-          name: setup
+          name: setup-ubuntu-1804
           suite: setup
           requires:
             *lint_and_unit
           platform: ubuntu-1804
       - kitchen/dokken-single:
-          name: setup
+          name: setup-amazonlinux
           suite: setup
           requires:
             *lint_and_unit
           platform: amazonlinux
       - kitchen/dokken-single:
-          name: default
+          name: default-centos-6
           suite: default
           requires:
             *lint_and_unit
           platform: centos-6
       - kitchen/dokken-single:
-          name: default
+          name: default-centos-7
           suite: default
           requires:
             *lint_and_unit
           platform: centos-7
       - kitchen/dokken-single:
-          name: default
+          name: default-debian-8
           suite: default
           requires:
             *lint_and_unit
           platform: debian-8
       - kitchen/dokken-single:
-          name: default
+          name: default-debian-9
           suite: default
           requires:
             *lint_and_unit
           platform: debian-9
       - kitchen/dokken-single:
-          name: default
+          name: default-ubuntu-1604
           suite: default
           requires:
             *lint_and_unit
           platform: ubuntu-1604
       - kitchen/dokken-single:
-          name: default
+          name: default-ubuntu-1804
           suite: default
           requires:
             *lint_and_unit
           platform: ubuntu-1804
       - kitchen/dokken-single:
-          name: default
+          name: default-amazonlinux
           suite: default
           requires:
             *lint_and_unit
