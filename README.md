@@ -2,7 +2,6 @@
 
 [![Build Status](https://img.shields.io/circleci/project/github/sous-chefs/selinux_policy/master.svg)](https://circleci.com/gh/sous-chefs/selinux_policy) [![Cookbook Version](https://img.shields.io/cookbook/v/selinux_policy.svg)](https://supermarket.chef.io/cookbooks/selinux_policy)
 
-
 This cookbook can be used to manage SELinux policies and components (rather than just enable / disable enforcing). I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
 
 ## Requirements
@@ -207,11 +206,11 @@ end
 ## Contributing
 
 1. Fork the repository
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable): If fixing a bug, please add regression tests for the RSpec (if possible) and the kitchen If adding a feature, please create basic tests for it, in both RSpec and kitchen
-5. Run the tests, ensuring they all pass, using `rake testing:user`
-6. Submit a Pull Request using Github Please **attach the test results** using a gist
+1. Create a named feature branch (like `add_component_x`)
+1. Write your change
+1. Write tests for your change (if applicable): If fixing a bug, please add regression tests for the RSpec (if possible) and the kitchen If adding a feature, please create basic tests for it, in both RSpec and kitchen
+1. Run the tests, ensuring they all pass, using `rake testing:user`
+1. Submit a Pull Request using Github Please **attach the test results** using a gist
 
 ## License and Authors
 
