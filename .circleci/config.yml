@@ -54,13 +54,13 @@ workflows:
           suite: setup
           requires:
             *lint_and_unit
-          platform: ubuntu-16.04
+          platform: ubuntu-1604
       - kitchen/dokken-single:
           name: setup
           suite: setup
           requires:
             *lint_and_unit
-          platform: ubuntu-18.04
+          platform: ubuntu-1804
       - kitchen/dokken-single:
           name: setup
           suite: setup
@@ -96,13 +96,13 @@ workflows:
           suite: default
           requires:
             *lint_and_unit
-          platform: ubuntu-16.04
+          platform: ubuntu-1604
       - kitchen/dokken-single:
           name: default
           suite: default
           requires:
             *lint_and_unit
-          platform: ubuntu-18.04
+          platform: ubuntu-1804
       - kitchen/dokken-single:
           name: default
           suite: default
