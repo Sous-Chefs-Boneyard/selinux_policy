@@ -1,6 +1,7 @@
 # selinux_policy Cookbook
 
-[![Cookbook Version](https://img.shields.io/cookbook/v/selinux_policy.svg?style=flat)](https://supermarket.chef.io/cookbooks/selinux_policy) [![Build Status](https://travis-ci.org/sous-chefs/selinux_policy.svg?branch=master)](https://travis-ci.org/sous-chefs/selinux_policy)
+[![Build Status](https://img.shields.io/circleci/project/github/sous-chefs/selinux_policy/master.svg)](https://circleci.com/gh/sous-chefs/selinux_policy) [![Cookbook Version](https://img.shields.io/cookbook/v/selinux_policy.svg)](https://supermarket.chef.io/cookbooks/selinux_policy)
+
 
 This cookbook can be used to manage SELinux policies and components (rather than just enable / disable enforcing). I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
 
