@@ -206,11 +206,11 @@ end
 ## Contributing
 
 1. Fork the repository
-2. Create a named feature branch (like `add_component_x`)
-3. Write your change
-4. Write tests for your change (if applicable): If fixing a bug, please add regression tests for the RSpec (if possible) and the kitchen If adding a feature, please create basic tests for it, in both RSpec and kitchen
-5. Run the tests, ensuring they all pass, using `rake testing:user`
-6. Submit a Pull Request using Github Please **attach the test results** using a gist
+1. Create a named feature branch (like `add_component_x`)
+1. Write your change
+1. Write tests for your change (if applicable): If fixing a bug, please add regression tests for the RSpec (if possible) and the kitchen If adding a feature, please create basic tests for it, in both RSpec and kitchen
+1. Run the tests, ensuring they all pass, using `rake testing:user`
+1. Submit a Pull Request using Github Please **attach the test results** using a gist
 
 ## License and Authors
 
