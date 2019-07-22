@@ -22,7 +22,6 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-
       - kitchen/dokken-single:
           name: default
           suite: default
