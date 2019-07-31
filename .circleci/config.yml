@@ -22,14 +22,15 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-
-      - kitchen/dokken-single:
-          name: default
-          suite: default
-          requires:
-            *lint_and_unit
-      - kitchen/dokken-single:
-          name: setup
-          suite: setup
-          requires:
-            *lint_and_unit
+      # We cannot run tests using dokken for selinux
+      # This is a known issue which we will revisit at a later date
+      # - kitchen/dokken-single:
+      #     name: default
+      #     suite: default
+      #     requires:
+      #       *lint_and_unit
+      # - kitchen/dokken-single:
+      #     name: setup
+      #     suite: setup
+      #     requires:
+      #       *lint_and_unit
