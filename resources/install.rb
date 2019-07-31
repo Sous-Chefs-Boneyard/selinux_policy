@@ -16,16 +16,16 @@ action :install do
   when 'rhel'
     case node['platform_version'].to_i
     when 6
-      package ['policycoreutils-python', 'selinux-policy', 'setools-console', 'make']
+      package %w(policycoreutils-python selinux-policy setools-console make)
     when 7
-      package ['policycoreutils-python', 'selinux-policy-devel', 'setools-console', 'make']
+      package %w(policycoreutils-python selinux-policy-devel setools-console make)
     when 8
-      package ['policycoreutils-python-utils', 'selinux-policy-devel', 'setools-console', 'make']
+      package %w(policycoreutils-python-utils selinux-policy-devel setools-console make)
     else
       raise 'Unknown version of RHEL/derivative, cannot determine required package names'
     end
   when 'fedora'
-    package ['policycoreutils-python', 'selinux-policy-devel', 'setools-console', 'make']
+    package %w(policycoreutils-python selinux-policy-devel setools-console make)
   else
     raise 'Unknown distro, cannot determine required package names'
   end
