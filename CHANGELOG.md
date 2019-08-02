@@ -4,6 +4,8 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 ## Unreleased
 
+- Migrated testing to circleci
+
 ## [2.3.4] - 2019-02-07
 
 - Fix `shell_out` to use an actual shell. Caused by [#88](https://github.com/sous-chefs/selinux_policy/issues/88)
