@@ -7,6 +7,8 @@ This file is used to changes made in each version of the selinux_policy cookbook
 ## [2.3.5] - 2019-02-15
 
 - Fix resource failure in permissive.rb Caused by [#96](https://github.com/sous-chefs/selinux_policy/pull/96)
+- Migrated testing to circleci
+
 
 ## [2.3.4] - 2019-02-07
 

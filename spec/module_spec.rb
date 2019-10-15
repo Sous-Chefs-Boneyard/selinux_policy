@@ -9,7 +9,7 @@ describe 'selinux_policy module' do
         content <<-eos
           policy_module(testy, 1.0.0)
           type testy_t;
-          eos
+        eos
       end
     end
   end
@@ -23,7 +23,7 @@ describe 'selinux_policy module' do
             content <<-eos
               policy_module(testy, 1.0.0)
               type testy_t;
-              eos
+            eos
             directory_source 'lolzaur'
           end
         end
@@ -55,7 +55,7 @@ describe 'selinux_policy module' do
             content <<-eos
               policy_module(testy, 1.0.0)
               type testy_t;
-              eos
+            eos
           end
         end
       end
