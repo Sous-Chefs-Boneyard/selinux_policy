@@ -1,18 +1,23 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
   - lint-yaml
   - lint-markdown
-
 version: 2.1
 orbs:
   kitchen: sous-chefs/kitchen@2
-
 workflows:
   kitchen:
     jobs:
-      # Lint and Unit Test
       - kitchen/yamllint:
           name: lint-yaml
       - kitchen/mdlint:
@@ -22,15 +27,115 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-      # We cannot run tests using dokken for selinux
-      # This is a known issue which we will revisit at a later date
-      # - kitchen/dokken-single:
-      #     name: default
-      #     suite: default
-      #     requires:
-      #       *lint_and_unit
-      # - kitchen/dokken-single:
-      #     name: setup
-      #     suite: setup
-      #     requires:
-      #       *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-amazonlinux
+          suite: setup-amazonlinux
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-amazonlinux-2
+          suite: setup-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-debian-8
+          suite: setup-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-debian-9
+          suite: setup-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-centos-6
+          suite: setup-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-centos-7
+          suite: setup-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-fedora-27
+          suite: setup-fedora-27
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-ubuntu-1404
+          suite: setup-ubuntu-1404
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-ubuntu-1604
+          suite: setup-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-ubuntu-1804
+          suite: setup-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: setup-opensuse-leap
+          suite: setup-opensuse-leap
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-amazonlinux
+          suite: default-amazonlinux
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-amazonlinux-2
+          suite: default-amazonlinux-2
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-debian-8
+          suite: default-debian-8
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-debian-9
+          suite: default-debian-9
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-centos-6
+          suite: default-centos-6
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-centos-7
+          suite: default-centos-7
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-fedora-27
+          suite: default-fedora-27
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-ubuntu-1404
+          suite: default-ubuntu-1404
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-ubuntu-1604
+          suite: default-ubuntu-1604
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-ubuntu-1804
+          suite: default-ubuntu-1804
+          requires: *lint_and_unit
+      - kitchen/dokken-single:
+          name: default-opensuse-leap
+          suite: default-opensuse-leap
+          requires: *lint_and_unit
+      - final:
+          requires:
+            - setup-amazonlinux
+            - setup-amazonlinux-2
+            - setup-debian-8
+            - setup-debian-9
+            - setup-centos-6
+            - setup-centos-7
+            - setup-fedora-27
+            - setup-ubuntu-1404
+            - setup-ubuntu-1604
+            - setup-ubuntu-1804
+            - setup-opensuse-leap
+            - default-amazonlinux
+            - default-amazonlinux-2
+            - default-debian-8
+            - default-debian-9
+            - default-centos-6
+            - default-centos-7
+            - default-fedora-27
+            - default-ubuntu-1404
+            - default-ubuntu-1604
+            - default-ubuntu-1804
+            - default-opensuse-leap
