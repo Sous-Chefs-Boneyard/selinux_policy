@@ -3,7 +3,7 @@ property :allow_disabled, [true, false], default: true
 action :install do
   case node['platform_family']
   when 'debian'
-    raise 'Install SELinux manually on Ubuntu. See https://wiki.ubuntu.com/SELinux' if node['platform'] == 'ubuntu'
+    raise 'Install SELinux manually on Ubuntu. See https://wiki.ubuntu.com/SELinux' if platform?('ubuntu')
 
     execute 'selinux-activate' do
       action :nothing
