@@ -1,4 +1,12 @@
 ---
+jobs:
+  final:
+    docker:
+      - image: bash:latest
+    steps:
+      - run:
+          name: Finish cooking
+          command: echo "Finished cooking"
 lint_and_unit: &lint_and_unit
   - delivery
   - danger
@@ -22,15 +30,5 @@ workflows:
           context: Danger
       - kitchen/delivery:
           name: delivery
-      # We cannot run tests using dokken for selinux
-      # This is a known issue which we will revisit at a later date
-      # - kitchen/dokken-single:
-      #     name: default
-      #     suite: default
-      #     requires:
-      #       *lint_and_unit
-      # - kitchen/dokken-single:
-      #     name: setup
-      #     suite: setup
-      #     requires:
-      #       *lint_and_unit
+      - final:
+          requires: *lint_and_unit
