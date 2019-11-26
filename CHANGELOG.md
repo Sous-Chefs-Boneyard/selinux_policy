@@ -4,6 +4,8 @@ This file is used to changes made in each version of the selinux_policy cookbook
 
 ## Unreleased
 
+- Fix issue on use_selinux function
+
 ## [2.3.5] - 2019-02-15
 
 - Fix resource failure in permissive.rb Caused by [#96](https://github.com/sous-chefs/selinux_policy/pull/96)
