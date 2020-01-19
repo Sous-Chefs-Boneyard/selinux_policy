@@ -19,5 +19,5 @@ selinux_policy_port '1081-again' do
   port 1081
   protocol 'tcp'
   secontext 'http_port_t'
-  notifies :run, 'ruby_block[fail-twice]', :immediate
+  notifies :run, 'ruby_block[fail-twice]', :immediately
 end
