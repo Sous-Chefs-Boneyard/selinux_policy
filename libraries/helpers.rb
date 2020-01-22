@@ -39,7 +39,7 @@ class Chef
       end
 
       def port_defined(protocol, port, label = nil)
-        base_command = "seinfo --protocol=#{protocol} --portcon=#{port} | awk -F: '$(NF-1) !~ /reserved_port_t$/ && $(NF-3) !~ /[0-9]*-[0-9]*/ {print $(NF-1)}'"
+        base_command = "seinfo --portcon=#{port} | grep 'portcon #{protocol}' | awk -F: '$(NF-1) !~ /reserved_port_t$/ && $(NF-3) !~ /[0-9]*-[0-9]*/ {print $(NF-1)}'"
         grep = if label
                  "grep -P '#{Regexp.escape(label)}'"
                else
