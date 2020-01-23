@@ -5,6 +5,8 @@ This file is used to changes made in each version of the selinux_policy cookbook
 ## Unreleased
 
 - Fix issue on use_selinux function
+- Migrate to github actions
+- Resolved ChefStyle/ImmediateNotificationTiming: Use :immediately instead of :immediate for resource notification timing notifies
 
 ## [2.3.5] - 2019-02-15
 
