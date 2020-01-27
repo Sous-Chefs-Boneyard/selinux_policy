@@ -2,7 +2,7 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
-## Unreleased
+## [2.3.6] - 2020-01-26
 
 - Fix issue on use_selinux function
 - Migrate to github actions
