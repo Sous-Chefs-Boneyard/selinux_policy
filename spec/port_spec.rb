@@ -4,7 +4,7 @@ describe 'selinux_policy port' do
   describe 'single port' do
     describe 'AddOrModify' do
       let(:chef_run) do
-        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_port'])
+        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_port'])
         runner.converge('test::single_port')
       end
       it 'defines a single port' do
@@ -28,7 +28,7 @@ describe 'selinux_policy port' do
     end
     describe 'default_AddOrModify' do
       let(:chef_run) do
-        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_port'])
+        runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_port'])
         runner.converge('test::single_default_port')
       end
       it 'defines a single port' do
@@ -68,7 +68,7 @@ describe 'selinux_policy port' do
 
   describe 'range of ports' do
     let(:chef_run) do
-      runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_port'])
+      runner = ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_port'])
       Chef::Config[:cookbook_path] << './test/cookbooks'
       runner.converge('test::range_port')
     end

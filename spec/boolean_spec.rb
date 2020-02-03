@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'selinux_policy boolean' do
   let :chef_run do
-    ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_boolean']).converge_dsl('selinux_policy') do
+    ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_boolean']).converge_dsl('selinux_policy') do
       selinux_policy_boolean 'httpd_can_network_connect_db' do
         value true
       end

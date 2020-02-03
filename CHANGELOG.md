@@ -2,6 +2,10 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## UNRELEASED
+
+- Update Chefspecs to avoid deprecation warnings
+
 ## [2.3.6] - 2020-01-26
 
 - Fix issue on use_selinux function

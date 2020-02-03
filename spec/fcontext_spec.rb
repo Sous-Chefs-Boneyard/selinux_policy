@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe 'selinux_policy fcontext' do
   let :chef_run do
-    ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_fcontext']).converge_dsl('selinux_policy') do
+    ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_fcontext']).converge_dsl('selinux_policy') do
       selinux_policy_fcontext '/tmp/test' do
         secontext 'http_dir_t'
       end
