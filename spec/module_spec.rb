@@ -1,8 +1,11 @@
 require 'spec_helper'
 
 describe 'selinux_policy module' do
+  before do
+    allow_any_instance_of(Chef::Resource).to receive(:use_selinux).and_return(true)
+  end
   def chef_run_module(*actions)
-    ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+    ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
       selinux_policy_module 'testy' do
         action actions
         allow_disabled true
@@ -16,7 +19,7 @@ describe 'selinux_policy module' do
   describe 'fetch' do
     describe 'disallows both source_directory and content' do
       let :chef_run do
-        ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+        ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
             action :fetch
             allow_disabled false
@@ -34,7 +37,7 @@ describe 'selinux_policy module' do
     end
     describe 'source_directory' do
       let :chef_run do
-        ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+        ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
             allow_disabled false
             action :fetch
@@ -48,7 +51,7 @@ describe 'selinux_policy module' do
     end
     describe 'content' do
       let :chef_run do
-        ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+        ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
           selinux_policy_module 'testy' do
             action :fetch
             allow_disabled false
@@ -88,7 +91,7 @@ describe 'selinux_policy module' do
   end
   describe 'Remove' do
     let :chef_run do
-      ChefSpec::SoloRunner.new(platform: 'centos', version: '7.4.1708', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
+      ChefSpec::SoloRunner.new(platform: 'centos', version: '7', step_into: ['selinux_policy_module']).converge_dsl('selinux_policy') do
         selinux_policy_module 'testy' do
           allow_disabled true
           action :remove
