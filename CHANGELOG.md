@@ -2,6 +2,11 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## [2.4.0] - 2020-02-13
+
+- Fix port_defined helper function for Centos 8 compatibility
+- Test fixes
+
 ## [2.3.6] - 2020-01-26
 
 - Fix issue on use_selinux function
