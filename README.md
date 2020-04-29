@@ -211,6 +211,10 @@ selinux_policy_permissive 'nginx' do
 end
 ```
 
+## Original Author
+
+[Nitzan Raz](https://github.com/BackSlasher) ([backslasher](http://backslasher.net))
+
 ## Contributors
 
 This project exists thanks to all the people who [contribute.](https://opencollective.com/sous-chefs/contributors.svg?width=890&button=false)
