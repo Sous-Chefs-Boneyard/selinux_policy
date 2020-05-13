@@ -2,6 +2,11 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## Unreleased
+
+- resolved cookstyle error: resources/module.rb:26:35 convention: `Layout/TrailingWhitespace`
+- resolved cookstyle error: resources/module.rb:26:36 refactor: `ChefModernize/FoodcriticComments`
+
 ## [2.4.0] - 2020-02-13
 
 - Fix port_defined helper function for Centos 8 compatibility
