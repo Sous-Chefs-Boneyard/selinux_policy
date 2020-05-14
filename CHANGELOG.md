@@ -2,7 +2,7 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
-## Unreleased
+## 2.4.1 - 2020-05-14
 
 - resolved cookstyle error: resources/module.rb:26:35 convention: `Layout/TrailingWhitespace`
 - resolved cookstyle error: resources/module.rb:26:36 refactor: `ChefModernize/FoodcriticComments`
