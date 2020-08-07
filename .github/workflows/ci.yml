@@ -18,37 +18,23 @@ jobs:
         env:
           CHEF_LICENSE: accept-no-persist
 
-  yamllint:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-      - name: Run yaml Lint
-        uses: actionshub/yamllint@master
-
-  mdl:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@master
-      - name: Run Markdown Lint
-        uses: actionshub/markdownlint@master
-
   dokken:
-    needs: [mdl, yamllint, delivery]
+    needs: [delivery]
     runs-on: ubuntu-latest
     strategy:
       matrix:
         os:
           - 'amazonlinux'
           - 'amazonlinux-2'
-          - 'debian-8'
           - 'debian-9'
+          - 'debian-10'
           - 'centos-6'
           - 'centos-7'
+          - 'centos-8'
           - 'ubuntu-1604'
           - 'ubuntu-1804'
-          - 'opensuse-leap-leap'
+          - 'ubuntu-2004'
+          - 'opensuse-leap-15'
         suite:
           - 'default'
           - 'setup'
