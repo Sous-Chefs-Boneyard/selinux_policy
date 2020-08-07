@@ -2,6 +2,12 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## 2.4.3 (2020-08-07)
+
+- Ship the correct license file since this cookbook was relicensed - [@tas50](https://github.com/tas50)
+- Update testing configs - [@tas50](https://github.com/tas50)
+- Update the maintainer to be Chef Software - [@tas50](https://github.com/tas50)
+
 ## 2.4.2 (2020-08-07)
 
 - Make sure the `setpersist` action runs by default not `set` to match the docs.
