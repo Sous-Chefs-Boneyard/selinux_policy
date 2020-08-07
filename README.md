@@ -1,24 +1,17 @@
 # selinux_policy Cookbook
 
 [![Cookbook Version](https://img.shields.io/cookbook/v/selinux_policy.svg)](https://supermarket.chef.io/cookbooks/selinux_policy)
-[![Build Status](https://img.shields.io/circleci/project/github/sous-chefs/selinux_policy/master.svg)](https://circleci.com/gh/sous-chefs/selinux_policy)
-[![OpenCollective](https://opencollective.com/sous-chefs/backers/badge.svg)](#backers)
-[![OpenCollective](https://opencollective.com/sous-chefs/sponsors/badge.svg)](#sponsors)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This cookbook can be used to manage SELinux policies and components (rather than just enable / disable enforcing). I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
-
-## Maintainers
-
-This cookbook is maintained by the Sous Chefs. The Sous Chefs are a community of Chef cookbook maintainers working together to maintain important cookbooks. If you’d like to know more please visit [sous-chefs.org](https://sous-chefs.org/) or come chat with us on the Chef Community Slack in [#sous-chefs](https://chefcommunity.slack.com/messages/C2V7B88SF).
 
 ## Requirements
 
 Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run). Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`. Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
 
-### Chef
+### Chef Infra Client
 
-- Chef 13+
+- 13 or later
 
 ### Platforms
 

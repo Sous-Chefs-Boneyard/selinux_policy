@@ -1,6 +1,6 @@
 name             'selinux_policy'
-maintainer       'Sous Chefs'
-maintainer_email 'help@sous-chefs.org'
+maintainer       'Chef Software, Inc.'
+maintainer_email 'cookbooks@chef.io'
 license          'Apache-2.0'
 description      'Manages SELinux policy components'
 source_url       'https://github.com/sous-chefs/selinux_policy'
