@@ -26,6 +26,13 @@ action :install do
     end
   when 'fedora'
     package %w(policycoreutils-python selinux-policy-devel setools-console make)
+  when 'amazon'
+    case node['platform_version'].to_i
+    when 2
+      package %w(policycoreutils-python selinux-policy-devel setools-console make)
+    else
+      package %w(policycoreutils-python selinux-policy setools-console make)
+    end
   else
     raise 'Unknown distro, cannot determine required package names'
   end
