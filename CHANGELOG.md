@@ -2,6 +2,14 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## Unreleased
+
+- Refactor and clean up test recipes - [@detjensrobert](https://github.com/detjensrobert)
+- Add Inspec tests for Kitchen test suites - [@detjensrobert](https://github.com/detjensrobert)
+- Idempotency fixes for test recipes - [@detjensrobert](https://github.com/detjensrobert)
+- Add ChefSpec tests - [@detjensrobert](https://github.com/detjensrobert)
+- Refactor and clean up documentation - [@detjensrobert](https://github.com/detjensrobert)
+
 ## 2.4.3 (2020-08-07)
 
 - Ship the correct license file since this cookbook was relicensed - [@tas50](https://github.com/tas50)
