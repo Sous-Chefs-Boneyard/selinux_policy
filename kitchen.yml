@@ -6,32 +6,50 @@ provisioner:
   name: chef_zero
   deprecations_as_errors: true
   chef_license: accept-no-persist
+  enforce_idempotency: true
+  multiple_converge: 2
 
 platforms:
-  - name: amazonlinux
-    driver_config:
-      box: mvbcoding/awslinux
-  - name: amazonlinux-2
   - name: centos-6
   - name: centos-7
   - name: centos-8
   - name: fedora-latest
 
-suites:
-  - name: setup
-    run_list:
-      - recipe[test::setup]
-      - recipe[test::single_port]
+verifier:
+  name: inspec
 
-  - name: default
+suites:
+  - name: install
     run_list:
-      - recipe[test::setup]
-      - recipe[test::single_port]
-      - recipe[test::twice_port]
-      - recipe[test::range_port]
-      - recipe[test::bad_port]
-      - recipe[test::module]
-      - recipe[test::module_directory]
+      - recipe[test::install]
+  - name: boolean
+    run_list:
+      - recipe[test::install]
+      - recipe[test::boolean]
+  - name: fcontext
+    run_list:
+      - recipe[test::install]
       - recipe[test::fcontext]
-      - recipe[test::fcontext_filetype]
-      - recipe[test::single_port_add_to_range]
+  - name: module
+    run_list:
+      - recipe[test::install]
+      - recipe[test::module]
+  - name: module-directory
+    run_list:
+      - recipe[test::install]
+      - recipe[test::module_directory]
+  - name: module-remove
+    run_list:
+      - recipe[test::install]
+      - recipe[test::module_remove]
+    provisioner:
+      enforce_idempotency: false
+      multiple_converge: 1
+  - name: permissive
+    run_list:
+      - recipe[test::install]
+      - recipe[test::permissive]
+  - name: port
+    run_list:
+      - recipe[test::install]
+      - recipe[test::port]
