@@ -6,7 +6,7 @@ property :allow_disabled, [true, false], default: true
 action :add do
   execute "selinux-permissive-#{new_resource.name}-add" do
     command "#{semanage_cmd} permissive -a '#{new_resource.name}'"
-    not_if  "#{semanage_cmd} permissive -l | grep  '^#{new_resource.name}$'"
+    not_if  "#{semanage_cmd} permissive -l | grep -Fxq '#{new_resource.name}'"
     only_if { use_selinux(new_resource.allow_disabled) }
   end
 end
@@ -15,7 +15,7 @@ end
 action :delete do
   execute "selinux-port-#{new_resource.name}-delete" do
     command "#{semanage_cmd} permissive -d '#{new_resource.name}'"
-    not_if  "#{semanage_cmd} permissive -l | grep  '^#{new_resource.name}$'"
+    only_if "#{semanage_cmd} permissive -l | grep -Fxq '#{new_resource.name}'"
     only_if { use_selinux(new_resource.allow_disabled) }
   end
 end

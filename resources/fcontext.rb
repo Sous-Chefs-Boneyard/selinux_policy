@@ -18,15 +18,15 @@ action :relabel do
     spec = new_resource.file_spec
     escaped = Regexp.escape spec
 
-    common =
-      if spec == escaped
-        spec
-      else
-        index = spec.size.times { |i| break i if spec[i] != escaped[i] }
-        ::File.dirname spec[0...index]
-      end
+    # find common path between regex and string
+    common = if spec == escaped
+               spec
+             else
+               index = spec.size.times { |i| break i if spec[i] != escaped[i] }
+               ::File.dirname spec[0...index]
+             end
 
-    # Just in case the spec is very weird...
+    # if path is not absolute, ignore it and search everything
     common = '/' if common[0] != '/'
 
     if ::File.exist? common

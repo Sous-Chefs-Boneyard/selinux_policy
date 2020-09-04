@@ -21,7 +21,7 @@ action :fetch do
     only_if { use_selinux(new_resource.allow_disabled) }
   end
 
-  raise 'dont specify both directory_source and content' if new_resource.directory_source && new_resource.content
+  raise 'Do not specify both directory_source and content' if new_resource.directory_source && new_resource.content
 
   if new_resource.directory_source
     remote_directory new_resource.directory do
@@ -43,7 +43,7 @@ action :compile do
   make_command = "/usr/bin/make -f /usr/share/selinux/devel/Makefile #{new_resource.module_name}.pp"
   execute "semodule-compile-#{new_resource.module_name}" do
     command make_command
-    not_if "#{make_command} -q", cwd: new_resource.directory # $? = 1 means make wants to execute http://www.gnu.org/software/make/manual/html_node/Running.html
+    not_if "#{make_command} -q", cwd: new_resource.directory # $?==0 means makeis up to date -- see http://www.gnu.org/software/make/manual/html_node/Running.html
     only_if { use_selinux(new_resource.allow_disabled) }
     cwd new_resource.directory
   end

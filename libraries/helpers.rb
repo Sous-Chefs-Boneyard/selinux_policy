@@ -20,16 +20,6 @@ class Chef
         return_val
       end
 
-      def sebool(new_resource, persist = false)
-        persist_string = persist ? '-P ' :  ''
-        new_value = new_resource.value ? 'on' : 'off'
-        execute "selinux-setbool-#{new_resource.name}-#{new_value}" do
-          command "#{setsebool_cmd} #{persist_string} #{new_resource.name} #{new_value}"
-          not_if "#{getsebool_cmd} #{new_resource.name} | grep '#{new_value}$' >/dev/null" unless new_resource.force
-          only_if { use_selinux(new_resource.allow_disabled) }
-        end
-      end
-
       def module_defined(name)
         "#{semodule_cmd} -l | grep -w '^#{name}'"
       end

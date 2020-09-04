@@ -2,8 +2,8 @@
 # See http://docs.fedoraproject.org/en-US/Fedora/13/html/SELinux_FAQ/index.html#id3715134
 
 property :port, [Integer, String], name_property: true
-property :protocol, String, equal_to: %w(tcp udp)
-property :secontext, String
+property :protocol, String, equal_to: %w(tcp udp), required: %i(addormodify add modify)
+property :secontext, String, required: %i(addormodify add modify)
 property :allow_disabled, [true, false], default: true
 
 action :addormodify do
