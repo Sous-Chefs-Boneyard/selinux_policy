@@ -5,5 +5,4 @@ end
 reboot 'SELinux Reboot' do
   action :nothing
   reason 'Rebooting to enable SELinux.'
-  delay_mins 7
 end

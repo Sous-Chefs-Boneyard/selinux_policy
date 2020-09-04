@@ -4,3 +4,7 @@ selinux_policy_module 'test_module' do
     type test_module_t;
   EOM
 end
+
+selinux_policy_module 'test_module' do
+  action :remove
+end

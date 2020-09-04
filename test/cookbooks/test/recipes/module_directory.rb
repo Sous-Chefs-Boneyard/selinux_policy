@@ -1,5 +1,5 @@
-# Creates a module based on a source directory
+file '/usr/bin/dirtest'
 
-selinux_policy_module 'testo' do
-  directory_source 'testo'
+selinux_policy_module 'dirtest' do
+  directory_source 'dirtest_module'
 end
