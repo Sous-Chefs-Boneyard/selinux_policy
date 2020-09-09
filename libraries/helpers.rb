@@ -1,5 +1,5 @@
-class Chef
-  module SELinuxPolicy
+module SELinuxPolicy
+  module Cookbook
     module Helpers
       require 'chef/mixin/shell_out'
       include Chef::Mixin::ShellOut
@@ -60,7 +60,7 @@ class Chef
 
       def semanage_options(file_type)
         # Set options for file_type
-        if node['platform_family'].include?('rhel') && Chef::VersionConstraint.new('< 7.0').include?(node['platform_version'])
+        if platform_family?('rhel') && node['platform_version'].to_i == 6
           case file_type
           when 'a' then '-f ""'
           when 'f' then '-f --'
@@ -71,27 +71,32 @@ class Chef
         end
       end
 
-      require 'chef/mixin/which'
-      include Chef::Mixin::Which
+      def cmd_path(command)
+        if platform_family?('rhel') && node['platform_version'].to_i == 6
+          "/usr/sbin/#{command}"
+        else
+          "/sbin/#{command}"
+        end
+      end
 
       def setsebool_cmd
-        @setsebool_cmd ||= which('setsebool')
+        cmd_path('setsebool')
       end
 
       def getsebool_cmd
-        @getsebool_cmd ||= which('getsebool')
+        cmd_path('getsebool')
       end
 
       def getenforce_cmd
-        @getenforce_cmd ||= which('getenforce')
+        cmd_path('getenforce')
       end
 
       def semanage_cmd
-        @semanage_cmd ||= which('semanage')
+        cmd_path('semanage')
       end
 
       def semodule_cmd
-        @semodule_cmd ||= which('semodule')
+        cmd_path('semodule')
       end
     end
   end

@@ -71,5 +71,5 @@ action :remove do
 end
 
 action_class do
-  include Chef::SELinuxPolicy::Helpers
+  include SELinuxPolicy::Cookbook::Helpers
 end
