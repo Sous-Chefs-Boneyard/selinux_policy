@@ -5,8 +5,6 @@ property :force, [true, false], default: false
 property :allow_disabled, [true, false], default: true
 
 action_class do
-  include SELinuxPolicy::Cookbook::Helpers
-
   def sebool(persist = false)
     persist_string = persist ? '-P' : ''
     new_value = new_resource.value ? 'on' : 'off'

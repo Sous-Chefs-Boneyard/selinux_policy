@@ -38,10 +38,6 @@ module SELinuxPolicy
         "#{base_command} | #{grep}"
       end
 
-      def validate_port(port)
-        raise ArgumentError, "port value: #{port} is invalid." unless port.to_s =~ /^\d+$/
-      end
-
       def fcontext_defined(file_spec, file_type, label = nil)
         file_hash = {
           'a' => 'all files',
@@ -101,3 +97,6 @@ module SELinuxPolicy
     end
   end
 end
+
+Chef::Recipe.include ::SELinuxPolicy::Cookbook::Helpers
+Chef::Resource.include ::SELinuxPolicy::Cookbook::Helpers

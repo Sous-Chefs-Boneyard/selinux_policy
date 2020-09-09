@@ -1,5 +1,5 @@
 describe command('seinfo --portcon=29000') do
-  its('stdout') { should match 'portcon tcp 29000 system_u:object_r:    http_port_t:s0' }
+  its('stdout') { should match 'portcon tcp 29000 system_u:object_r:http_port_t:s0' }
   its('stdout') { should match 'portcon udp 29000 system_u:object_r:http_port_t:s0' }
 end
 

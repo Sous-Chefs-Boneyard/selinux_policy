@@ -69,7 +69,3 @@ action :remove do
     only_if { use_selinux(new_resource.allow_disabled) }
   end
 end
-
-action_class do
-  include SELinuxPolicy::Cookbook::Helpers
-end

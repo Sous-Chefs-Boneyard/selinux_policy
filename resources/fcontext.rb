@@ -63,7 +63,3 @@ action :modify do
     notifies :relabel, new_resource, :immediately
   end
 end
-
-action_class do
-  include SELinuxPolicy::Cookbook::Helpers
-end

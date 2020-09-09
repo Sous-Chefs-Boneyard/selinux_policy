@@ -111,20 +111,6 @@ describe SELinuxPolicy::Cookbook::Helpers do
     end
   end
 
-  describe '#validate_port' do
-    context 'valid port' do
-      it 'does not raise error' do
-        expect { subject.validate_port('6969') }.to_not raise_error
-      end
-    end
-
-    context 'invalid port' do
-      it 'raises error' do
-        expect { subject.validate_port('notaport') }.to raise_error(ArgumentError, 'port value: notaport is invalid.')
-      end
-    end
-  end
-
   describe '#fcontext_defined' do
     before { allow(subject).to receive(:semanage_cmd).and_return('semanage') }
 
