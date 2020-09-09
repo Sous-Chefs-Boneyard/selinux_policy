@@ -1,37 +1,15 @@
 require 'chefspec'
 require 'chefspec/berkshelf'
 
-module ChefSpec
-  class SoloRunner
-    def converge_dsl(*recipes, &block)
-      cookbook_name = 'imaginary'
-      recipe_name = 'temp'
-      converge(*recipes) do
-        recipe = Chef::Recipe.new(cookbook_name, recipe_name, @run_context)
-        recipe.instance_eval(&block)
-      end
-    end
-  end
-end
-
-# Stub this for the tests
-class Chef
-  module Mixin
-    module Which
-      def which(*cmds)
-        cmds.first
-      end
-    end
-  end
-end
+require_relative '../libraries/helpers'
 
 RSpec.configure do |config|
   config.color = true
-  config.tty = true
   config.formatter = :documentation
-  config.filter_run focus: true
-  config.run_all_when_everything_filtered = true
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
+end
+
+shared_context 'selinux enabled' do
+  before do
+    allow_any_instance_of(SELinuxPolicy::Cookbook::Helpers).to receive(:use_selinux).and_return(true)
   end
 end
