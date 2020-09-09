@@ -1,6 +1,6 @@
 # selinux_policy_install
 
-Installs the required packages and tools to setup a working SELinux enironment. A reboot may be required to fully enable SELinux.
+Installs the required packages and tools to setup a working SELinux environment. A reboot may be required to fully enable SELinux.
 
 ## Actions
 
