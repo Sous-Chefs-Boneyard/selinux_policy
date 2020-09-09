@@ -8,6 +8,12 @@ provisioner:
   chef_license: accept-no-persist
   enforce_idempotency: true
   multiple_converge: 2
+  # reboot tweaks:
+  max_retries: 3
+  wait_for_retry: 90
+  retry_on_exit_code: [35, 213]
+  client_rb:
+    client_fork: false
 
 platforms:
   - name: centos-6
