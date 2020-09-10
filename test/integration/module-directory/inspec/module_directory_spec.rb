@@ -10,7 +10,6 @@ end
 ).each do |type|
   describe command("seinfo --type=#{type}") do
     its('stdout') { should match type }
-    its('stderr') { should_not match "ERROR: could not find datum for type #{type}" }
   end
 end
 
