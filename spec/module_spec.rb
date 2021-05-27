@@ -27,7 +27,7 @@ describe 'selinux_policy module' do
               policy_module(testy, 1.0.0)
               type testy_t;
             eos
-            directory_source 'lolzaur'
+            dir_source 'lolzaur'
           end
         end
       end
@@ -41,7 +41,7 @@ describe 'selinux_policy module' do
           selinux_policy_module 'testy' do
             allow_disabled false
             action :fetch
-            directory_source 'lolzaur'
+            dir_source 'lolzaur'
           end
         end
       end
