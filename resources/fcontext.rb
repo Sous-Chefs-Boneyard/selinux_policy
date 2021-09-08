@@ -1,5 +1,6 @@
 # Manages file specs in SELinux
 # See http://docs.fedoraproject.org/en-US/Fedora/13/html/SELinux_FAQ/index.html#id3715134
+unified_mode true
 
 property :file_spec, String, name_property: true
 property :secontext, String

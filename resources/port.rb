@@ -1,6 +1,6 @@
 # Manages a port assignment in SELinux
 # See http://docs.fedoraproject.org/en-US/Fedora/13/html/SELinux_FAQ/index.html#id3715134
-
+unified_mode true
 property :port, [Integer, String], name_property: true
 property :protocol, String, equal_to: %w(tcp udp)
 property :secontext, String

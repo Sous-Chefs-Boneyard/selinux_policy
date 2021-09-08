@@ -1,4 +1,5 @@
 # A resource for managing SELinux Booleans
+unified_mode true
 
 property :value, [true, false]
 property :force, [true, false], default: false

@@ -2,6 +2,12 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## Unreleased
+
+- Sous-Chefs adoption
+- Set unifed_mode to true for Chef 17+ support
+- Require Chef 15.3 for unified_mode support
+
 ## 2.4.3 (2020-08-07)
 
 - Ship the correct license file since this cookbook was relicensed - [@tas50](https://github.com/tas50)
