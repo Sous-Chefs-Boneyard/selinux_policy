@@ -31,7 +31,7 @@ suites:
       - recipe[test::setup]
       - recipe[test::single_port]
       - recipe[test::twice_port]
-      - recipe[test::range_port]
+      # - recipe[test::range_port]
       - recipe[test::bad_port]
       - recipe[test::module]
       - recipe[test::module_directory]
