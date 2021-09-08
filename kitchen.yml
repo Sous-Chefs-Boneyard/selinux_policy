@@ -37,4 +37,4 @@ suites:
       - recipe[test::module_directory]
       - recipe[test::fcontext]
       - recipe[test::fcontext_filetype]
-      - recipe[test::single_port_add_to_range]
+      # - recipe[test::single_port_add_to_range]
