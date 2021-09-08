@@ -8,6 +8,9 @@ This file is used to changes made in each version of the selinux_policy cookbook
 - Set unifed_mode to true for Chef 17+ support
 - Require Chef 15.3 for unified_mode support
 - Update README and add documentation folder
+- Use the standard dokken config
+- Stop testing on CentOS 6 and Amazon Linux 1
+- Default rhel/amazon packages to installing CentOS 7 packages
 
 ## 2.4.3 (2020-08-07)
 

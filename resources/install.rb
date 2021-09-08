@@ -15,7 +15,7 @@ action :install do
       notifies :run, 'execute[selinux-activate]', :immediately
     end
 
-  when 'rhel'
+  when 'rhel', 'amazon'
     case node['platform_version'].to_i
     when 6
       package %w(policycoreutils-python selinux-policy setools-console make)
@@ -24,7 +24,7 @@ action :install do
     when 8
       package %w(policycoreutils-python-utils selinux-policy-devel setools-console make)
     else
-      raise 'Unknown version of RHEL/derivative, cannot determine required package names'
+      package %w(policycoreutils-python selinux-policy-devel setools-console make)
     end
   when 'fedora'
     package %w(policycoreutils-python selinux-policy-devel setools-console make)
