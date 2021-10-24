@@ -1,5 +1,7 @@
 property :allow_disabled, [true, false], default: true
 
+unified_mode true
+
 action :install do
   case node['platform_family']
   when 'debian'

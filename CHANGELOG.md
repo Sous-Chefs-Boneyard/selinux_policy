@@ -2,6 +2,10 @@
 
 This file is used to changes made in each version of the selinux_policy cookbook.
 
+## Unreleased
+
+- Add `unified_mode true` to resources
+
 ## 2.4.3 (2020-08-07)
 
 - Ship the correct license file since this cookbook was relicensed - [@tas50](https://github.com/tas50)

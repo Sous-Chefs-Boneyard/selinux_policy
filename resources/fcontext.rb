@@ -6,6 +6,8 @@ property :secontext, String
 property :file_type, String, default: 'a', equal_to: %w(a f d c b s l p)
 property :allow_disabled, [true, false], default: true
 
+unified_mode true
+
 action :addormodify do
   run_action(:add)
   run_action(:modify)

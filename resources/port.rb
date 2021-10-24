@@ -6,6 +6,8 @@ property :protocol, String, equal_to: %w(tcp udp)
 property :secontext, String
 property :allow_disabled, [true, false], default: true
 
+unified_mode true
+
 action :addormodify do
   # TODO: We can be a bit more clever here, and try to detect if it's already
   # there then modify
