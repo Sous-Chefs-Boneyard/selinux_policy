@@ -5,6 +5,12 @@
 
 This cookbook can be used to manage SELinux policies and components (rather than just enable / disable enforcing). I made it because I needed some SELinux settings done, and the `execute`s started to look annoying.
 
+> ## ⚠ This cookbook is deprecated ⚠
+>
+> Use the [`selinux` cookbook](https://github.com/sous-chefs/selinux) instead. That cookbook has all the resources that this cookbook does, and is properly tested on current platforms. This cookbook is no longer maintained.
+>
+> For more context, see sous-chefs/selinux#79.
+
 ## Requirements
 
 Needs an SELinux policy active (so its values can be managed). Can work with a disabled SELinux system (see attribute `allow_disabled`), which will generate warnings and do nothing (but won't break the run). Also requires SELinux's management tools, namely `semanage`, `setsebool` and `getsebool`. Tools are installed by the `selinux_policy::install` recipe (for RHEL/Debian and the like).
