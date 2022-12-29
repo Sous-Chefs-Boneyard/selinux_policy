@@ -21,6 +21,8 @@ action :install do
       package %w(policycoreutils-python selinux-policy-devel setools-console make)
     when 8
       package %w(policycoreutils-python-utils selinux-policy-devel setools-console make)
+    when 9
+      package %w(policycoreutils-python-utils selinux-policy-devel setools-console make)
     else
       raise 'Unknown version of RHEL/derivative, cannot determine required package names'
     end
